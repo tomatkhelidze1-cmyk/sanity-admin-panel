@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="სახარების რწმენის ეკლესია – ქუთაისი – ქადაგებები და სწავლებები.">
+    <title>ქადაგებები – სახარების რწმენის ეკლესია</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Noto+Sans+Georgian:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/svg+xml" href="../pages/images/logo.svg">
+    <style>/* სპეციფიკური სტილები ქადაგებების გვერდისთვის */
+        .sermons-hero {
+            background: linear-gradient(rgba(17, 17, 17, 0.75), rgba(17, 17, 17, 0.95)), url('https://images.unsplash.com/photo-1438032005730-c779502df39b?auto=format&fit=crop&q=80&w=1600') center/cover no-repeat;
+            padding: 180px 20px 100px;
+            text-align: center;
+            color: var(--white);
+        }
+        .sermons-hero h1 {
+            color: var(--white) !important;
+        }
+        .grid-uppertitle {
+            display: block;
+            font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--gold);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        .main-player-section {
+            padding: 80px 20px;
+            background: var(--bg-light);
+        }
+        .player-wrapper {
+            max-width: 960px;
+            margin: 0 auto;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            background: var(--dark-900);
+            line-height: 0;
+        }
+
+        .series-section {
+            padding: 80px 20px 100px;
+            background: var(--white);
+        }
+
+        /* საძიებო სისტემა და ფილტრები */
+        .search-filter-container {
+            max-width: 960px;
+            margin: 40px auto 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 0 10px;
+        }
+        .search-box-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .search-box-wrapper input {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            border: 1px solid #e1d8bf;
+            border-radius: 50px;
+            font-family: 'MersadBold', 'Noto Sans Georgian', sans-serif !important;
+            font-size: 0.95rem;
+            background: #fdfbf7;
+            color: #111;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search-box-wrapper input:focus {
+            border-color: var(--gold);
+            background: #ffffff;
+            box-shadow: 0 8px 25px rgba(170,149,79,0.12);
+        }
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aa954f;
+            font-size: 1.15rem;
+        }
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+        .filter-btn {
+            background: #fdfbf7;
+            border: 1px solid #e1d8bf;
+            color: var(--dark-900);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--gold);
+            color: var(--white);
+            border-color: var(--gold);
+            box-shadow: 0 5px 15px rgba(170,149,79,0.25);
+            transform: translateY(-1px);
+        }
+
+        .series-grid {
+            max-width: 960px;
+            margin: 30px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* სერიების ბარათის ახალი დიზაინი */
+        .series-card {
+            display: flex;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            border: 1px solid #f3eedf;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(170, 149, 79, 0.03);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, opacity 0.4s ease, display 0.4s ease;
+            opacity: 1;
+        }
+        .series-card.is-hidden {
+            display: none !important;
+            opacity: 0;
+        }
+        .series-thumbnail {
+            width: 200px;
+            position: relative;
+            background-color: #ebdcd0;
+            flex-shrink: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #f3eedf;
+            transition: all 0.4s ease;
+        }
+        .thumbnail-img-wrap {
+            width: 100%;
+            height: 150px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .thumbnail-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .series-card:hover .thumbnail-img-wrap img {
+            transform: scale(1.05);
+        }
+        .series-meta-details {
+            display: none;
+            padding: 20px 15px;
+            flex-direction: column;
+            gap: 15px;
+            font-family: 'Montserrat', 'Noto Sans Georgian', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            background: #fdfbf7;
+            flex-grow: 1;
+            border-top: 1px solid #f3eedf;
+            box-sizing: border-box;
+        }
+        .series-card.is-open .series-meta-details {
+            display: flex;
+        }
+        .meta-description-text {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            color: var(--text-soft);
+            margin: 5px 0 0 0;
+        }
+        .meta-tags-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-top: 1px solid #f3eedf;
+            padding-top: 12px;
+            margin-top: auto;
+        }
+        .meta-tag {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.78rem;
+            color: var(--dark-700);
+            line-height: 1.4;
+        }
+        .meta-tag i {
+            color: var(--gold);
+            margin-top: 3px;
+            width: 14px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        .meta-label {
+            font-weight: 700;
+            color: var(--dark-900);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .series-main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .series-header {
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            background: #ffffff;
+            gap: 20px;
+            flex-grow: 1;
+        }
+        .series-info {
+            text-align: left;
+        }
+        .series-info h3 {
+            font-size: 1.4rem;
+            color: var(--dark-900);
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-family: 'MersadBold', 'Noto Sans Georgian', sans-serif !important;
+        }
+        .series-info p {
+            color: var(--text-soft);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-family: 'Montserrat', 'Noto Sans Georgian', sans-serif;
+        }
+        .series-badge {
+            background: rgba(170, 149, 79, 0.1);
+            color: var(--gold);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-left: 15px;
+            white-space: nowrap;
+            font-family: 'MersadBold', 'Noto Sans Georgian', sans-serif !important;
+        }
+        .series-icon {
+            font-size: 1.1rem;
+            color: var(--gold);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-left: 20px;
+        }
+        .episodes-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--bg-light);
+            border-top: 1px solid #f3eedf;
+        }
+        .episodes-list {
+            padding: 20px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .episode-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: #ffffff;
+            border: 1px solid #e1d8bf;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        .episode-item:hover {
+            border-color: var(--gold);
+            background: rgba(170, 149, 79, 0.03);
+            transform: translateX(6px);
+        }
+        .episode-title-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .episode-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-700);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'MersadBold', 'Noto Sans Georgian', sans-serif !important;
+        }
+        .episode-title i {
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+        .episode-speaker {
+            font-size: 0.82rem;
+            color: #777;
+            font-family: 'Montserrat', 'Noto Sans Georgian', sans-serif;
+            padding-left: 24px;
+        }
+        .episode-meta {
+            font-size: 0.85rem;
+            color: #888;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+        }
+        
+        /* აქტიური კლასები ანიმაციისთვის */
+        .series-card.is-open {
+            box-shadow: 0 15px 45px rgba(170, 149, 79, 0.08);
+        }
+        .series-card.is-open .series-icon {
+            transform: rotate(180deg);
+        }
+        .series-card.is-open .episodes-panel {
+            max-height: 1000px;
+        }
+        .episode-item.is-playing {
+            border-color: var(--gold);
+            background: rgba(170, 149, 79, 0.08);
+            box-shadow: 0 4px 15px rgba(170, 149, 79, 0.05);
+        }
+        .episode-item.is-playing .episode-title {
+            color: var(--gold);
+            font-weight: 700;
+        }
+        
+        /* ნავბარის კორექცია */
+        .main-header {
+            background-color: rgba(17, 17, 17, 0.85) !important;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+        .main-header.scrolled {
+            background-color: var(--dark-900) !important;
+        }
+
+        /* 📱 რესპონსიული დიზაინი მობილურებისთვის */
+        @media (max-width: 768px) {
+            .sermons-hero {
+                padding: 140px 20px 70px;
+            }
+            .main-player-section {
+                padding: 40px 15px;
+            }
+            .series-section {
+                padding: 50px 15px 70px;
+            }
+            .search-filter-container {
+                margin: 30px auto 20px;
+            }
+            .search-box-wrapper input {
+                padding: 14px 18px 14px 45px;
+                font-size: 0.9rem;
+            }
+            .search-icon {
+                left: 18px;
+            }
+            .filter-btn {
+                padding: 8px 18px;
+                font-size: 0.75rem;
+            }
+            .series-card {
+                flex-direction: column;
+            }
+            .series-thumbnail {
+                width: 100%;
+                height: auto;
+                align-self: stretch;
+                border-right: none;
+                border-bottom: 1px solid #f3eedf;
+            }
+            .thumbnail-img-wrap {
+                height: 180px;
+            }
+            .meta-tags-section {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            .series-header {
+                padding: 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .series-header > div:last-child {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 10px;
+            }
+            .episodes-list {
+                padding: 15px;
+                gap: 10px;
+            }
+            .episode-item {
+                padding: 12px 16px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .episode-meta {
+                align-self: flex-end;
+                font-size: 0.78rem;
+            }
+            .episode-speaker {
+                padding-left: 21px;
+            }
+        }</style>
+</head>
+<body>
+
+<header class="main-header" role="banner">
+    <div class="header-container">
+        <div class="logo">
+            <a href="../index.html" aria-label="ქუთაისის სახარების რწმენის ეკლესია – მთავარი">
+                <svg width="70" height="70" viewBox="0 0 2000 2000" fill="none" aria-hidden="true">
+                    <style type="text/css">
+                        .st0{fill:#FFFFFF;}
+                        .st1{fill:#aa954f;}
+                    </style>
+                <g>
+                    <path class="st0" d="M1672.23,926.58c-206.24,393.27-239.98,698.69-612.89,850.09c-31.49-62.97-26.24-52.48-104.96-204.66 c-116.66-225.55-229.28-626.85-573.16-721.26c57.88-323.21,219.04-627.43,620.55-627.43c65.81,0,126.42,8.87,182.05,25.35 c10.92,3.2,21.62,6.72,32.17,10.55c0.11,0.05,0.21,0.11,0.37,0.16c12.44,4.46,24.66,9.39,36.58,14.64c0.05,0.05,0.05,0.05,0.1,0.05 C1493.13,380.5,1626.42,640.95,1672.23,926.58z"/>
+                    <g>
+                <path class="st1" d="M552.28,516.35 c-22.01,6.94,58.25,27.32,65.95,48.44c1.68,4.6,11.86,23.28-4.91,38.72c-4.07,3.75-6.57,20.36-4.6,27.27 c1.71,6.01,18,15.95,23.66,17.09c27.67,5.58,32.04,23.99,31.05,33.35c-1.83,17.43-19.82,40.98-33.85,48.47 c-12.41,6.63-4.04,15.81,5.67,27.54c2.25,2.71,5.31,4.63,8.71,5.56c36.03,9.86,72.29,3.67,117.07-0.24 c63.66-5.56,128.2-9.37,192.24-9.37c40.42,0,77.19,6.26,116.25,8.72c14.64,0.92,18.65,8.12,19.48,21.33 c3.42,53.95,5.41,107.94,5.92,162c-2.35,135.4-9.45,270.35-37.89,403.3c-12.56,58.72-28.4,116.35-58.46,169.01 c-9.62,16.85-21.29,32-35.53,45.45c-9.21,8.7-18.62,11.37-30.87,9.98c-228.65-25.95-404.63-135.49-524.42-332.41 c-50.92-83.71-79.93-175.48-89.16-273.17c-15.4-162.99,21.7-312.84,113.89-448.48c81.68-120.17,191.53-204.21,327.48-255.08 c54.27-20.3,110.72-29.8,167.47-38.72c12.79-2.01,20.79,4.55,27.73,13.38c35.56,45.22,61.88,95.39,80.08,149.91 c10.37,31.06,16.71,63.14,24.17,94.93c4.2,17.89,2.54,19.64-15.91,18.77c-81.25-3.86-162.56-6.77-243.89-5.14 C722.29,498.54,637.81,506.46,552.28,516.35z"/>
+                <path class="st1" d="M1681.47,1015.48c-5.2,68.06-19.73,134.13-39.57,199c-23.67,77.35-58.2,149.98-100.7,218.83 c-29.07,47.02-63.08,90.05-100.7,130.56c-58.93,63.55-126.68,114.61-204.09,153.92c-48.33,24.56-167.72,58.88-177.06,58.88 c53.58-47.7,98.97-106.79,132.3-166.51c30.33-54.31,55.47-111.04,75.57-170.19c13.49-39.73,26.08-79.66,36.21-120.28 c16.85-67.59,29.91-136.02,37.47-205.45c8.55-78.66,13.54-157.49,11.44-236.57c-0.79-28.55-3.67-57.04-5.67-85.59 c-0.63-9.18,0.47-13.28,12.28-10.44c81.66,19.47,162.31,41.51,237.83,79.4c0.11,0.05,0.21,0.11,0.31,0.16 c9.55,4.88,19.36-5.88,13.64-15.01c-0.21-0.31-0.42-0.68-0.63-1.05c-13.8-23.3-28.34-39.78-38.89-64.81 c-8.66-20.62-10.18-26.92,6.35-41.41c4.78-4.25,8.92-9.87,4.78-15.69c-2.57-3.57-3.88-6.19-5.67-10.23 c-2.47-5.51-7.08-8.5-2.94-14.17c2.2-2.99,4.62-4.93,7.5-6.04c4.62-1.78,8.29-5.41,9.76-10.13c1.47-4.78,2.15-9.81,1.57-11.86 c-8.92-30.38-28.55-37.84-53.95-52.58c-58.41-34.06-122.22-55-186.51-74.57c-14.17-4.3-28.02-9.5-42.61-12.28 c-6.61-1.21-9.5-4.62-10.86-12.65c-10.71-61.29-24.45-121.43-53.89-177.53c-16.32-31.12-38.41-66.07-60.93-92.52 c10.92,3.2,21.62,6.72,32.17,10.55c0.11,0.05,0.21,0.11,0.37,0.16c3.25,1.47,6.4,2.89,9.39,3.99c9.13,3.46,18.21,6.98,27.18,10.65 c0.05,0.05,0.05,0.05,0.1,0.05c44.03,18,86.54,38.99,126.63,64.86c43.45,27.97,82.13,61.66,117.87,98.97 c51.69,53.95,90.52,116.03,122.27,183.46c24.3,51.69,40.25,105.8,51.17,161.16C1686.14,859.36,1687.45,937.24,1681.47,1015.48z"/>
+                </g>
+                    </g>
+                </svg>
+            </a>
+         </div>
+
+        <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-menu" id="main-nav" role="navigation" aria-label="Main navigation">
+            <ul class="nav-list">
+                <li class="has-dropdown">
+                    <a href="#" aria-haspopup="true" aria-expanded="false">
+                        ჩვენს შესახებ <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="about.html">ვინ ვართ ჩვენ</a></li>
+                        <li><a href="team.html">მსახურთა გუნდი</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-dropdown">
+                    <a href="#" aria-haspopup="true" aria-expanded="false">
+                        შემდეგი ნაბიჯი <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="new-here.html">მე ახალი ვარ აქ</a></li>
+                        <li><a href="next-steps.html">რა არის შემდეგი ნაბიჯი</a></li>
+                        <li><a href="registration.html">რეგისტრაცია</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-dropdown">
+                    <a href="#" aria-haspopup="true" aria-expanded="false">
+                        მსახურებები <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="family-groups.html">საოჯახო ჯგუფები</a></li>
+                        <li><a href="youth.html">ახალგაზრდული</a></li>
+                        <li><a href="kids.html">ბავშვები</a></li>
+                        <li><a href="consultation.html">კონსულტაცია</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-dropdown">
+                    <a href="#" aria-haspopup="true" aria-expanded="false">
+                        რესურსები <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="sermons.html">ქადაგებები</a></li>
+                        <li><a href="https://holybible.ge/geo/bible/%E1%83%90%E1%83%AE%E1%83%90%E1%83%9A%E1%83%98-%E1%83%92%E1%83%90%E1%83%93%E1%83%90%E1%83%9B%E1%83%A3%E1%83%A8%E1%83%90%E1%83%95%E1%83%94%E1%83%91%E1%83%A3%E1%83%9B%E1%83%A5-%E1%83%92%E1%83%9B%E1%83%9D%E1%83%AA%E1%83%9B%E1%83%90-2015/1/0/0/0/1" target="_blank" rel="noopener noreferrer">ონლაინ ბიბლია</a></li>
+                        <li><a href="https://live.bible.is/bible/KATGNT/MAT/1" target="_blank" rel="noopener noreferrer">აუდიო ბიბლია</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="contact.html">დაგვიკავშირდი</a></li>
+                <li class="nav-give-item"><a href="give.html" class="btn-nav-give">გაეცი</a></li>
+            </ul>
+
+            <div class="mobile-socials">
+                <a href="https://www.facebook.com/efchurchofkutaisi" class="fb-icon" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/efckyouth/" class="insta-icon" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@EFC-Kutaisi" class="yt-icon" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </nav>
+
+        <div class="header-socials" aria-label="სოციალური ქსელები">
+            <a href="https://www.facebook.com/efchurchofkutaisi" class="fb-icon" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/efckyouth/" class="insta-icon" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.youtube.com/@EFC-Kutaisi" class="yt-icon" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+
+<section class="sermons-hero">
+        <span class="grid-uppertitle">მედია არქივი</span>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700; letter-spacing: 2px; font-family: 'BPGNinoMtavruliBold', sans-serif !important;">ონლაინ ქადაგებები</h1>
+        <p class="cursive-text" style="margin-bottom: 0; color: var(--gold-light);">მოუსმინე და გაიზარდე რწმენაში</p>
+    </section>
+
+    <section class="main-player-section" id="playerZone">
+        <div class="player-wrapper">
+            <div class="video-container">
+                <iframe 
+                    id="mainSermonPlayer"
+                    src="https://www.youtube-nocookie.com/embed/-yhiipmNtMA?rel=0&modestbranding=1&vq=hd1080" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <section class="series-section">
+        <div style="width: 100%; box-sizing: border-box; text-align: center; max-width: 600px; margin: 0 auto;">
+            <span class="grid-uppertitle">თემატური სწავლებები</span>
+            <h2 style="font-size: 2.2rem; font-weight: 700; color: var(--dark-900); font-family: 'BPGNinoMtavruliBold', sans-serif !important;">სერიული ქადაგებები</h2>
+        </div>
+
+        <!-- საძიებო სისტემა და კატეგორიები -->
+        <div class="search-filter-container">
+            <div class="search-box-wrapper">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="sermonSearch" placeholder="მოძებნე ქადაგების სერია სათაურით ან აღწერით...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">ყველა</button>
+                <button class="filter-btn" data-filter="spiritual">სულიერი ზრდა</button>
+                <button class="filter-btn" data-filter="family">ოჯახი & ცხოვრება</button>
+                <button class="filter-btn" data-filter="biblical">ბიბლიური სწავლებები</button>
+            </div>
+        </div>
+
+        <div class="series-grid">
+            
+            <!-- 1. გაცემის პრინციპები -->
+            <div class="series-card" data-category="biblical">
+                <div class="series-thumbnail">
+                    <div class="thumbnail-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80&w=600" alt="გაცემის პრინციპები">
+                    </div>
+                    <div class="series-meta-details">
+                        <div class="meta-description-section">
+                            <span class="meta-label">სერიის შესახებ</span>
+                            <p class="meta-description-text">ეს სერია სიღრმისეულად განიხილავს ბიბლიურ ხედვას ფინანსებზე, გულუხვობასა და მესაკუთრეობაზე. ჩვენ ვისწავლით, თუ როგორ გავთავისუფლდეთ მატერიალური წნეხისგან, როგორ ვენდოთ ღმერთს ჩვენს საჭიროებებში და როგორ გავხდეთ ერთგული განმკარგველები იმ კურთხევებისა, რაც უფალმა მოგვანდო.</p>
+                        </div>
+                        <div class="meta-tags-section">
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-folder"></i>
+                                <div>კატეგორია: ბიბლიური სწავლებები</div>
+                            </div>
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-user"></i>
+                                <div>სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div class="series-main">
+                    <div class="series-header">
+                        <div class="series-info">
+                            <h3>გაცემის პრინციპები</h3>
+                            <p>აღმოაჩინე ბიბლიური ფინანსური თავისუფლებისა და კურთხევის საიდუმლოებები.</p>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <span class="series-badge">4 ეპიზოდი</span>
+                            <i class="fa-solid fa-chevron-down series-icon"></i>
+                        </div>
+                    </div>
+                    <div class="episodes-panel">
+                        <div class="episodes-list">
+                            <div class="episode-item is-playing" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 1: გულის მოტივაცია</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">45 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 2: ერთგულების ნაყოფი</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">52 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 3: მინდობილობა გამოცდისას</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">38 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 4: უხვი მოსავალი</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">41 წთ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. რწმენის ნაბიჯები -->
+            <div class="series-card" data-category="spiritual">
+                <div class="series-thumbnail">
+                    <div class="thumbnail-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=600" alt="რწმენის ნაბიჯები">
+                    </div>
+                    <div class="series-meta-details">
+                        <div class="meta-description-section">
+                            <span class="meta-label">სერიის შესახებ</span>
+                            <p class="meta-description-text">რწმენა არ არის მხოლოდ თეორია, ის მოქმედებაა. ამ სწავლებაში განვიხილავთ ბიბლიურ გმირებს, რომლებმაც გაბედეს უცნობში გადადგმა უფლის სიტყვის საფუძველზე. თქვენ აღმოაჩენთ, როგორ დაძლიოთ ეჭვი, როგორ ამოიცნოთ ღმერთის ხმა და როგორ იაროთ დამაჯერებლად მაშინაც კი, როცა გზა ბუნდოვანია.</p>
+                        </div>
+                        <div class="meta-tags-section">
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-folder"></i>
+                                <div>კატეგორია: სულიერი ზრდა</div>
+                            </div>
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-user"></i>
+                                <div>სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div class="series-main">
+                    <div class="series-header">
+                        <div class="series-info">
+                            <h3>რწმენის ნაბიჯები</h3>
+                            <p>როგორ ვიაროთ ღმერთთან ერთად მაშინაც, როცა გარემოებები ბუნდოვანია.</p>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <span class="series-badge">3 ეპიზოდი</span>
+                            <i class="fa-solid fa-chevron-down series-icon"></i>
+                        </div>
+                    </div>
+                    <div class="episodes-panel">
+                        <div class="episodes-list">
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 1: ნოეს მორჩილება</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">48 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 2: აბრაამის გამოცდა</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">50 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 3: პეტრეს ნაბიჯი წყალზე</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">44 წთ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. ქრისტესმიერი იდენტობა -->
+            <div class="series-card" data-category="spiritual">
+                <div class="series-thumbnail">
+                    <div class="thumbnail-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&q=80&w=600" alt="ქრისტესმიერი იდენტობა">
+                    </div>
+                    <div class="series-meta-details">
+                        <div class="meta-description-section">
+                            <span class="meta-label">სერიის შესახებ</span>
+                            <p class="meta-description-text">ბევრი ქრისტიანი ცხოვრობს დამარცხებულად, რადგან არ იცის თავისი ნამდვილი იდენტობა. ეს სერია დაგეხმარებათ გააცნობიეროთ, რას ნიშნავს იყოთ ღვთის შვილი, გქონდეთ სამეფო იდენტობა და იმოქმედოთ იმ სულიერი ძალაუფლებითა და მადლით, რაც იესომ ჯვარზე გამარჯვებით მოგვიპოვა.</p>
+                        </div>
+                        <div class="meta-tags-section">
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-folder"></i>
+                                <div>კატეგორია: სულიერი ზრდა</div>
+                            </div>
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-user"></i>
+                                <div>სპიკერი: პასტორი ლია ჭანკვეტაძე</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div class="series-main">
+                    <div class="series-header">
+                        <div class="series-info">
+                            <h3>ქრისტესმიერი იდენტობა</h3>
+                            <p>გაიგე, ვინ ხარ შენ იესოში და როგორ იმოქმედო ამ ბოძებული ძალაუფლებით.</p>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <span class="series-badge">3 ეპიზოდი</span>
+                            <i class="fa-solid fa-chevron-down series-icon"></i>
+                        </div>
+                    </div>
+                    <div class="episodes-panel">
+                        <div class="episodes-list">
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 1: ახალი ქმნილება</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი ლია ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">46 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 2: მამობის სული</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი ლია ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">42 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 3: გამარჯვებულის ცნობიერება</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი ლია ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">49 წთ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. ოჯახი და ურთიერთობები -->
+            <div class="series-card" data-category="family">
+                <div class="series-thumbnail">
+                    <div class="thumbnail-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&q=80&w=600" alt="ოჯახი და ურთიერთობები">
+                    </div>
+                    <div class="series-meta-details">
+                        <div class="meta-description-section">
+                            <span class="meta-label">სერიის შესახებ</span>
+                            <p class="meta-description-text">ურთიერთობები ჩვენი ცხოვრების უმნიშვნელოვანესი ნაწილია. ამ სწავლებაში პრაქტიკულად განვიხილავთ ქორწინებას, ბავშვების აღზრდასა და კონფლიქტების მოგვარების ბიბლიურ მოდელებს. ვისწავლით, როგორ ავაშენოთ ქრისტეზე დაფუძნებული ჯანსაღი, მოსიყვარულე და მტკიცე ოჯახები.</p>
+                        </div>
+                        <div class="meta-tags-section">
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-folder"></i>
+                                <div>კატეგორია: ოჯახი & ცხოვრება</div>
+                            </div>
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-user"></i>
+                                <div>სპიკერი: პასტორები სპარტაკ და ლია ჭანკვეტაძეები</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div class="series-main">
+                    <div class="series-header">
+                        <div class="series-info">
+                            <h3>ოჯახი და ურთიერთობები</h3>
+                            <p>ბიბლიური პრინციპები ჯანსაღი ქორწინებისთვის, შვილების აღზრდისა და მეგობრობისთვის.</p>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <span class="series-badge">3 ეპიზოდი</span>
+                            <i class="fa-solid fa-chevron-down series-icon"></i>
+                        </div>
+                    </div>
+                    <div class="episodes-panel">
+                        <div class="episodes-list">
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 1: სიყვარული და პატივისცემა</span>
+                                    <span class="episode-speaker">სპიკერები: პასტორები სპარტაკ და ლია ჭანკვეტაძეები</span>
+                                </div>
+                                <span class="episode-meta">55 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 2: აღზრდა მადლით</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი ლია ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">47 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 3: კონფლიქტების მოგვარება</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">50 წთ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. სულიწმინდის ნაყოფი -->
+            <div class="series-card" data-category="spiritual">
+                <div class="series-thumbnail">
+                    <div class="thumbnail-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=600" alt="სულიწმინდის ნაყოფი">
+                    </div>
+                    <div class="series-meta-details">
+                        <div class="meta-description-section">
+                            <span class="meta-label">სერიის შესახებ</span>
+                            <p class="meta-description-text">ქრისტიანის ნამდვილი ძალა მის ხასიათში ვლინდება. ამ სერიაში ვისწავლით, თუ როგორ მივცეთ უფლება სულიწმინდას, გარდაქმნას ჩვენი შინაგანი სამყარო. განვიხილავთ სიყვარულის, სიხარულის, მშვიდობის, ერთგულებისა და თავშეკავების პრაქტიკულ გამოვლინებებს ყოველდღიურობაში.</p>
+                        </div>
+                        <div class="meta-tags-section">
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-folder"></i>
+                                <div>კატეგორია: სულიერი ზრდა</div>
+                            </div>
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-user"></i>
+                                <div>სპიკერი: ნათია კალანდაძე</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div class="series-main">
+                    <div class="series-header">
+                        <div class="series-info">
+                            <h3>სულიწმინდის ნაყოფი</h3>
+                            <p>როგორ ჩამოვაყალიბოთ ქრისტეს მსგავსი ხასიათი ყოველდღიურ ცხოვრებაში.</p>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <span class="series-badge">3 ეპიზოდი</span>
+                            <i class="fa-solid fa-chevron-down series-icon"></i>
+                        </div>
+                    </div>
+                    <div class="episodes-panel">
+                        <div class="episodes-list">
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 1: სიყვარული და სიხარული</span>
+                                    <span class="episode-speaker">სპიკერი: ნათია კალანდაძე</span>
+                                </div>
+                                <span class="episode-meta">40 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 2: მშვიდობა და სულგრძელობა</span>
+                                    <span class="episode-speaker">სპიკერი: ნათია კალანდაძე</span>
+                                </div>
+                                <span class="episode-meta">43 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 3: ერთგულება და თავშეკავება</span>
+                                    <span class="episode-speaker">სპიკერი: ნათია კალანდაძე</span>
+                                </div>
+                                <span class="episode-meta">45 წთ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. ლოცვის საიდუმლო -->
+            <div class="series-card" data-category="spiritual">
+                <div class="series-thumbnail">
+                    <div class="thumbnail-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1445077100181-a33e9ac94db0?auto=format&fit=crop&q=80&w=600" alt="ლოცვის საიდუმლო">
+                    </div>
+                    <div class="series-meta-details">
+                        <div class="meta-description-section">
+                            <span class="meta-label">სერიის შესახებ</span>
+                            <p class="meta-description-text">ლოცვა არ არის მხოლოდ რიტუალი, ის ღმერთთან ურთიერთობის გულისცემაა. სერია დაგეხმარებათ შეხვიდეთ ახალ საფეხურზე ლოცვით ცხოვრებაში. ვისწავლით, როგორ ვილოცოთ ეფექტურად, როგორ მოვისმინოთ პასუხები და როგორ გავხდეთ შუამდგომელნი სხვებისთვის.</p>
+                        </div>
+                        <div class="meta-tags-section">
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-folder"></i>
+                                <div>კატეგორია: სულიერი ზრდა</div>
+                            </div>
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-user"></i>
+                                <div>სპიკერი: უხუცესი იოსებ ბაქრაძე</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div class="series-main">
+                    <div class="series-header">
+                        <div class="series-info">
+                            <h3>ლოცვის საიდუმლო</h3>
+                            <p>ლოცვის პრაქტიკული გზამკვლევი – როგორ განვავითაროთ ინტიმური ურთიერთობა ღმერთთან.</p>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <span class="series-badge">3 ეპიზოდი</span>
+                            <i class="fa-solid fa-chevron-down series-icon"></i>
+                        </div>
+                    </div>
+                    <div class="episodes-panel">
+                        <div class="episodes-list">
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 1: ფარული ოთახი</span>
+                                    <span class="episode-speaker">სპიკერი: უხუცესი იოსებ ბაქრაძე</span>
+                                </div>
+                                <span class="episode-meta">50 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 2: შუამდგომლობის ძალა</span>
+                                    <span class="episode-speaker">სპიკერი: უხუცესი იოსებ ბაქრაძე</span>
+                                </div>
+                                <span class="episode-meta">42 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 3: პასუხგაუცემელი ლოცვები</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">53 წთ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. გამარჯვება კრიზისში -->
+            <div class="series-card" data-category="family">
+                <div class="series-thumbnail">
+                    <div class="thumbnail-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=600" alt="გამარჯვება კრიზისში">
+                    </div>
+                    <div class="series-meta-details">
+                        <div class="meta-description-section">
+                            <span class="meta-label">სერიის შესახებ</span>
+                            <p class="meta-description-text">კრიზისები ცხოვრების გარდაუვალი ნაწილია, მაგრამ ქრისტეში ჩვენ გვესწავლება გამარჯვება. ეს სწავლება მოგცემთ სულიერ იარაღებს შიშის, იმედგაცრუებისა და გაურკვევლობის დასაძლევად. აღმოაჩენთ, როგორ იპოვოთ ღვთის მშვიდობა ნებისმიერ ქარიშხალში.</p>
+                        </div>
+                        <div class="meta-tags-section">
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-folder"></i>
+                                <div>კატეგორია: ოჯახი & ცხოვრება</div>
+                            </div>
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-user"></i>
+                                <div>სპიკერი: პასტორები სპარტაკ და ლია ჭანკვეტაძეები</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div class="series-main">
+                    <div class="series-header">
+                        <div class="series-info">
+                            <h3>გამარჯვება კრიზისში</h3>
+                            <p>როგორ დავძლიოთ შიში, დეპრესია და გაურკვევლობა ღმერთის სიტყვაზე დაყრდნობით.</p>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <span class="series-badge">3 ეპიზოდი</span>
+                            <i class="fa-solid fa-chevron-down series-icon"></i>
+                        </div>
+                    </div>
+                    <div class="episodes-panel">
+                        <div class="episodes-list">
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 1: იმედი ქარიშხალში</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">51 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 2: გონების განახლება</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი ლია ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">46 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 3: უფლის სიჩუმე</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">48 წთ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. მთაზე ქადაგება -->
+            <div class="series-card" data-category="biblical">
+                <div class="series-thumbnail">
+                    <div class="thumbnail-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?auto=format&fit=crop&q=80&w=600" alt="მთაზე ქადაგება">
+                    </div>
+                    <div class="series-meta-details">
+                        <div class="meta-description-section">
+                            <span class="meta-label">სერიის შესახებ</span>
+                            <p class="meta-description-text">იესოს ყველაზე ცნობილი ქადაგების სიღრმისეული ანალიზი. ჩვენ შევისწავლით ზეციური სამეფოს რევოლუციურ წესებს, ნეტარებებს, მორალურ სტანდარტებს და იმას, თუ რას ნიშნავს რეალურად ვიყოთ სამყაროს მარილი და სინათლე ყოველდღიურ ქმედებებში.</p>
+                        </div>
+                        <div class="meta-tags-section">
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-folder"></i>
+                                <div>კატეგორია: ბიბლიური სწავლებები</div>
+                            </div>
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-user"></i>
+                                <div>სპიკერი: მარიამ ჩხეიძე</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div class="series-main">
+                    <div class="series-header">
+                        <div class="series-info">
+                            <h3>მთაზე ქადაგება</h3>
+                            <p>მათეს მე-5-მე-7 თავების სიღრმისეული განხილვა და ზეციური სამეფოს ეთიკა.</p>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <span class="series-badge">3 ეპიზოდი</span>
+                            <i class="fa-solid fa-chevron-down series-icon"></i>
+                        </div>
+                    </div>
+                    <div class="episodes-panel">
+                        <div class="episodes-list">
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 1: ნეტარებები</span>
+                                    <span class="episode-speaker">სპიკერი: მარიამ ჩხეიძე</span>
+                                </div>
+                                <span class="episode-meta">47 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 2: მარილი და სინათლე</span>
+                                    <span class="episode-speaker">სპიკერი: მარიამ ჩხეიძე</span>
+                                </div>
+                                <span class="episode-meta">42 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 3: საძირკვლის შენება</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">50 წთ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. მადლით თავისუფალნი -->
+            <div class="series-card" data-category="biblical">
+                <div class="series-thumbnail">
+                    <div class="thumbnail-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&q=80&w=600" alt="მადლით თავისუფალნი">
+                    </div>
+                    <div class="series-meta-details">
+                        <div class="meta-description-section">
+                            <span class="meta-label">სერიის შესახებ</span>
+                            <p class="meta-description-text">ბევრი მორწმუნე რელიგიურ იურიდიზმში ან დანაშაულის გრძნობაში ცხოვრობს. ეს სერია დაგეხმარებათ დაინახოთ მადლის სრული სილამაზე და გათავისუფლდეთ მსჯავრდებისგან. ჩვენ გავიგებთ, რომ მადლი არ არის ცოდვის ნებართვა, არამედ ძალაა ცოდვაზე გასამარჯვებლად.</p>
+                        </div>
+                        <div class="meta-tags-section">
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-folder"></i>
+                                <div>კატეგორია: ბიბლიური სწავლებები</div>
+                            </div>
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-user"></i>
+                                <div>სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div class="series-main">
+                    <div class="series-header">
+                        <div class="series-info">
+                            <h3>მადლით თავისუფალნი</h3>
+                            <p>კანონისა და მადლის გამიჯვნა – რას ნიშნავს ქრისტეს მიერ მოპოვებული ჭეშმარიტი თავისუფლება.</p>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <span class="series-badge">3 ეპიზოდი</span>
+                            <i class="fa-solid fa-chevron-down series-icon"></i>
+                        </div>
+                    </div>
+                    <div class="episodes-panel">
+                        <div class="episodes-list">
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 1: რწმენით გამართლება</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">52 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 2: მსჯავრდებისგან გათავისუფლება</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">47 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 3: მადლის ძალა ცოდვაზე</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი ლია ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">45 წთ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. მოწოდება და გავლენა -->
+            <div class="series-card" data-category="spiritual">
+                <div class="series-thumbnail">
+                    <div class="thumbnail-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600" alt="მოწოდება და გავლენა">
+                    </div>
+                    <div class="series-meta-details">
+                        <div class="meta-description-section">
+                            <span class="meta-label">სერიის შესახებ</span>
+                            <p class="meta-description-text">ღმერთს თითოეული ჩვენგანისთვის აქვს უნიკალური გეგმა. ამ სწავლებაში ვისწავლით, როგორ აღმოვაჩინოთ ჩვენი სულიერი ნიჭები, როგორ ვიპოვოთ ჩვენი მოწოდება და როგორ მოვახდინოთ დადებითი, ღვთიური გავლენა საზოგადოებაზე, სამუშაო ადგილსა თუ მეგობრებში.</p>
+                        </div>
+                        <div class="meta-tags-section">
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-folder"></i>
+                                <div>კატეგორია: სულიერი ზრდა</div>
+                            </div>
+                            <div class="meta-tag">
+                                <i class="fa-solid fa-user"></i>
+                                <div>სპიკერი: ილია ნავროზაშვილი</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div class="series-main">
+                    <div class="series-header">
+                        <div class="series-info">
+                            <h3>მოწოდება და გავლენა</h3>
+                            <p>იპოვე შენი სულიერი ნიჭი და მოახდინე პოზიტიური გავლენა საზოგადოებაზე.</p>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <span class="series-badge">3 ეპიზოდი</span>
+                            <i class="fa-solid fa-chevron-down series-icon"></i>
+                        </div>
+                    </div>
+                    <div class="episodes-panel">
+                        <div class="episodes-list">
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 1: სულიერი ნიჭები</span>
+                                    <span class="episode-speaker">სპიკერი: ილია ნავროზაშვილი</span>
+                                </div>
+                                <span class="episode-meta">44 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="FnAaUcbma58">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 2: გავლენის სფეროები</span>
+                                    <span class="episode-speaker">სპიკერი: ილია ნავროზაშვილი</span>
+                                </div>
+                                <span class="episode-meta">49 წთ</span>
+                            </div>
+                            <div class="episode-item" data-video-id="-yhiipmNtMA">
+                                <div class="episode-title-block">
+                                    <span class="episode-title"><i class="fa-solid fa-play"></i> ნაწილი 3: მისიონერული ცხოვრება</span>
+                                    <span class="episode-speaker">სპიკერი: პასტორი სპარტაკ ჭანკვეტაძე</span>
+                                </div>
+                                <span class="episode-meta">51 წთ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+<section class="contact-section" id="contact" aria-label="Contact and location">
+    <div class="contact-container">
+
+        <div class="contact-info-col">
+            <span class="contact-eyebrow">მოგვძებნეთ</span>
+            <h2 class="contact-heading">გვეწვიეთ ეკლესიაში</h2>
+            <p class="contact-intro">მოხარული ვიქნებით თქვენი სტუმრობით ამ კვირას. ჩვენი კარები ყოველთვის ღიაა — მობრძანდით თქვენს ოჯახთან ერთად და შეიგრძენით ჩვენი საზოგადოება.</p>
+
+            <div class="contact-block">
+                <div class="contact-icon-wrap" aria-hidden="true">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="contact-block-text">
+                    <p class="contact-label">ფიზიკური მისამართი</p>
+                    <a
+                        href="https://maps.app.goo.gl/vRDFyab5jMPhwHNh7"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="contact-address-link"
+                        aria-label="Open address in Google Maps"
+                    >
+                        მესხის ქ. 42<br>ქუთაისი, საქართველო
+                        <i class="fa-solid fa-arrow-up-right-from-square contact-ext-icon" aria-hidden="true"></i>
+                    </a>
+                    <p class="contact-sub">ქუთაისის სახარების რწმენის ეკლესია</p>
+                </div>
+            </div>
+
+            <div class="contact-block">
+                <div class="contact-icon-wrap" aria-hidden="true">
+                    <i class="fa-regular fa-envelope"></i>
+                </div>
+                <div class="contact-block-text">
+                    <p class="contact-label">ელ-ფოსტა</p>
+                    <a href="mailto:info@efckutaisi.ge" style="text-decoration: none; color: #ffffff; font-weight: 500; font-family: 'Montserrat', sans-serif;">info@efckutaisi.ge</a>
+                </div>
+            </div>
+
+            <div class="contact-block">
+                <div class="contact-icon-wrap" aria-hidden="true">
+                    <i class="fa-regular fa-clock"></i>
+                </div>
+                <div class="contact-block-text">
+                    <p class="contact-label">მსახურების განრიგი</p>
+                    <table class="hours-table" aria-label="Weekly service schedule">
+                        <tbody>
+                            <tr>
+                                <td class="hours-day">კვირა</td>
+                                <td class="hours-time">11:00 – საკვირაო ღვთისმსახურება</td>
+                            </tr>
+                            <tr>
+                                <td class="hours-day">შაბათი</td>
+                                <td class="hours-time">16:00 – ახალგაზრდული მსახურება</td>
+                            </tr>
+                            <tr>
+                                <td class="hours-day">ოთხშაბათი</td>
+                                <td class="hours-time">19:00 – საოჯახო ჯგუფები</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <a href="contact.html" class="btn btn-contact-cta">
+                <i class="fa-regular fa-envelope" aria-hidden="true"></i>  მოგვწერეთ შეტყობინება
+            </a>
+        </div>
+
+        <div class="contact-map-col">
+            <div class="map-wrapper" role="region" aria-label="Interactive map">
+                <div class="map-overlay" title="Click to interact with the map" aria-hidden="true"></div>
+                <iframe
+                    class="contact-map-iframe"
+                    src="https://maps.google.com/maps?q=Evangelical+Faith+Church,+Kutaisi&output=embed"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="ქუთაისის სახარების რწმენის ეკლესია"
+                ></iframe>
+            </div>
+            <p class="map-hint">
+                <i class="fa-solid fa-hand-pointer" aria-hidden="true"></i>
+                <span class="hint-text">დააკლიკეთ რუკაზე ინტერაქტივისთვის</span>
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<div class="minimal-copyright-strip">
+    <p>© 2026 სახარების რწმენის ეკლესია – ქუთაისი. ყველა უფლება დაცულია.</p>
+</div>
+
+<button class="back-to-top" aria-label="ზემოთ ასვლა" title="ზემოთ ასვლა">
+    <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+</button>
+
+<script src="../script.js"></script>
+<script src="../sanity-fetch.js"></script>
+
+
+
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Accordion & Video Play Event Delegation on .series-grid
+            const seriesGrid = document.querySelector('.series-grid');
+            if (seriesGrid) {
+                seriesGrid.addEventListener('click', (e) => {
+                    // Accordion Header Toggle
+                    const header = e.target.closest('.series-header');
+                    if (header) {
+                        const currentCard = header.closest('.series-card');
+                        document.querySelectorAll('.series-card').forEach(card => {
+                            if (card !== currentCard) {
+                                card.classList.remove('is-open');
+                            }
+                        });
+                        currentCard.classList.toggle('is-open');
+                        return;
+                    }
+
+                    // Episode Video Play Click
+                    const item = e.target.closest('.episode-item');
+                    if (item) {
+                        const videoId = item.getAttribute('data-video-id');
+                        const mainPlayer = document.getElementById('mainSermonPlayer');
+                        const playerZone = document.getElementById('playerZone');
+                        
+                        if (videoId && mainPlayer) {
+                            mainPlayer.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1&vq=hd1080`;
+                            
+                            document.querySelectorAll('.episode-item').forEach(el => el.classList.remove('is-playing'));
+                            item.classList.add('is-playing');
+                            
+                            if (playerZone) {
+                                playerZone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 3. Search and Filtering Logic
+            const searchInput = document.getElementById('sermonSearch');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+
+            let activeFilter = 'all';
+            let searchQuery = '';
+
+            function applyFilter() {
+                const seriesCards = document.querySelectorAll('.series-card');
+                seriesCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    const title = card.querySelector('.series-info h3').textContent.toLowerCase();
+                    const desc = card.querySelector('.series-info p').textContent.toLowerCase();
+                    
+                    const matchesCategory = (activeFilter === 'all' || category === activeFilter);
+                    const matchesSearch = (title.includes(searchQuery) || desc.includes(searchQuery));
+
+                    if (matchesCategory && matchesSearch) {
+                        card.classList.remove('is-hidden');
+                    } else {
+                        card.classList.add('is-hidden');
+                        card.classList.remove('is-open');
+                    }
+                });
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    searchQuery = e.target.value.toLowerCase().trim();
+                    applyFilter();
+                });
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeFilter = btn.getAttribute('data-filter');
+                    applyFilter();
+                });
+            });
+            
+        });
+    </script>
+
+</body>
+</html>

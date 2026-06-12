@@ -1,0 +1,7 @@
+node_modules/
+sanity-studio/node_modules/
+sanity-studio/dist/
+sanity-studio/.sanity/
+.DS_Store
+Thumbs.db
+*.log

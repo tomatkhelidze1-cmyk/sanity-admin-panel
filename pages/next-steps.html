@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="რა არის შემდეგი ნაბიჯი – სახარების რწმენის ეკლესია – ქუთაისი">
+    <title>რა არის შემდეგი ნაბიჯი – სახარების რწმენის ეკლესია</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Noto+Sans+Georgian:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/svg+xml" href="../pages/images/logo.svg">
+    <style>/* სექციებს შორის მკვდარი სივრცეების კონტროლი */
+        .section-padding-sm {
+            padding: 50px 0 20px 0;
+        }
+        .section-padding-md {
+            padding: 10px 0 40px 0;
+        }
+        .section-padding-bg {
+            padding: 30px 0 50px 0;
+        }
+
+        /* კონტეინერის მყარი არქიტექტურა */
+        .steps-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: 30px;
+            perspective: 1200px; /* აძლიერებს 3D სიღრმის აღქმას */
+        }
+
+        /* ბარათების პრემიუმ სტილი */
+        .next-step-card {
+            background: #fdfbf7;
+            padding: 50px 35px;
+            border-radius: 12px;
+            border: 1px solid #f3eedf;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 390px;
+            box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(170, 149, 79, 0.02);
+            
+            /* 3D აპარატურული აქსელერაცია */
+            transform-style: preserve-3d;
+            transform: translateZ(0); 
+            will-change: transform;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* ფერების დიფერენციაცია ხაზების მიხედვით */
+        .card-gold { border-top: 4px solid #aa954f; }
+        .card-dark { border-top: 4px solid #222222; }
+
+        /* ინტერაქციის დროს ეფექტების გაძლიერება */
+        .next-step-card:hover {
+            box-shadow: 0 20px 45px rgba(170, 149, 79, 0.08);
+        }
+        .next-step-card.card-gold:hover { border-color: #aa954f; }
+        .next-step-card.card-dark:hover { border-color: #000000; }
+
+        /* ფონური გიგანტური ციფრები */
+        .card-bg-number {
+            position: absolute;
+            right: 30px;
+            top: 15px;
+            font-family: 'Playfair Display', serif;
+            font-size: 5.5rem;
+            font-weight: 600;
+            line-height: 1;
+            user-select: none;
+            z-index: 1;
+            pointer-events: none; /* კრიტიკულია: მაუსი არ უნდა რეაგირებდეს ციფრზე */
+        }
+        .card-gold .card-bg-number { color: #f5eee0; }
+        .card-dark .card-bg-number { color: #ebdcd0; opacity: 0.4; }
+
+        /* შიგთავსის იზოლაცია ბაგების პრევენციისთვის */
+        .card-content-wrapper {
+            position: relative;
+            z-index: 2;
+            pointer-events: none; /* აქრობს ტექსტზე გადასვლისას ბარათის ციმციმს (Flicker Bug) */
+        }
+
+        .card-step-label {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .card-gold .card-step-label { color: #aa954f; }
+        .card-dark .card-step-label { color: #777777; }
+
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #111;
+            margin: 0 0 18px 0;
+        }
+
+        .card-description {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            color: #555;
+            line-height: 1.7;
+            font-size: 0.95rem;
+            text-align: left;
+            margin: 0;
+        }
+
+        /* სამოქმედო ღილაკები */
+        .card-action-wrapper {
+            position: relative;
+            z-index: 3; /* მაუსმა უნდა დააჭიროს ლინკს */
+        }
+
+        .card-link {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #111;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+        .card-gold .card-link { border-bottom: 2px solid #aa954f; }
+        .card-dark .card-link { border-bottom: 2px solid #222222; }
+        .card-link:hover { color: #aa954f; }
+
+        /* ფილოსოფიური ქვედა ბლოკი */
+        .info-msg-box {
+            max-width: 750px;
+            margin: 0 auto;
+            background-color: #fdfbf7;
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid #f3eedf;
+            box-sizing: border-box;
+        }
+
+        /* -----------------------------------------
+            Intersection Observer - სკროლ ანიმაციები
+        ----------------------------------------- */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .scroll-reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }</style>
+</head>
+<body>
+
+<header class="main-header" role="banner">
+    <div class="header-container">
+        <div class="logo">
+            <a href="../index.html" aria-label="ქუთაისის სახარების რწმენის ეკლესია – მთავარი">
+                <svg width="70" height="70" viewBox="0 0 2000 2000" fill="none" aria-hidden="true">
+                    <style type="text/css">
+                        .st0{fill:#FFFFFF;}
+                        .st1{fill:#aa954f;}
+                    </style>
+                <g>
+                    <path class="st0" d="M1672.23,926.58c-206.24,393.27-239.98,698.69-612.89,850.09c-31.49-62.97-26.24-52.48-104.96-204.66 c-116.66-225.55-229.28-626.85-573.16-721.26c57.88-323.21,219.04-627.43,620.55-627.43c65.81,0,126.42,8.87,182.05,25.35 c10.92,3.2,21.62,6.72,32.17,10.55c0.11,0.05,0.21,0.11,0.37,0.16c12.44,4.46,24.66,9.39,36.58,14.64c0.05,0.05,0.05,0.05,0.1,0.05 C1493.13,380.5,1626.42,640.95,1672.23,926.58z"/>
+                    <g>
+                <path class="st1" d="M552.28,516.35 c-22.01,6.94,58.25,27.32,65.95,48.44c1.68,4.6,11.86,23.28-4.91,38.72c-4.07,3.75-6.57,20.36-4.6,27.27 c1.71,6.01,18,15.95,23.66,17.09c27.67,5.58,32.04,23.99,31.05,33.35c-1.83,17.43-19.82,40.98-33.85,48.47 c-12.41,6.63-4.04,15.81,5.67,27.54c2.25,2.71,5.31,4.63,8.71,5.56c36.03,9.86,72.29,3.67,117.07-0.24 c63.66-5.56,128.2-9.37,192.24-9.37c40.42,0,77.19,6.26,116.25,8.72c14.64,0.92,18.65,8.12,19.48,21.33 c3.42,53.95,5.41,107.94,5.92,162c-2.35,135.4-9.45,270.35-37.89,403.3c-12.56,58.72-28.4,116.35-58.46,169.01 c-9.62,16.85-21.29,32-35.53,45.45c-9.21,8.7-18.62,11.37-30.87,9.98c-228.65-25.95-404.63-135.49-524.42-332.41 c-50.92-83.71-79.93-175.48-89.16-273.17c-15.4-162.99,21.7-312.84,113.89-448.48c81.68-120.17,191.53-204.21,327.48-255.08 c54.27-20.3,110.72-29.8,167.47-38.72c12.79-2.01,20.79,4.55,27.73,13.38c35.56,45.22,61.88,95.39,80.08,149.91 c10.37,31.06,16.71,63.14,24.17,94.93c4.2,17.89,2.54,19.64-15.91,18.77c-81.25-3.86-162.56-6.77-243.89-5.14 C722.29,498.54,637.81,506.46,552.28,516.35z"/>
+                <path class="st1" d="M1681.47,1015.48c-5.2,68.06-19.73,134.13-39.57,199c-23.67,77.35-58.2,149.98-100.7,218.83 c-29.07,47.02-63.08,90.05-100.7,130.56c-58.93,63.55-126.68,114.61-204.09,153.92c-48.33,24.56-167.72,58.88-177.06,58.88 c53.58-47.7,98.97-106.79,132.3-166.51c30.33-54.31,55.47-111.04,75.57-170.19c13.49-39.73,26.08-79.66,36.21-120.28 c16.85-67.59,29.91-136.02,37.47-205.45c8.55-78.66,13.54-157.49,11.44-236.57c-0.79-28.55-3.67-57.04-5.67-85.59 c-0.63-9.18,0.47-13.28,12.28-10.44c81.66,19.47,162.31,41.51,237.83,79.4c0.11,0.05,0.21,0.11,0.31,0.16 c9.55,4.88,19.36-5.88,13.64-15.01c-0.21-0.31-0.42-0.68-0.63-1.05c-13.8-23.3-28.34-39.78-38.89-64.81 c-8.66-20.62-10.18-26.92,6.35-41.41c4.78-4.25,8.92-9.87,4.78-15.69c-2.57-3.57-3.88-6.19-5.67-10.23 c-2.47-5.51-7.08-8.5-2.94-14.17c2.2-2.99,4.62-4.93,7.5-6.04c4.62-1.78,8.29-5.41,9.76-10.13c1.47-4.78,2.15-9.81,1.57-11.86 c-8.92-30.38-28.55-37.84-53.95-52.58c-58.41-34.06-122.22-55-186.51-74.57c-14.17-4.3-28.02-9.5-42.61-12.28 c-6.61-1.21-9.5-4.62-10.86-12.65c-10.71-61.29-24.45-121.43-53.89-177.53c-16.32-31.12-38.41-66.07-60.93-92.52 c10.92,3.2,21.62,6.72,32.17,10.55c0.11,0.05,0.21,0.11,0.37,0.16c3.25,1.47,6.4,2.89,9.39,3.99c9.13,3.46,18.21,6.98,27.18,10.65 c0.05,0.05,0.05,0.05,0.1,0.05c44.03,18,86.54,38.99,126.63,64.86c43.45,27.97,82.13,61.66,117.87,98.97 c51.69,53.95,90.52,116.03,122.27,183.46c24.3,51.69,40.25,105.8,51.17,161.16C1686.14,859.36,1687.45,937.24,1681.47,1015.48z"/>
+                </g>
+                    </g>
+                </svg>
+            </a>
+         </div>
+
+        <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-menu" id="main-nav" role="navigation" aria-label="Main navigation">
+            <ul class="nav-list">
+                <li class="has-dropdown">
+                    <a href="#" aria-haspopup="true" aria-expanded="false">
+                        ჩვენს შესახებ <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="about.html">ვინ ვართ ჩვენ</a></li>
+                        <li><a href="team.html">მსახურთა გუნდი</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-dropdown">
+                    <a href="#" aria-haspopup="true" aria-expanded="false">
+                        შემდეგი ნაბიჯი <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="new-here.html">მე ახალი ვარ აქ</a></li>
+                        <li><a href="next-steps.html">რა არის შემდეგი ნაბიჯი</a></li>
+                        <li><a href="registration.html">რეგისტრაცია</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-dropdown">
+                    <a href="#" aria-haspopup="true" aria-expanded="false">
+                        მსახურებები <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="family-groups.html">საოჯახო ჯგუფები</a></li>
+                        <li><a href="youth.html">ახალგაზრდული</a></li>
+                        <li><a href="kids.html">ბავშვები</a></li>
+                        <li><a href="consultation.html">კონსულტაცია</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-dropdown">
+                    <a href="#" aria-haspopup="true" aria-expanded="false">
+                        რესურსები <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="sermons.html">ქადაგებები</a></li>
+                        <li><a href="https://holybible.ge/geo/bible/%E1%83%90%E1%83%AE%E1%83%90%E1%83%9A%E1%83%98-%E1%83%92%E1%83%90%E1%83%93%E1%83%90%E1%83%9B%E1%83%A3%E1%83%A8%E1%83%90%E1%83%95%E1%83%94%E1%83%91%E1%83%A3%E1%83%9B%E1%83%A5-%E1%83%92%E1%83%9B%E1%83%9D%E1%83%AA%E1%83%9B%E1%83%90-2015/1/0/0/0/1" target="_blank" rel="noopener noreferrer">ონლაინ ბიბლია</a></li>
+                        <li><a href="https://live.bible.is/bible/KATGNT/MAT/1" target="_blank" rel="noopener noreferrer">აუდიო ბიბლია</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="contact.html">დაგვიკავშირდი</a></li>
+                <li class="nav-give-item"><a href="give.html" class="btn-nav-give">გაეცი</a></li>
+            </ul>
+
+            <div class="mobile-socials">
+                <a href="https://www.facebook.com/efchurchofkutaisi" class="fb-icon" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/efckyouth/" class="insta-icon" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@EFC-Kutaisi" class="yt-icon" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </nav>
+
+        <div class="header-socials" aria-label="სოციალური ქსელები">
+            <a href="https://www.facebook.com/efchurchofkutaisi" class="fb-icon" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/efckyouth/" class="insta-icon" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.youtube.com/@EFC-Kutaisi" class="yt-icon" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+
+<main role="main">
+
+        <section class="hero-section" style="height: 45vh; min-height: 350px;" aria-label="Page banner">
+            <div class="hero-overlay" aria-hidden="true"></div>
+            <div class="hero-content">
+                <h1>რა არის შემდეგი ნაბიჯი?</h1>
+                <p class="cursive-text">შენი გზამკვლევი სულიერი ზრდისა და ერთობისკენ</p>
+            </div>
+        </section>
+
+        <section class="section-padding-sm" style="background-color: #ffffff; text-align: center;">
+            <div style="width: 100%; max-width: 850px; margin: 0 auto; padding: 0 20px; box-sizing: border-box;">
+                <span class="grid-uppertitle" style="color: #aa954f; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem;">გაიზარდე ჩვენთან ერთად</span>
+                <h2 style="font-family: 'Playfair Display', serif; font-weight: 300; font-size: 2.6rem; margin-top: 5px; margin-bottom: 15px; color: #111;">აღმოაჩინე შენი ადგილი</h2>
+                <p style="width: 100%; box-sizing: border-box; color: #555; line-height: 1.7; font-size: 1.05rem; font-family: 'Montserrat', sans-serif; font-weight: 400; max-width: 700px; margin: 0 auto;">
+                    ეკლესიაში მოსვლა მხოლოდ დასაწყისია. ჩვენ გვსურს, რომ დაგეხმაროთ ქრისტესთან უფრო ღრმა ურთიერთობის ჩამოყალიბებაში, ახალი მეგობრების შეძენასა და თქვენი ნიჭის აღმოჩენაში. აი 3 მარტივი ნაბიჯი, რომელსაც შეგიძლიათ მიჰყვეთ:
+                </p>
+            </div>
+        </section>
+
+        <section class="section-padding-md" style="background-color: #ffffff;">
+            <div class="steps-container">
+                <div class="steps-grid">
+                    
+                    <div class="next-step-card card-gold scroll-reveal">
+                        <div class="card-bg-number">01</div>
+                        <div class="card-content-wrapper">
+                            <span class="card-step-label">საფეხური 1</span>
+                            <h3 class="card-title">კვირა დილა</h3>
+                            <p class="card-description">
+                                საუკეთესო გზა ჩვენი საზოგადოების გასაცნობად კვირა დღის მსახურებაზე დასწრებაა. ეს არის დრო, როდესაც ჩვენ ერთად ვიკრიბებით საერთო თაყვანისცემისთვის, მუსიკისთვის, ბიბლიური, პრაქტიკული სწავლების მოსასმენად და ერთმანეთთან საზიარებლად.
+                            </p>
+                        </div>
+                        <div class="card-action-wrapper">
+                            <a href="new-here.html" class="card-link">
+                                რას ველოდო კვირას <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="next-step-card card-dark scroll-reveal">
+                        <div class="card-bg-number">02</div>
+                        <div class="card-content-wrapper">
+                            <span class="card-step-label">საფეხური 2</span>
+                            <h3 class="card-title">საოჯახო ჯგუფები</h3>
+                            <p class="card-description">
+                                ეკლესია იზრდება დიდ დარბაზში, მაგრამ ნამდვილი მეგობრობა და ურთიერთობები პატარა ჯგუფებში ყალიბდება. საოჯახო ჯგუფები არის მყუდრო, არაფორმალური შეხვედრები სახლებში კვირის განმავლობაში, სადაც ერთად განვიხილავთ ქადაგებებს და ვლოცულობთ.
+                            </p>
+                        </div>
+                        <div class="card-action-wrapper">
+                            <a href="family-groups.html" class="card-link">
+                                იპოვე შენი წრე <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="next-step-card card-gold scroll-reveal">
+                        <div class="card-bg-number">03</div>
+                        <div class="card-content-wrapper">
+                            <span class="card-step-label">საფეხური 3</span>
+                            <h3 class="card-title">მოუსმინე და უყურე</h3>
+                            <p class="card-description">
+                                იხილეთ ჩვენი მედია არქივი, სადაც განთავსებულია წინა კვირების ქადაგებები, სულიერი გაკვეთილები და თაყვანისცემის ჩანაწერები, რომლებიც დაგეხმარებათ ყოველდღიურ სულიერ ცხოვრებაში.
+                            </p>
+                        </div>
+                        <div class="card-action-wrapper">
+                            <a href="sermons.html" class="card-link">
+                                მედია არქივი <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+
+        
+
+    </main>
+
+<section class="contact-section" id="contact" aria-label="Contact and location">
+    <div class="contact-container">
+
+        <div class="contact-info-col">
+            <span class="contact-eyebrow">მოგვძებნეთ</span>
+            <h2 class="contact-heading">გვეწვიეთ ეკლესიაში</h2>
+            <p class="contact-intro">მოხარული ვიქნებით თქვენი სტუმრობით ამ კვირას. ჩვენი კარები ყოველთვის ღიაა — მობრძანდით თქვენს ოჯახთან ერთად და შეიგრძენით ჩვენი საზოგადოება.</p>
+
+            <div class="contact-block">
+                <div class="contact-icon-wrap" aria-hidden="true">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="contact-block-text">
+                    <p class="contact-label">ფიზიკური მისამართი</p>
+                    <a
+                        href="https://maps.app.goo.gl/vRDFyab5jMPhwHNh7"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="contact-address-link"
+                        aria-label="Open address in Google Maps"
+                    >
+                        მესხის ქ. 42<br>ქუთაისი, საქართველო
+                        <i class="fa-solid fa-arrow-up-right-from-square contact-ext-icon" aria-hidden="true"></i>
+                    </a>
+                    <p class="contact-sub">ქუთაისის სახარების რწმენის ეკლესია</p>
+                </div>
+            </div>
+
+            <div class="contact-block">
+                <div class="contact-icon-wrap" aria-hidden="true">
+                    <i class="fa-regular fa-envelope"></i>
+                </div>
+                <div class="contact-block-text">
+                    <p class="contact-label">ელ-ფოსტა</p>
+                    <a href="mailto:info@efckutaisi.ge" style="text-decoration: none; color: #ffffff; font-weight: 500; font-family: 'Montserrat', sans-serif;">info@efckutaisi.ge</a>
+                </div>
+            </div>
+
+            <div class="contact-block">
+                <div class="contact-icon-wrap" aria-hidden="true">
+                    <i class="fa-regular fa-clock"></i>
+                </div>
+                <div class="contact-block-text">
+                    <p class="contact-label">მსახურების განრიგი</p>
+                    <table class="hours-table" aria-label="Weekly service schedule">
+                        <tbody>
+                            <tr>
+                                <td class="hours-day">კვირა</td>
+                                <td class="hours-time">11:00 – საკვირაო ღვთისმსახურება</td>
+                            </tr>
+                            <tr>
+                                <td class="hours-day">შაბათი</td>
+                                <td class="hours-time">16:00 – ახალგაზრდული მსახურება</td>
+                            </tr>
+                            <tr>
+                                <td class="hours-day">ოთხშაბათი</td>
+                                <td class="hours-time">19:00 – საოჯახო ჯგუფები</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <a href="contact.html" class="btn btn-contact-cta">
+                <i class="fa-regular fa-envelope" aria-hidden="true"></i>  მოგვწერეთ შეტყობინება
+            </a>
+        </div>
+
+        <div class="contact-map-col">
+            <div class="map-wrapper" role="region" aria-label="Interactive map">
+                <div class="map-overlay" title="Click to interact with the map" aria-hidden="true"></div>
+                <iframe
+                    class="contact-map-iframe"
+                    src="https://maps.google.com/maps?q=Evangelical+Faith+Church,+Kutaisi&output=embed"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="ქუთაისის სახარების რწმენის ეკლესია"
+                ></iframe>
+            </div>
+            <p class="map-hint">
+                <i class="fa-solid fa-hand-pointer" aria-hidden="true"></i>
+                <span class="hint-text">დააკლიკეთ რუკაზე ინტერაქტივისთვის</span>
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<div class="minimal-copyright-strip">
+    <p>© 2026 სახარების რწმენის ეკლესია – ქუთაისი. ყველა უფლება დაცულია.</p>
+</div>
+
+<button class="back-to-top" aria-label="ზემოთ ასვლა" title="ზემოთ ასვლა">
+    <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+</button>
+
+<script src="../script.js"></script>
+<script src="../sanity-fetch.js"></script>
+
+
+
+<script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // 1. სუფთა ამოცურვის ანიმაცია (Scroll Reveal)
+            const revealElements = document.querySelectorAll('.scroll-reveal');
+            
+            if ('IntersectionObserver' in window) {
+                const revealObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, idx) => {
+                        if (entry.isIntersecting) {
+                            // დახვეწილი ინტერვალი (Staggered Effect)
+                            setTimeout(() => {
+                                entry.target.classList.add('is-visible');
+                            }, idx * 120);
+                            revealObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.05, rootMargin: "0px 0px -30px 0px" });
+
+                revealElements.forEach(el => revealObserver.observe(el));
+            } else {
+                revealElements.forEach(el => el.classList.add('is-visible'));
+            }
+
+
+            // 2. ულტრა-მინიმალისტური 3D Tilt ანიმაცია (მაქსიმალურად დასტაბილურებული)
+            const tiltCards = document.querySelectorAll('.next-step-card');
+            
+            tiltCards.forEach(card => {
+                let ticking = false;
+
+                card.addEventListener('mousemove', (e) => {
+                    if (!ticking) {
+                        window.requestAnimationFrame(() => {
+                            const rect = card.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const y = e.clientY - rect.top;
+                            
+                            const centerX = rect.width / 2;
+                            const centerY = rect.height / 2;
+                            
+                            // კოეფიციენტი ჩამოყვანილია 1 გრადუსამდე სრული სიმყარისთვის
+                            const rotateX = ((centerY - y) / centerY) * 1;
+                            const rotateY = ((x - centerX) / centerX) * 1;
+
+                            // translateY ჩამოვიდა 0.5px-მდე (ნახევარი პიქსელი), რომ ფაქტობრივად არ აიწიოს
+                            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-0.5px) translateZ(2px)`;
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    window.requestAnimationFrame(() => {
+                        card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0px) translateZ(0px)';
+                    });
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

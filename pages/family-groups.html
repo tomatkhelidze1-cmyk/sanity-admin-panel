@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="საოჯახო ჯგუფები – სახარების რწმენის ეკლესია – ქუთაისი">
+    <title>საოჯახო ჯგუფები – სახარების რწმენის ეკლესია</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Noto+Sans+Georgian:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/svg+xml" href="../pages/images/logo.svg">
+    <style>/* სექციების შიდა დაშორებები */
+        .section-padding-md {
+            padding: 60px 0;
+        }
+
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; }
+
+        /* ბიბლიური ციტატის ბლოკი (Acts 2:42) */
+        .scripture-quote {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            border-left: 3px solid #aa954f;
+            background-color: #fdfbf7;
+            border-radius: 0 8px 8px 0;
+            text-align: left;
+        }
+
+        .scripture-text {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .scripture-ref {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #aa954f;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* საოჯახო ჯგუფების ქარდების Grid სისტემა */
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .group-card {
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #f3eedf;
+            box-shadow: 0 10px 30px rgba(170, 149, 79, 0.02);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .group-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(170, 149, 79, 0.07);
+        }
+
+        .group-image-wrap {
+            height: 240px;
+            position: relative;
+            background-color: #ebdcd0;
+            overflow: hidden;
+        }
+
+        .group-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .group-card:hover .group-image-wrap img {
+            transform: scale(1.03);
+        }
+
+        .group-badge {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            background: #aa954f;
+            color: #fff;
+            padding: 6px 14px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+        }
+
+        .group-card-content {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .group-leaders {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #111;
+            margin: 0 0 10px 0;
+        }
+
+        .group-meta-info {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .group-meta-info i {
+            color: #aa954f;
+            width: 16px;
+        }
+
+        .group-meta-info a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .group-meta-info a:hover {
+            color: #aa954f;
+        }
+
+        .group-excerpt {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.92rem;
+            color: #555;
+            line-height: 1.6;
+            margin: 0 0 20px 0;
+            text-align: left;
+        }
+
+        .group-action-btn {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #aa954f;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* -----------------------------------------
+            მოდალური ფანჯრის სტილები (Pop-up Modal)
+        ----------------------------------------- */
+        .group-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(17, 11, 6, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .group-modal.modal-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content-box {
+            background: #fdfbf7;
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
+            border-radius: 12px;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.15);
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+            border: 1px solid #f3eedf;
+        }
+
+        .group-modal.modal-active .modal-content-box {
+            transform: translateY(0);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e1d8bf;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            color: #222;
+        }
+
+        .modal-close-btn:hover {
+            background: #aa954f;
+            color: #fff;
+            border-color: #aa954f;
+        }
+
+        .modal-hero-image {
+            height: 280px;
+            width: 100%;
+            object-fit: cover;
+            background-color: #ebdcd0;
+        }
+
+        .modal-body {
+            padding: 40px;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #111;
+            margin: 0 0 15px 0;
+        }
+
+        .modal-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #f3eedf;
+            margin-bottom: 25px;
+        }
+
+        .modal-info-item {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.92rem;
+            color: #444;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: left;
+        }
+
+        .clickable-address-wrapper {
+            text-decoration: none;
+            color: #444;
+            transition: color 0.2s ease;
+        }
+        
+        .clickable-address-wrapper:hover {
+            color: #aa954f;
+        }
+
+        .modal-info-item span {
+            font-weight: 600;
+            color: #aa954f;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .modal-description-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.98rem;
+            color: #555;
+            line-height: 1.75;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .modal-footer-action {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-modal-cta {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 14px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-modal-primary {
+            background-color: #aa954f;
+            color: #ffffff;
+        }
+
+        .btn-modal-primary:hover {
+            background-color: #8e7a3d;
+        }
+
+        .btn-modal-secondary {
+            border: 1px solid #e5dcbf;
+            background-color: #ffffff;
+            color: #222;
+        }
+
+        .btn-modal-secondary:hover {
+            background-color: #fdfbf7;
+            border-color: #aa954f;
+        }
+
+        /* -----------------------------------------
+            საკუთარი (ინლაინ) სარეგისტრაციო ფორმა
+        ----------------------------------------- */
+        .inline-register-form {
+            display: none;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #f3eedf;
+            margin-top: 20px;
+            text-align: left;
+            position: relative;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #aa954f;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e1d8bf;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.92rem;
+            box-sizing: border-box;
+            background: #fdfbf7;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #aa954f;
+            background: #ffffff;
+        }
+
+        /* 🌟 წითელი შეცდომის შეტყობინების სტილი ვალიდაციისთვის */
+        .error-message {
+            display: none;
+            color: #ea4335;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            margin-top: 5px;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .form-submit-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        /* 21-ე საუკუნის თანამედროვე შეტყობინების სტილი */
+        .success-toast {
+            display: none;
+            background: #eef9f1;
+            border: 1px solid #34a853;
+            color: #1e4620;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            animation: fadeInSimple 0.4s ease-out;
+        }
+
+        .success-toast i {
+            color: #34a853;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .success-toast h4 {
+            margin: 0 0 4px 0;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .success-toast p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #445e46;
+        }
+
+        @keyframes fadeInSimple {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .modal-details-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .modal-body {
+                padding: 25px;
+            }
+            .modal-footer-action, .form-submit-row {
+                flex-direction: column;
+            }
+            .btn-modal-cta {
+                justify-content: center;
+            }
+        }</style>
+</head>
+<body>
+
+<header class="main-header" role="banner">
+    <div class="header-container">
+        <div class="logo">
+            <a href="../index.html" aria-label="ქუთაისის სახარების რწმენის ეკლესია – მთავარი">
+                <svg width="70" height="70" viewBox="0 0 2000 2000" fill="none" aria-hidden="true">
+                    <style type="text/css">
+                        .st0{fill:#FFFFFF;}
+                        .st1{fill:#aa954f;}
+                    </style>
+                <g>
+                    <path class="st0" d="M1672.23,926.58c-206.24,393.27-239.98,698.69-612.89,850.09c-31.49-62.97-26.24-52.48-104.96-204.66 c-116.66-225.55-229.28-626.85-573.16-721.26c57.88-323.21,219.04-627.43,620.55-627.43c65.81,0,126.42,8.87,182.05,25.35 c10.92,3.2,21.62,6.72,32.17,10.55c0.11,0.05,0.21,0.11,0.37,0.16c12.44,4.46,24.66,9.39,36.58,14.64c0.05,0.05,0.05,0.05,0.1,0.05 C1493.13,380.5,1626.42,640.95,1672.23,926.58z"/>
+                    <g>
+                <path class="st1" d="M552.28,516.35 c-22.01,6.94,58.25,27.32,65.95,48.44c1.68,4.6,11.86,23.28-4.91,38.72c-4.07,3.75-6.57,20.36-4.6,27.27 c1.71,6.01,18,15.95,23.66,17.09c27.67,5.58,32.04,23.99,31.05,33.35c-1.83,17.43-19.82,40.98-33.85,48.47 c-12.41,6.63-4.04,15.81,5.67,27.54c2.25,2.71,5.31,4.63,8.71,5.56c36.03,9.86,72.29,3.67,117.07-0.24 c63.66-5.56,128.2-9.37,192.24-9.37c40.42,0,77.19,6.26,116.25,8.72c14.64,0.92,18.65,8.12,19.48,21.33 c3.42,53.95,5.41,107.94,5.92,162c-2.35,135.4-9.45,270.35-37.89,403.3c-12.56,58.72-28.4,116.35-58.46,169.01 c-9.62,16.85-21.29,32-35.53,45.45c-9.21,8.7-18.62,11.37-30.87,9.98c-228.65-25.95-404.63-135.49-524.42-332.41 c-50.92-83.71-79.93-175.48-89.16-273.17c-15.4-162.99,21.7-312.84,113.89-448.48c81.68-120.17,191.53-204.21,327.48-255.08 c54.27-20.3,110.72-29.8,167.47-38.72c12.79-2.01,20.79,4.55,27.73,13.38c35.56,45.22,61.88,95.39,80.08,149.91 c10.37,31.06,16.71,63.14,24.17,94.93c4.2,17.89,2.54,19.64-15.91,18.77c-81.25-3.86-162.56-6.77-243.89-5.14 C722.29,498.54,637.81,506.46,552.28,516.35z"/>
+                <path class="st1" d="M1681.47,1015.48c-5.2,68.06-19.73,134.13-39.57,199c-23.67,77.35-58.2,149.98-100.7,218.83 c-29.07,47.02-63.08,90.05-100.7,130.56c-58.93,63.55-126.68,114.61-204.09,153.92c-48.33,24.56-167.72,58.88-177.06,58.88 c53.58-47.7,98.97-106.79,132.3-166.51c30.33-54.31,55.47-111.04,75.57-170.19c13.49-39.73,26.08-79.66,36.21-120.28 c16.85-67.59,29.91-136.02,37.47-205.45c8.55-78.66,13.54-157.49,11.44-236.57c-0.79-28.55-3.67-57.04-5.67-85.59 c-0.63-9.18,0.47-13.28,12.28-10.44c81.66,19.47,162.31,41.51,237.83,79.4c0.11,0.05,0.21,0.11,0.31,0.16 c9.55,4.88,19.36-5.88,13.64-15.01c-0.21-0.31-0.42-0.68-0.63-1.05c-13.8-23.3-28.34-39.78-38.89-64.81 c-8.66-20.62-10.18-26.92,6.35-41.41c4.78-4.25,8.92-9.87,4.78-15.69c-2.57-3.57-3.88-6.19-5.67-10.23 c-2.47-5.51-7.08-8.5-2.94-14.17c2.2-2.99,4.62-4.93,7.5-6.04c4.62-1.78,8.29-5.41,9.76-10.13c1.47-4.78,2.15-9.81,1.57-11.86 c-8.92-30.38-28.55-37.84-53.95-52.58c-58.41-34.06-122.22-55-186.51-74.57c-14.17-4.3-28.02-9.5-42.61-12.28 c-6.61-1.21-9.5-4.62-10.86-12.65c-10.71-61.29-24.45-121.43-53.89-177.53c-16.32-31.12-38.41-66.07-60.93-92.52 c10.92,3.2,21.62,6.72,32.17,10.55c0.11,0.05,0.21,0.11,0.37,0.16c3.25,1.47,6.4,2.89,9.39,3.99c9.13,3.46,18.21,6.98,27.18,10.65 c0.05,0.05,0.05,0.05,0.1,0.05c44.03,18,86.54,38.99,126.63,64.86c43.45,27.97,82.13,61.66,117.87,98.97 c51.69,53.95,90.52,116.03,122.27,183.46c24.3,51.69,40.25,105.8,51.17,161.16C1686.14,859.36,1687.45,937.24,1681.47,1015.48z"/>
+                </g>
+                    </g>
+                </svg>
+            </a>
+         </div>
+
+        <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-menu" id="main-nav" role="navigation" aria-label="Main navigation">
+            <ul class="nav-list">
+                <li class="has-dropdown">
+                    <a href="#" aria-haspopup="true" aria-expanded="false">
+                        ჩვენს შესახებ <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="about.html">ვინ ვართ ჩვენ</a></li>
+                        <li><a href="team.html">მსახურთა გუნდი</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-dropdown">
+                    <a href="#" aria-haspopup="true" aria-expanded="false">
+                        შემდეგი ნაბიჯი <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="new-here.html">მე ახალი ვარ აქ</a></li>
+                        <li><a href="next-steps.html">რა არის შემდეგი ნაბიჯი</a></li>
+                        <li><a href="registration.html">რეგისტრაცია</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-dropdown">
+                    <a href="#" aria-haspopup="true" aria-expanded="false">
+                        მსახურებები <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="family-groups.html">საოჯახო ჯგუფები</a></li>
+                        <li><a href="youth.html">ახალგაზრდული</a></li>
+                        <li><a href="kids.html">ბავშვები</a></li>
+                        <li><a href="consultation.html">კონსულტაცია</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-dropdown">
+                    <a href="#" aria-haspopup="true" aria-expanded="false">
+                        რესურსები <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="sermons.html">ქადაგებები</a></li>
+                        <li><a href="https://holybible.ge/geo/bible/%E1%83%90%E1%83%AE%E1%83%90%E1%83%9A%E1%83%98-%E1%83%92%E1%83%90%E1%83%93%E1%83%90%E1%83%9B%E1%83%A3%E1%83%A8%E1%83%90%E1%83%95%E1%83%94%E1%83%91%E1%83%A3%E1%83%9B%E1%83%A5-%E1%83%92%E1%83%9B%E1%83%9D%E1%83%AA%E1%83%9B%E1%83%90-2015/1/0/0/0/1" target="_blank" rel="noopener noreferrer">ონლაინ ბიბლია</a></li>
+                        <li><a href="https://live.bible.is/bible/KATGNT/MAT/1" target="_blank" rel="noopener noreferrer">აუდიო ბიბლია</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="contact.html">დაგვიკავშირდი</a></li>
+                <li class="nav-give-item"><a href="give.html" class="btn-nav-give">გაეცი</a></li>
+            </ul>
+
+            <div class="mobile-socials">
+                <a href="https://www.facebook.com/efchurchofkutaisi" class="fb-icon" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/efckyouth/" class="insta-icon" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@EFC-Kutaisi" class="yt-icon" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </nav>
+
+        <div class="header-socials" aria-label="სოციალური ქსელები">
+            <a href="https://www.facebook.com/efchurchofkutaisi" class="fb-icon" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/efckyouth/" class="insta-icon" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.youtube.com/@EFC-Kutaisi" class="yt-icon" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+
+<main role="main">
+
+        <section class="hero-section" style="height: 45vh; min-height: 350px;" aria-label="Page banner">
+            <div class="hero-overlay" aria-hidden="true"></div>
+            <div class="hero-content">
+                <h1>საოჯახო ჯგუფები</h1>
+                <p class="cursive-text">ადგილი, სადაც ურთიერთობები ღრმავდება</p>
+            </div>
+        </section>
+
+        <section class="section-padding-md" style="background-color: #ffffff; text-align: center;">
+            <div class="container">
+                <span class="grid-uppertitle" style="color: #aa954f; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem;">ცხოვრება ერთად</span>
+                <h2 style="font-family: 'Playfair Display', serif; font-weight: 300; font-size: 2.5rem; margin-top: 5px; margin-bottom: 20px; color: #111;">რატომ საოჯახო ჯგუფები?</h2>
+                <p style="width: 100%; box-sizing: border-box; color: #555; line-height: 1.75; font-size: 1.05rem; font-family: 'Montserrat', sans-serif; font-weight: 400; max-width: 800px; margin: 0 auto;">
+                    კვირა დღის მსახურება დიდ დარბაზში შესანიშნავი დროა ერთობლივი თაყვანისცემისთვის, ზეიმისთვისა და ღვთის სიტყვის მოსასმენად. თუმცა, ნამდვილი, ღრმა მეგობრობა და სულიერი ზრდა პატარა წრეში ყალიბდება. ჩვენი საოჯახო ჯგუფები (Life Groups) არის $10\text{-}15$ ადამიანისგან შემდგარი მყუდრო გაერთიანებები, რომლებიც კვირის განმავლობაში სხვადასხვა სახლში იკრიბებიან, რათა პრაქტიკულად გამოიყენონ ბიბლიური პრინციპები.
+                </p>
+
+                <blockquote class="scripture-quote">
+                    <p class="scripture-text">
+                        „და ისინი ერთგულნი იყვნენ მოციქულთა მოძღვრებისა, ზიარებისა, პურის გატეხისა და ლოცვისა... ტეხდნენ პურს სახლებში, სიხარულითა და გულის სიმარტივით იღებდნენ საზრდოს...“
+                    </p>
+                    <cite class="scripture-ref">საქმეები 2:42,46</cite>
+                </blockquote>
+            </div>
+        </section>
+
+        <section class="section-padding-md" style="background-color: #faf8f5;">
+            <div class="container">
+                <div class="groups-grid">
+
+                    <div class="group-card scroll-reveal" data-group-id="1">
+                        <div class="group-image-wrap">
+                            <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=cover&w=600&q=80" alt="ვაკისუბანი (პასილოკი)">
+                            <span class="group-badge">ოთხშაბათი</span>
+                        </div>
+                        <div class="group-card-content">
+                            <h3 class="group-leaders">ვაკისუბანი (პასილოკი)</h3>
+                            <div class="group-meta-info">
+                                <i class="fa-solid fa-user"></i> საბა ჭანკვეტაზე
+                            </div>
+                            <div class="group-meta-info">
+                                <i class="fa-regular fa-clock"></i> ოთხშაბათი, 17:00 საათი
+                            </div>
+                            <div class="group-meta-info">
+                                <a href="https://maps.google.com/?q=Vakisubani+Kutaisi" target="_blank" rel="noopener noreferrer">
+                                    <i class="fa-solid fa-location-dot"></i> მისამართი (ნახვა რუკაზე)
+                                </a>
+                            </div>
+                            <p class="group-excerpt">სიღრმისეული ბიბლიური კვლევისა და თეოლოგიური საკითხების პრაქტიკული განხილვის ჯგუფი მყუდრო გარემოში.</p>
+                            <span class="group-action-btn">დეტალების ნახვა <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="group-card scroll-reveal" data-group-id="2">
+                        <div class="group-image-wrap">
+                            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=cover&w=600&q=80" alt="ნიკეა">
+                            <span class="group-badge">ოთხშაბათი</span>
+                        </div>
+                        <div class="group-card-content">
+                            <h3 class="group-leaders">ნიკეა</h3>
+                            <div class="group-meta-info">
+                                <i class="fa-solid fa-user"></i> მარინა მიქაძა
+                            </div>
+                            <div class="group-meta-info">
+                                <i class="fa-regular fa-clock"></i> ოთხშაბათი, 17:00 საათი
+                            </div>
+                            <div class="group-meta-info">
+                                <a href="https://maps.google.com/?q=Nikea+St+Kutaisi" target="_blank" rel="noopener noreferrer">
+                                    <i class="fa-solid fa-location-dot"></i> მისამართი (ნახვა რუკაზე)
+                                </a>
+                            </div>
+                            <p class="group-excerpt">მშობლებისა და ზრდასრულების ჯგუფი, რომელიც განსაკუთრებულ ყურადღებას უთმობს ოჯახურ ლოცვასა და თანადგომას.</p>
+                            <span class="group-action-btn">დეტალების ნახვა <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="group-card scroll-reveal" data-group-id="3">
+                        <div class="group-image-wrap">
+                            <img src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=cover&w=600&q=80" alt="კახიანოური (პლაშატკა - ახალგაზრდობის გამზირი)">
+                            <span class="group-badge">ოთხშაბათი</span>
+                        </div>
+                        <div class="group-card-content">
+                            <h3 class="group-leaders">კახიანოური (პლაშატკა - ახალგაზრდობის გამზირი)</h3>
+                            <div class="group-meta-info">
+                                <i class="fa-solid fa-user"></i> ტარიელ მუზაევი
+                            </div>
+                            <div class="group-meta-info">
+                                <i class="fa-regular fa-clock"></i> ოთხშაბათი, 17:00 საათი
+                            </div>
+                            <div class="group-meta-info">
+                                <a href="https://maps.google.com/?q=Akhalgazrdoba+Ave+Kutaisi" target="_blank" rel="noopener noreferrer">
+                                    <i class="fa-solid fa-location-dot"></i> მისამართი (ნახვა რუკაზე)
+                                </a>
+                            </div>
+                            <p class="group-excerpt">სპეციალური ქალთა საოჯახო ჯგუფი, რომელიც ორიენტირებულია სულიერ მეგობრობაზე, ბიბლიის კითხვასა და საერთო ლოცვებზე.</p>
+                            <span class="group-action-btn">დეტალების ნახვა <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="group-card scroll-reveal" data-group-id="4">
+                        <div class="group-image-wrap">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=cover&w=800&q=80" alt="აღმაშენებელი">
+                            <span class="group-badge">ოთხშაბათი</span>
+                        </div>
+                        <div class="group-card-content">
+                            <h3 class="group-leaders">აღმაშენებელი</h3>
+                            <div class="group-meta-info">
+                                <i class="fa-solid fa-user"></i> ლარისა ლობოვი
+                            </div>
+                            <div class="group-meta-info">
+                                <i class="fa-regular fa-clock"></i> ოთხშაბათი, 17:00 საათი
+                            </div>
+                            <div class="group-meta-info">
+                                <a href="https://maps.google.com/?q=Nikea+St+Kutaisi" target="_blank" rel="noopener noreferrer">
+                                    <i class="fa-solid fa-location-dot"></i> მისამართი (ნახვა რუკაზე)
+                                </a>
+                            </div>
+                            <p class="group-excerpt">სტუდენტებისა და ახალგაზრდა პროფესიონალების დინამიკური ჯგუფი, აქტუალური თემებისა და რწმენის განსახილველად.</p>
+                            <span class="group-action-btn">დეტალების ნახვა <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="group-card scroll-reveal" data-group-id="5">
+                        <div class="group-image-wrap">
+                            <img src="https://images.unsplash.com/photo-1516796181074-bf453fbfa3e6?auto=format&fit=cover&w=600&q=80" alt="წერეთლის ქუჩა">
+                            <span class="group-badge">ოთხშაბათი</span>
+                        </div>
+                        <div class="group-card-content">
+                            <h3 class="group-leaders">წერეთლის ქუჩა</h3>
+                            <div class="group-meta-info">
+                                <i class="fa-solid fa-user"></i> ნინო ცნობილაძე
+                            </div>
+                            <div class="group-meta-info">
+                                <i class="fa-regular fa-clock"></i> ოთხშაბათი, 17:00 საათი
+                            </div>
+                            <div class="group-meta-info">
+                                <a href="https://maps.google.com/?q=Tsereteli+St+Kutaisi" target="_blank" rel="noopener noreferrer">
+                                    <i class="fa-solid fa-location-dot"></i> მისამართი (ნახვა რუკაზე)
+                                </a>
+                            </div>
+                            <p class="group-excerpt">უფროსი თაობის მყუდრო ჯგუფი, სადაც ხდება მდიდარი ცხოვრებისეული გამოცდილების გაზიარება და ბიბლიური სწავლება.</p>
+                            <span class="group-action-btn">დეტალების ნახვა <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="group-card scroll-reveal" data-group-id="6">
+                        <div class="group-image-wrap">
+                            <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=cover&w=800&q=80" alt="ჭავჭავაძის ქუჩა.">
+                            <span class="group-badge">ოთხშაბათი</span>
+                        </div>
+                        <div class="group-card-content">
+                            <h3 class="group-leaders">ჭავჭავაძის ქუჩა.</h3>
+                            <div class="group-meta-info">
+                                <i class="fa-solid fa-user"></i> რომეო შალამბერიძე
+                            </div>
+                            <div class="group-meta-info">
+                                <i class="fa-regular fa-clock"></i> ოთხშაბათი, 17:00 საათი
+                            </div>
+                            <div class="group-meta-info">
+                                <a href="https://maps.google.com/?q=Chavchavadze+St+Kutaisi" target="_blank" rel="noopener noreferrer">
+                                    <i class="fa-solid fa-location-dot"></i> მისამართი (ნახვა რუკაზე)
+                                </a>
+                            </div>
+                            <p class="group-excerpt">ახალგაზრდა ოჯახებისა და წყვილების ჯგუფი, რომლებიც ორიენტირებულნი არიან ყოველდღიურ ცხოვრებაში ბიბლიის გამოყენებაზე.</p>
+                            <span class="group-action-btn">დეტალების ნახვა <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        
+
+    </main>
+
+    <div class="group-modal" id="groupModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content-box">
+            <button class="modal-close-btn" id="closeModal" aria-label="ფანჯრის დახურვა">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <img src="" alt="ჯგუფის ფოტო" class="modal-hero-image" id="modalImage">
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle">ხელმძღვანელების სახელი</h2>
+                
+                <div class="modal-details-grid">
+                    <div class="modal-info-item">
+                        <span>შეხვედრის დრო</span>
+                        <div id="modalTime"><i class="fa-regular fa-clock"></i> ოთხშაბათი, 19:00</div>
+                    </div>
+                    <div class="modal-info-item">
+                        <span>ჯგუფის ხელმძღვანელი</span>
+                        <div id="modalLeader"><i class="fa-solid fa-user"></i> რომეო შალამბერიძე</div>
+                    </div>
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="clickable-address-wrapper" id="modalLocationWrap">
+                        <div class="modal-info-item">
+                            <span>მისამართი (ნახვა რუკაზე)</span>
+                            <div id="modalLocation"><i class="fa-solid fa-location-dot"></i> ქუთაისი, საქართველო</div>
+                        </div>
+                    </a>
+                </div>
+
+                <p class="modal-description-text" id="modalDescription">აქ გამოჩნდება სრული ტექსტი.</p>
+
+                <div class="modal-footer-action" id="modalDefaultActions">
+                    <button class="btn-modal-cta btn-modal-primary" id="startJoinProcess">ამ ჯგუფში გაწევრიანება</button>
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="btn-modal-cta btn-modal-secondary" id="modalMapLink">
+                        <i class="fa-solid fa-map-location-dot"></i> რუკაზე ნახვა
+                    </a>
+                </div>
+
+                <div class="inline-register-form" id="registerFormBlock">
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #111; margin: 0 0 15px 0; border-bottom: 1px solid #f3eedf; padding-bottom: 8px;">ჯგუფში რეგისტრაცია</h3>
+                    
+                    <form id="groupRegisterForm">
+                        <input type="hidden" id="hiddenLeaderInput" name="entry.1880814093" value="">
+
+                        <div class="form-group">
+                            <label for="regName">სახელი და გვარი *</label>
+                            <input type="text" id="regName" name="entry.1959320102" required placeholder="მაგ: გიორგი კაპანაძე">
+                        </div>
+                        <div class="form-group">
+                            <label for="regPhone">ტელეფონის ნომერი *</label>
+                            <input type="tel" id="regPhone" name="entry.785890127" required placeholder="მაგ: 599XXXYYY">
+                            <div class="error-message" id="phoneError">
+                                <i class="fa-solid fa-circle-exclamation"></i> შეიყვანეთ ვალიდური ტელეფონის ნომერი (მაგ: 599123456)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="regEmail">ელ-ფოსტა *</label>
+                            <input type="email" id="regEmail" name="entry.901083088" required placeholder="მაგ: example@gmail.com">
+                        </div>
+                        
+                        <div class="form-submit-row">
+                            <button type="submit" class="btn-modal-cta btn-modal-primary" style="flex: 2;">განაცხადის გაგზავნა</button>
+                            <button type="button" class="btn-modal-cta btn-modal-secondary" id="cancelRegister" style="flex: 1;">უკან</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="success-toast" id="successToast">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <h4>რეგისტრაცია წარმატებით შესრულდა!</h4>
+                    <p>თქვენი განაცხადი მიღებულია ცხრილში, მალე დაგიკავშირდებიან.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<section class="contact-section" id="contact" aria-label="Contact and location">
+    <div class="contact-container">
+
+        <div class="contact-info-col">
+            <span class="contact-eyebrow">მოგვძებნეთ</span>
+            <h2 class="contact-heading">გვეწვიეთ ეკლესიაში</h2>
+            <p class="contact-intro">მოხარული ვიქნებით თქვენი სტუმრობით ამ კვირას. ჩვენი კარები ყოველთვის ღიაა — მობრძანდით თქვენს ოჯახთან ერთად და შეიგრძენით ჩვენი საზოგადოება.</p>
+
+            <div class="contact-block">
+                <div class="contact-icon-wrap" aria-hidden="true">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="contact-block-text">
+                    <p class="contact-label">ფიზიკური მისამართი</p>
+                    <a
+                        href="https://maps.app.goo.gl/vRDFyab5jMPhwHNh7"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="contact-address-link"
+                        aria-label="Open address in Google Maps"
+                    >
+                        მესხის ქ. 42<br>ქუთაისი, საქართველო
+                        <i class="fa-solid fa-arrow-up-right-from-square contact-ext-icon" aria-hidden="true"></i>
+                    </a>
+                    <p class="contact-sub">ქუთაისის სახარების რწმენის ეკლესია</p>
+                </div>
+            </div>
+
+            <div class="contact-block">
+                <div class="contact-icon-wrap" aria-hidden="true">
+                    <i class="fa-regular fa-envelope"></i>
+                </div>
+                <div class="contact-block-text">
+                    <p class="contact-label">ელ-ფოსტა</p>
+                    <a href="mailto:info@efckutaisi.ge" style="text-decoration: none; color: #ffffff; font-weight: 500; font-family: 'Montserrat', sans-serif;">info@efckutaisi.ge</a>
+                </div>
+            </div>
+
+            <div class="contact-block">
+                <div class="contact-icon-wrap" aria-hidden="true">
+                    <i class="fa-regular fa-clock"></i>
+                </div>
+                <div class="contact-block-text">
+                    <p class="contact-label">მსახურების განრიგი</p>
+                    <table class="hours-table" aria-label="Weekly service schedule">
+                        <tbody>
+                            <tr>
+                                <td class="hours-day">კვირა</td>
+                                <td class="hours-time">11:00 – საკვირაო ღვთისმსახურება</td>
+                            </tr>
+                            <tr>
+                                <td class="hours-day">შაბათი</td>
+                                <td class="hours-time">16:00 – ახალგაზრდული მსახურება</td>
+                            </tr>
+                            <tr>
+                                <td class="hours-day">ოთხშაბათი</td>
+                                <td class="hours-time">19:00 – საოჯახო ჯგუფები</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <a href="contact.html" class="btn btn-contact-cta">
+                <i class="fa-regular fa-envelope" aria-hidden="true"></i>  მოგვწერეთ შეტყობინება
+            </a>
+        </div>
+
+        <div class="contact-map-col">
+            <div class="map-wrapper" role="region" aria-label="Interactive map">
+                <div class="map-overlay" title="Click to interact with the map" aria-hidden="true"></div>
+                <iframe
+                    class="contact-map-iframe"
+                    src="https://maps.google.com/maps?q=Evangelical+Faith+Church,+Kutaisi&output=embed"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="ქუთაისის სახარების რწმენის ეკლესია"
+                ></iframe>
+            </div>
+            <p class="map-hint">
+                <i class="fa-solid fa-hand-pointer" aria-hidden="true"></i>
+                <span class="hint-text">დააკლიკეთ რუკაზე ინტერაქტივისთვის</span>
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<div class="minimal-copyright-strip">
+    <p>© 2026 სახარების რწმენის ეკლესია – ქუთაისი. ყველა უფლება დაცულია.</p>
+</div>
+
+<button class="back-to-top" aria-label="ზემოთ ასვლა" title="ზემოთ ასვლა">
+    <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+</button>
+
+<script src="../script.js"></script>
+<script src="../sanity-fetch.js"></script>
+
+
+
+<script>
+        const groupsData = {
+            1: { title: "ვაკისუბანი (პასილოკი)", leader: "საბა ჭანკვეტაზე", formLeader: "საბა ჭანკვეტაძე", time: "ყოველ ოთხშაბათს, 17:00 სთ", location: "ვაკისუბანი (პასილოკი), ქუთაისი", type: "სიღრმისეული ბიბლიური კვლევა", image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=cover&w=800&q=80", description: "ჩვენი ჯგუფის ფოკუსი წმინდა წერილის სიღრმისეული ანალიზია. ჩვენ თავს ვუძღვნით ბიბლიური წიგნების თავ-თავად შესწავლას, ისტორიული კონტექსტების გააზრებას და ერთმანეთისთვის კითხვების დასმას.", map: "https://maps.google.com/?q=Vakisubani+Kutaisi" },
+            2: { title: "ნიკეა", leader: "მარინა მიქაძა", formLeader: "მარინა მიქაძე", time: "ყოველ ოთხშაბათს, 17:00 სთ", location: "ნიკეას ქუჩა, ქუთაისი", type: "ზრდასრულები და მშობლები", image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=cover&w=600&q=80", description: "ჩვენი კარი ღიაა ყველასთვის, განსაკუთრებით კი იმ მშობლებისთვის, ვისაც სურს შვილების ქრისტიანული პრინციპებით აღზრდა. შეხვედრებზე ვსაუბრობთ ყოველდღიურ გამოწვევებზე და ვუზიარებთ ერთმანეთს გამოცდილებას.", map: "https://maps.google.com/?q=Nikea+St+Kutaisi" },
+            3: { title: "კახიანოური (პლაშატკა - ახალგაზრდობის გამზირი)", leader: "ტარიელ მუზაევი", formLeader: "ტარიელ მუზაევი", time: "ყოველ ოთხშაბათს, 17:00 სთ", location: "ახალგაზრდობის გამზირი, ქუთაისი", type: "მხოლოდ ქალების მსახურება", image: "https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=cover&w=600&q=80", description: "ეს არის სპეციალიზებული ქალთა ჯგუფი. ჩვენ ერთად განვიხილავთ ბიბლიაში არსებულ ქალთა პერსონაჟებს, ვლოცულობთ ჩვენი ოჯახებისთვის, შვილებისთვის და ერთმანეთისთვის. გარემო არის უკიდურესად თბილი.", map: "https://maps.google.com/?q=Akhalgazrdoba+Ave+Kutaisi" },
+            4: { title: "აღმაშენებელი", leader: "ლარისა ლობოვი", formLeader: "ლარისა ლობოვი", time: "ყოველ ოთხშაბათს, 17:00 სთ", location: "აღმაშენებლის გამზირი, ქუთაისი", type: "სტუდენტები და ახალგაზრდა პროფესიონალები", image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=cover&w=800&q=80", description: "აქტიური, ახალგაზრდული და ენერგიული ჯგუფი! ჩვენ ერთად ვეძებთ პასუხებს თანამედროვე სამყაროსა და კულტურაში არსებულ რთულ კითხვებზე ქრისტიანული მსოფლმხედველობიდან გამომდინარე.", map: "https://maps.google.com/?q=Nikea+St+Kutaisi" },
+            5: { title: "წერეთლის ქუჩა", leader: "ნინო ცნობილაძე", formLeader: "ნინო ცნობილაძე", time: "ყოველ ოთხშაბათს, 17:00 სთ", location: "წერეთლის ქუჩა, ქუთაისი", type: "უფროსი თაობა (Senior Fellowship)", image: "https://images.unsplash.com/photo-1516796181074-bf453fbfa3e6?auto=format&fit=cover&w=800&q=80", description: "ჩვენს ჯგუფს აქვს მრავალწლიანი ცხოვრებისეული და სულიერი გამოცდილების ბაზისი. ჩვენ ერთად ვგალობთ, ვკითხულობთ წმინდა წერილს და ვცდილობთ ვიყოთ მენტორები ეკლესიის ახალგაზრდა თაობებისთვის.", map: "https://maps.google.com/?q=Tsereteli+St+Kutaisi" },
+            6: { title: "ჭავჭავაძის ქუჩა.", leader: "რომეო შალამბერიძე", formLeader: "რომეო შალამბერიძე", time: "ყოველ ოთხშაბათს, 17:00 სთ", location: "ჭავჭავაძის ქუჩა, ქუთაისი", type: "ახალგაზრდა ოჯახები და წყვილები", image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=cover&w=800&q=80", description: "კეთილი იყოს თქვენი მობრძანება ჩვენს ჯგუფში! ჩვენ ძირითადად ვიკრიბებით ახალგაზრდა წყვილები. შეხვედრა იწყება მსუბუქი ვახშმით და ყავით, რის შემდეგაც გადავდივართ კვირა დღის ქადაგების პრაქტიკულ განხილვაზე.", map: "https://maps.google.com/?q=Chavchavadze+St+Kutaisi" }
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("groupModal");
+            const closeModalBtn = document.getElementById("closeModal");
+            const cards = document.querySelectorAll(".group-card");
+
+            const mTitle = document.getElementById("modalTitle");
+            const mImage = document.getElementById("modalImage");
+            const mTime = document.getElementById("modalTime");
+            const mLoc = document.getElementById("modalLocation");
+            const mLocWrap = document.getElementById("modalLocationWrap");
+            const mDesc = document.getElementById("modalDescription");
+            const mMap = document.getElementById("modalMapLink");
+            
+            const defaultActions = document.getElementById("modalDefaultActions");
+            const registerFormBlock = document.getElementById("registerFormBlock");
+            const startJoinBtn = document.getElementById("startJoinProcess");
+            const cancelRegBtn = document.getElementById("cancelRegister");
+            const regForm = document.getElementById("groupRegisterForm");
+            const hiddenLeaderInput = document.getElementById("hiddenLeaderInput");
+            const successToast = document.getElementById("successToast");
+            
+            // ვალიდაციის ელემენტები
+            const phoneInput = document.getElementById("regPhone");
+            const phoneError = document.getElementById("phoneError");
+
+            let currentLeaderName = "";
+
+            cards.forEach(card => {
+                card.addEventListener("click", (e) => {
+                    // თუ დაკლიკება მოხდა რუკის ბმულზე, არ გავხსნათ მოდალი
+                    if (e.target.closest("a")) {
+                        return;
+                    }
+                    const id = card.getAttribute("data-group-id");
+                    const data = groupsData[id];
+
+                    if (data) {
+                        currentLeaderName = data.formLeader || data.leader;
+                        mTitle.textContent = data.title;
+                        mImage.src = data.image;
+                        mImage.alt = data.title;
+                        mTime.innerHTML = `<i class="fa-regular fa-clock"></i> ${data.time}`;
+                        document.getElementById("modalLeader").innerHTML = `<i class="fa-solid fa-user"></i> ${data.leader}`;
+                        mLoc.innerHTML = `<i class="fa-solid fa-location-dot"></i> ${data.location}`;
+                        
+                        mLocWrap.href = data.map;
+                        mMap.href = data.map;
+                        
+                        mDesc.textContent = data.description;
+
+                        registerFormBlock.style.display = "none";
+                        successToast.style.display = "none";
+                        phoneError.style.display = "none";
+                        defaultActions.style.display = "flex";
+                        regForm.reset();
+
+                        modal.classList.add("modal-active");
+                        document.body.style.overflow = "hidden";
+                    }
+                });
+            });
+
+            startJoinBtn.addEventListener("click", () => {
+                defaultActions.style.display = "none";
+                registerFormBlock.style.display = "block";
+                
+                hiddenLeaderInput.value = currentLeaderName;
+                document.getElementById("regName").value = ""; 
+                phoneError.style.display = "none";
+
+                registerFormBlock.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            cancelRegBtn.addEventListener("click", () => {
+                registerFormBlock.style.display = "none";
+                defaultActions.style.display = "flex";
+            });
+
+            // 🌟 ფორმის გაგზავნა მკაცრი ტელეფონის ვალიდაციით (Fetch API)
+            regForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                
+                const phoneValue = phoneInput.value.trim();
+                
+                // რეგულარული გამოსახულება (Regex): ამოწმებს იწყება თუ არა 5-იანით და შედგება თუ არა ზუსტად 9 ციფრისგან (ტექსტის გარეშე)
+                const phoneRegex = /^5\d{8}$/;
+
+                if (!phoneRegex.test(phoneValue)) {
+                    phoneError.style.display = "flex"; // ვაჩენთ წითელ შეტყობინებას
+                    phoneInput.focus();
+                    return; // აჩერებს რეგისტრაციის პროცესს
+                } else {
+                    phoneError.style.display = "none"; // თუ სწორია, ვმალავთ შეცდომას
+                }
+
+                submitted = true;
+                
+                const formData = new FormData();
+                formData.append('entry.1880814093', hiddenLeaderInput.value);
+                formData.append('entry.1959320102', document.getElementById("regName").value);
+                formData.append('entry.785890127', phoneValue);
+                formData.append('entry.901083088', document.getElementById("regEmail").value);
+
+                fetch('https://docs.google.com/forms/d/e/1FAIpQLSdU2vt9BH5w3d8Czz0Z_zZrbWtChZGg8dwkoAiuAJWX2iEsrA/formResponse', {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors'
+                })
+                .then(() => {
+                    registerFormBlock.style.display = "none";
+                    successToast.style.display = "block";
+                    
+                    setTimeout(() => {
+                        modal.classList.remove("modal-active");
+                        document.body.style.overflow = "";
+                        regForm.reset();
+                        successToast.style.display = "none";
+                    }, 2500);
+                })
+                .catch(err => {
+                    console.error('Ошибка:', err);
+                    alert("ხარვეზი მონაცემთა გადაცემისას. სცადეთ მოგვიანებით.");
+                });
+            });
+
+            closeModalBtn.addEventListener("click", () => { modal.classList.remove("modal-active"); document.body.style.overflow = ""; });
+            modal.addEventListener("click", (e) => { if (e.target === modal) { modal.classList.remove("modal-active"); document.body.style.overflow = ""; } });
+            document.addEventListener("keydown", (e) => { if (e.key === "Escape" && modal.classList.contains("modal-active")) { modal.classList.remove("modal-active"); document.body.style.overflow = ""; } });
+
+            if ('IntersectionObserver' in window) {
+                const revealObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, idx) => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                entry.target.style.opacity = "1";
+                                entry.target.style.transform = "translateY(0)";
+                            }, idx * 100);
+                            revealObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.05 });
+
+                document.querySelectorAll(".scroll-reveal").forEach(el => {
+                    el.style.opacity = "0";
+                    el.style.transform = "translateY(20px)";
+                    el.style.transition = "opacity 0.6s ease-out, transform 0.6s ease-out";
+                    revealObserver.observe(el);
+                });
+            } else {
+                document.querySelectorAll(".scroll-reveal").forEach(el => {
+                    el.style.opacity = "1";
+                    el.style.transform = "translateY(0)";
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

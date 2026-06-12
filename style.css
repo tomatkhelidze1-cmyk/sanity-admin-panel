@@ -1,0 +1,2052 @@
+/* ==========================================================================
+   FONTS & RESET & BASE
+   ========================================================================== */
+@font-face {
+    font-family: 'MersadBold';
+    /* 🌟 GitHub-ისთვის უფრო უსაფრთხოა გამოტოვებული ადგილის ნაცვლად %20-ის ჩაწერა */
+    src: url('fonts/Mersad%20Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BPGNinoMtavruliBold';
+    src: url('fonts/bpg_nino_mtavruli_bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* ==========================================================================
+   🌟 ყველა სპეციფიკური ქვესათაურის ფონტის იძულებითი შეცვლა bpg_nino_mtavruli
+   ========================================================================== */
+
+/* 🎯 სათაურების სრული ფიქსი - დაცულია გაწელვისგან, გადადის ხაზებზე და იკუმშება ავტომატურად */
+.hero-content h1, 
+.page-header h1, 
+.page-header h2, 
+.internal-hero h1, 
+.internal-hero h2 {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+    white-space: normal !important;      /* 🌟 აუქმებს გაჭედვის ეფექტს და ტექსტს ჩამოშლის უფლებას აძლევს */
+    text-align: center !important;       /* 🌟 ინარჩუნებს იდეალურ ცენტრირებას */
+    line-height: 1.25 !important;        /* 🌟 სათაურებს შორის იდეალური ვერტიკალური დაშორება */
+    
+    /* 🌟 ფლუიდური ზომა: ხელით გაწერილი 100px-ის ნაცვლად, კომპიუტერზე იქნება დიდი, */
+    /* ხოლო ეკრანის შემცირებასთან ერთად რბილად დაპატარავდება ტაბლეტის ზომამდე */
+    font-size: clamp(1.8rem, 4.5vw, 3.2rem) !important; 
+}
+
+.hero-content .btn-hero {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+    font-size: 18px !important;
+}
+
+.welcome-text-block .subtitle, 
+.gold-subtitle, 
+.grid-uppertitle, 
+.contact-eyebrow, 
+.contact-label {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+    font-size: 16px !important;
+    letter-spacing: 5px !important;
+}
+
+/* Apply Mtavruli font exclusively to the navigation links */
+.nav-list a, 
+.dropdown-menu a, 
+.btn-nav-give {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+    font-size: 18px !important;
+    white-space: nowrap !important;
+    padding: 10px 8px !important; /* 🌟 მჭიდრო პედინგი, რომ 18px ზომაზე მენიუს ლინკები ხაზიდან არ ჩამოვარდეს */
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --gold:        #aa954f;
+    --gold-light:  #c9b26a;
+    --gold-dim:    rgba(170, 149, 79, 0.25);
+    --dark-900:    #111111;
+    --dark-800:    #1a1a1a;
+    --dark-700:    #222222;
+    --dark-600:    #333333;
+    --dark-400:    #444444;
+    --text-muted:  #cccccc;
+    --text-soft:   #555555;
+    --white:       #ffffff;
+    --bg-light:    #fafafa;
+    --radius-md:   12px;
+    --radius-lg:   16px;
+    --shadow-md:   0 20px 45px rgba(0,0,0,0.35);
+    --shadow-lg:   0 30px 60px rgba(0,0,0,0.45);
+    --transition:  0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    scroll-behavior: smooth;
+}
+
+html {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    scroll-padding-top: 250px;
+    background-color: var(--dark-900) !important; /* Premium dark background behind the transparent scrollbar track */
+}
+
+body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+/* 🌟 standard scrollbar properties ONLY for browsers that do NOT support webkit-scrollbar (like Firefox) */
+@supports not selector(::-webkit-scrollbar) {
+    html {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(170, 149, 79, 0.45) var(--dark-900);
+    }
+}
+
+/* 🌟 Ultra-Refined Modern Minimalist Scrollbar for WebKit browsers (Chrome, Edge, Safari, Opera) */
+::-webkit-scrollbar {
+    width: 10px; /* Thinner for elegance but readable */
+    height: 10px; /* Horizontal scrollbar height */
+}
+::-webkit-scrollbar-track {
+    background: transparent; /* Transparent track for floating pill effect */
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(170, 149, 79, 0.45); /* Subtle semi-transparent gold */
+    border-radius: 20px; /* Fully rounded capsule pill */
+    border: 2px solid transparent; /* Padding around the thumb */
+    background-clip: padding-box; /* Makes the border transparent */
+    transition: background-color 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #aa954f; /* Solid gold on hover */
+}
+
+
+/* 🌟 Georgian text wrap insurance to prevent overflow on mobile */
+p, span, h1, h2, h3, h4, h5, h6, a, li, blockquote, td, th {
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    word-break: break-word;
+}
+
+body {
+    font-family: 'MersadBold', 'Noto Sans Georgian', 'Montserrat', sans-serif; /* 🌟 პირველ ადგილზე ვსვამთ მერსადს */
+    background-color: var(--bg-light);
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 🌟 ვავალდებულებთ ყველა სათაურს (H2-ის გარდა), ღილაკსა და ინპუტს, რომ მერსადი გამოიყენონ */
+h1, h3, h4, h5, h6, .btn, button, input, select, textarea {
+    font-family: 'MersadBold', 'Noto Sans Georgian', sans-serif !important;
+}
+
+/* 🌟 გლობალური ცვლილება სპეციალურად საიტის ყველა H2 სათაურისთვის */
+h2 {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+/* Enforce fluid widths globally on all main sections, wrappers, and containers */
+.header-container,
+.welcome-banner.floating-banner,
+.building-container,
+.info-grid-container,
+.contact-container,
+.responsive-two-col,
+.give-split-layout,
+.team-asymmetric-layout,
+.events-grid,
+.series-grid,
+.sermons-grid,
+.steps-grid,
+.container,
+.steps-container,
+.sermons-container,
+.registration-container,
+.player-wrapper {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* 📱 დამატებითი მიკრო-კორექცია სპეციალურად პატარა მობილური ტელეფონებისთვის (768px-ზე ქვემოთ) */
+@media (max-width: 768px) {
+    .hero-content h1, 
+    .page-header h1, 
+    .internal-hero h1 {
+        /* ტელეფონზე სათაურები კიდევ უფრო იკუმშება, რომ ეკრანიდან არ გავარდეს */
+        font-size: clamp(1.4rem, 6vw, 1.9rem) !important; 
+    }
+}
+
+/* ==========================================================================
+   HEADER & DROPDOWN NAVIGATION (ოპტიმიზებული მარცხენა გასწორებით)
+   ========================================================================== */
+.main-header {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 20px 0;
+    transition: background var(--transition), padding var(--transition), box-shadow var(--transition);
+}
+
+.main-header.scrolled {
+    background: rgba(17, 17, 17, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 14px 0;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    gap: 20px;
+}
+
+.logo a {
+    display: inline-block;
+    text-decoration: none;
+    line-height: 0;
+    transition: opacity 0.3s;
+}
+.logo a:hover { opacity: 0.8; }
+.dropdown-menu {
+    /* ... სხვა კოდი უცვლელია ... */
+    min-width: 270px; /* 240-ის ნაცვლად ვზრდით 270-მდე, რომ გრძელი ტექსტი ჩაეტიოს */
+}
+
+/* ნავ სიის სტილები */
+.nav-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-list > li {
+    position: relative;
+    margin: 0 4px;
+}
+
+.nav-list a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    transition: color 0.3s;
+}
+.dropdown-menu a:hover {
+    color: var(--gold);
+    background: rgba(255, 255, 255, 0.05);
+    padding-left: 18px;
+    white-space: nowrap; /* უკრძალავს ტექსტს მომდევნო ხაზზე გადასვლას */
+}
+
+.nav-list > li > a::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 14px;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width var(--transition);
+}
+
+.nav-list > li:hover > a {
+    color: var(--gold);
+}
+
+.nav-list > li:hover > a::after {
+    width: calc(100% - 28px);
+}
+
+/* სპეციალური "გაეცი" ღილაკი ნავბარში */
+.nav-give-item {
+    margin-left: 12px !important;
+}
+
+.btn-nav-give {
+    background: var(--gold) !important;
+    color: var(--dark-900) !important;
+    border-radius: 4px;
+    
+    /* 🌟 ხელით ვასწორებთ ბალანსს: ზემოდან ვზრდით, ქვემოდან ვაკლებთ */
+    padding-top: 10px !important;
+    padding-bottom: 5px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    
+    font-weight: 700 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    box-shadow: 0 4px 10px rgba(170, 149, 79, 0.25);
+    transition: transform 0.2s, background 0.3s !important;
+}
+
+.btn-nav-give:hover {
+    background: var(--gold-light) !important;
+    transform: translateY(-1px);
+}
+
+.btn-nav-give::after {
+    display: none !important;
+}
+
+/* Dropdown ქვე-მენიუების ახალი სტილები დესკტოპზე */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: translateY(15px);
+    background: rgba(20, 20, 20, 0.98);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-top: 3px solid var(--gold);
+    min-width: 240px;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    padding: 12px 0;
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+}
+
+.dropdown-menu li {
+    width: 100%;
+}
+
+.dropdown-menu a {
+    color: rgba(255, 255, 255, 0.85);
+    text-transform: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 20px 10px 14px;
+    display: block;
+    width: 100%;
+    transition: all 0.25s ease;
+}
+
+.dropdown-menu a:hover {
+    color: var(--gold);
+    background: rgba(255, 255, 255, 0.05);
+    padding-left: 18px;
+}
+
+/* Dropdown-ის გამოჩენა Hover-ზე დესკტოპზე */
+@media (min-width: 769px) {
+    .has-dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   HEADER SOCIALS (სოც. მედიის ხატულების ფიქსი - ხაზებისა და წერტილების გარეშე)
+   ========================================================================== */
+.header-socials {
+    display: flex;
+    align-items: center;
+}
+
+.header-socials a {
+    color: var(--white);
+    margin-left: 18px;
+    font-size: 17px;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.header-socials a::before,
+.header-socials a::after {
+    content: none !important;
+    display: none !important;
+}
+
+.header-socials a.fb-icon:hover    { color: #1877f2; transform: scale(1.15); }
+.header-socials a.insta-icon:hover { color: #e1306c; transform: scale(1.15); }
+.header-socials a.yt-icon:hover    { color: #ff0000; transform: scale(1.15); }
+
+/* მობილური ჰამბურგერი */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1100;
+}
+.hamburger span {
+    display: block;
+    width: 26px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: var(--transition);
+}
+.hamburger.active span:nth-child(1) { transform: translateY(7px)  rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ==========================================================================
+   HERO სექცია
+   ========================================================================== */
+.hero-section {
+    height: 100vh;
+    min-height: 600px;
+    background: url('https://picsum.photos/1920/1080?random=5') center/cover no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 118px 20px 36px;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(17,17,17,0.88) 100%);
+}
+
+.hero-content {
+    position: relative;
+    color: var(--white);
+    width: min(100%, 1100px);
+    max-height: 100%;
+    padding: 0 20px;
+    z-index: 1;
+    overflow-wrap: anywhere;
+}
+
+.hero-content h1 {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+    white-space: normal !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+    font-size: clamp(2.2rem, 6vw, 4.8rem) !important;
+}
+
+.cursive-text {
+    font-family: 'Playfair Display', 'Noto Sans Georgian', serif;
+    font-style: italic;
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    color: #e2d7b5;
+    margin-bottom: 40px;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 992px) {
+    /* ეს წაშლის მთლიან ლურჯ სექციას (ქადაგებასაც და კვირის განრიგსაც ერთად) */
+    body.hide-sermon-page .sidebar-content-wrapper {
+        display: none !important;
+    }
+}
+
+.btn-hero {
+    border: 2px solid var(--white);
+    color: var(--white);
+    background: transparent;
+    padding: 15px 40px;
+    letter-spacing: 3px;
+    font-size: 13px;
+    border-radius: 4px;
+}
+.btn-hero:hover {
+    background: var(--white);
+    color: var(--dark-900);
+}
+
+/* ==========================================================================
+   საერთო ღილაკები
+   ========================================================================== */
+.btn {
+    display: inline-block;
+    padding: 13px 28px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 6px;
+    transition: all var(--transition);
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background: var(--dark-900);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.btn-secondary:hover {
+    background: var(--white);
+    color: var(--dark-900);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+
+.btn-outline {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    
+    /* 🌟 ასიმეტრიული კორექცია: ზემოდან ვუმატებთ სივრცეს, ქვემოდან ვაკლებთ */
+    padding-top: 18px !important;
+    padding-bottom: 12px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    
+    font-size: 16px !important;      /* 🌟 მთავრული ფონტისთვის 14px ზომა იდეალურად ჯდება */
+    line-height: 1 !important;        /* 🌟 უჯდება ფონტის შიდა ზომას, რომ არ აცურდეს */
+    display: inline-flex !important;  /* 🌟 აქცევს ბლოკს ფლექსად მათემატიკური ცენტრირებისთვის */
+    align-items: center !important;
+    justify-content: center !important;
+    letter-spacing: 1px;
+}
+.btn-outline:hover {
+    background: var(--gold);
+    color: var(--white);
+    box-shadow: 0 10px 25px rgba(170, 149, 79, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-card {
+    border: 1px solid rgba(255,255,255,0.6);
+    color: var(--white);
+    background: transparent;
+    padding: 12px 26px;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+.btn-card {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+    
+    /* 🌟 ასიმეტრიული კორექცია: ზემოდან ვუმატებთ სივრცეს, ქვემოდან ვაკლებთ */
+    padding-top: 16px !important;
+    padding-bottom: 10px !important;
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+    
+    display: inline-flex !important;   /* 🌟 აქცევს ღილაკს ფლექს-კონტეინერად შიდა ცენტრირებისთვის */
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;         /* 🌟 აფიქსირებს ტექსტის შიდა სიმაღლეს */
+    font-size: 16px !important;        /* 🌟 მთავრული ფონტის იდეალური ზომა კარტის ღილაკებისთვის */
+}
+.btn-card:hover {
+    background: var(--white);
+    color: var(--dark-900);
+    border-color: var(--white);
+}
+
+/* ==========================================================================
+   WELCOME ბანერი (სრულად თეთრი ტექსტებით)
+   ========================================================================== */
+/* ==========================================================================
+   WELCOME BANNER (FONT INTEGRATED)
+   ========================================================================== */
+
+/* 1. ფონტის იზოლირებული რეგისტრაცია სპეციალურად ამ ბანერისთვის */
+@font-face {
+    font-family: 'MersadWelcome';
+    src: url('fonts/Mersad%20Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MersadWelcome';
+    src: url('fonts/Mersad%20Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+.welcome-banner.floating-banner {
+    background: rgba(170, 149, 79, 0.94);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    max-width: 1200px;
+    margin: -90px auto 0;
+    padding: 60px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    z-index: 10;
+    color: var(--white);
+
+    opacity: 0;
+    transform: translateY(40px);
+    pointer-events: none;
+    transition:
+        opacity   0.75s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* 🌟 ბაზისური ფონტი ბანერისთვის */
+    font-family: 'MersadWelcome', 'Noto Sans Georgian', sans-serif;
+}
+
+.welcome-banner.floating-banner.banner-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.welcome-container {
+    display: grid;
+    grid-template-columns: 1.2fr 1.8fr;
+    gap: 50px;
+    align-items: center;
+}
+
+/* 🌟 ტექსტური ბლოკები ახალი ფონტით */
+.welcome-text-block .subtitle {
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 700;
+    margin-bottom: 12px;
+   
+}
+.welcome-text-block h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: var(--white) !important;
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important; /* 🌟 მივანიჭეთ ახალი მთავრული ფონტი */
+    line-height: 1.2 !important;                               /* 🌟 აბალანსებს შიდა სიმაღლეს, რომ ტექსტი არ აცურდეს */
+}
+.welcome-text-block p {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    opacity: 0.95;
+    color: #ffffff !important;
+    font-family: 'MersadWelcome', 'Noto Sans Georgian', sans-serif !important;
+}
+
+/* ბანერის შიდა ღილაკი "ახალი ხართ აქ?" */
+.welcome-text-block .btn {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+    font-size: 16px !important;
+}
+
+/* საათების განლაგება */
+.schedule-grid {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.schedule-item {
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+.schedule-item:hover { transform: translateY(-6px); }
+
+.clock-wrap {
+    color: var(--white);
+    width: 64px;
+    height: 64px;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+    transition: transform 0.3s, filter 0.3s;
+}
+.schedule-item:hover .clock-wrap {
+    transform: scale(1.1);
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
+}
+
+.clock-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* 🌟 საათების ტექსტები ახალი ფონტით */
+.schedule-item h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--white) !important;
+    line-height: 1;
+    font-family: 'MersadWelcome', 'Noto Sans Georgian', sans-serif !important;
+}
+
+.schedule-day {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--white) !important;
+    letter-spacing: 1px;
+    opacity: 0.95;
+    font-family: 'MersadWelcome', 'Noto Sans Georgian', sans-serif !important;
+}
+
+.schedule-label {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75) !important;
+    margin-top: 2px;
+    font-family: 'MersadWelcome', 'Noto Sans Georgian', sans-serif !important;
+}
+
+/* ==========================================================================
+   ეკლესიის მშენებლობის სექცია
+   ========================================================================== */
+.building-section {
+    background: radial-gradient(circle at 50% 30%, var(--dark-700) 0%, var(--dark-800) 100%);
+    color: var(--white);
+    text-align: center;
+    padding: 100px 20px 80px;
+}
+
+.building-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.building-video-wrap {
+    width: 100%;
+    max-width: 650px;
+    margin: -50px auto 40px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    line-height: 0;
+}
+
+.building-video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    display: block;
+    object-fit: cover;
+    border: none;
+    outline: none;
+}
+
+.gold-subtitle {
+    color: var(--gold);
+    letter-spacing: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.building-section h2 {
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.building-text p {
+    color: #cdcdcd;
+    font-size: 1.05rem;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.building-video-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    transform: scale(1.0);
+}
+
+/* ==========================================================================
+   კარუსელ სლაიდერი
+   ========================================================================== */
+.slider-container.floating-slider {
+    margin-top: 0;
+    padding-bottom: 80px;
+    position: relative;
+    z-index: 20;
+    overflow: hidden;
+    user-select: none;
+}
+
+.slider-track {
+    display: flex;
+    padding: 30px 10vw;
+    will-change: transform;
+    cursor: grab;
+}
+.slider-track:active {
+    cursor: grabbing;
+}
+
+.card-item {
+    flex: 0 0 350px;
+    height: 420px;
+    margin: 0 15px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.25s ease !important;
+    cursor: pointer;
+}
+.card-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
+    z-index: 1;
+    transition: background 0.4s ease;
+}
+@media (hover: hover) {
+    .card-item:hover {
+        transform: scale(1.03) !important;
+        box-shadow: var(--shadow-lg);
+    }
+    .card-item:hover::before {
+        background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.75) 100%);
+    }
+}
+
+.card-content {
+    position: relative;
+    z-index: 2;
+    color: var(--white);
+    text-align: center;
+    padding: 0 25px;
+    transition: transform 0.4s ease;
+}
+@media (hover: hover) {
+    .card-item:hover .card-content { transform: translateY(-5px); }
+}
+
+.card-content h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--white);
+    cursor: pointer;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease !important;
+    font-size: 18px;
+}
+.arrow-left  { left:  30px; }
+.arrow-right { right: 30px; }
+.slider-arrow:hover {
+    background: var(--white);
+    color: var(--dark-900);
+    box-shadow: 0 10px 30px rgba(255,255,255,0.15);
+    transform: translateY(-50%) scale(1.08);
+}
+
+/* ==========================================================================
+   INFO GRID
+   ========================================================================== */
+.info-grid-section {
+    padding: 100px 20px;
+    background: linear-gradient(to bottom, var(--bg-light) 0%, var(--white) 100%);
+    position: relative;
+    z-index: 2;
+}
+.info-grid-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 80px;
+    align-items: start;
+}
+.grid-uppertitle {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    display: block;
+    margin-bottom: 10px;
+}
+.left-column h2 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--dark-900);
+    line-height: 1.25;
+}
+.left-column p {
+    color: var(--text-soft);
+    margin-bottom: 20px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+.bullet-title {
+    font-size: 14px;
+    letter-spacing: 2px;
+    border-left: 3px solid var(--gold);
+    padding-left: 14px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: var(--dark-900);
+    text-transform: uppercase;
+}
+
+/* Global video responsive lock */
+iframe, video {
+    width: 100% !important;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+}
+
+/* Map exceptions to prevent scale issues */
+.contact-map-iframe,
+.large-map-iframe {
+    aspect-ratio: auto !important;
+    height: 100% !important;
+}
+
+/* Responsive video wrapper implementation */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    padding-top: 30px; 
+    height: 0; 
+    overflow: hidden;
+    width: 100%;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed,
+.video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.video-placeholder,
+.main-video-placeholder,
+.camp-video-placeholder {
+    background-color: #f0f0f0;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    color: var(--gold);
+    margin-bottom: 40px;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+.video-placeholder:hover,
+.main-video-placeholder:hover,
+.camp-video-placeholder:hover {
+    transform: scale(1.02);
+    background-color: #ede3c4;
+    color: var(--dark-900);
+}
+.week-schedule { padding: 0; }
+.week-schedule li {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 12px;
+    gap: 4px;
+}
+.week-schedule li strong { color: #222; font-size: 15px; }
+.week-schedule li span   { color: #777; font-size: 13px; }
+
+/* ==========================================================================
+   მისასალმებელი ვიდეო სექცია
+   ========================================================================== */
+.welcome-video-section {
+    background: radial-gradient(circle at 50% 50%, var(--gold-light) 0%, var(--gold) 100%);
+    color: var(--white);
+    text-align: center;
+    padding: 90px 20px;
+}
+.video-container-box { max-width: 750px; margin: 0 auto; }
+.main-video-placeholder {
+    background-color: var(--dark-900);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    font-size: 44px;
+    color: var(--white);
+    margin-bottom: 30px;
+    border-radius: var(--radius-md);
+}
+.welcome-video-section .cursive-text {
+    margin-top: 20px;
+    margin-bottom: 12px;
+    color: var(--dark-900);
+}
+.welcome-video-section p { color: rgba(0,0,0,0.7); font-size: 1.05rem; }
+
+/* ==========================================================================
+   კონტაქტი და რუკა
+   ========================================================================== */
+.contact-section {
+    background: var(--dark-800);
+    padding: 100px 20px;
+    border-top: 1px solid rgba(170, 149, 79, 0.2);
+}
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 70px;
+    align-items: start;
+}
+
+.contact-eyebrow {
+    display: inline-block;
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+.contact-heading {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important; /* 🌟 მივანიჭეთ ახალი მთავრული ფონტი */
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem) !important;       /* 🌟 ოდნავ დავაკორექტირეთ მაქსიმალური ზომა ფონტის სისქის გამო */
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 18px;
+    line-height: 1.3 !important;                               /* 🌟 აბალანსებს შიდა სიმაღლეს, რომ ასოები ზემოთ არ აიცუროს */
+}
+.contact-intro {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 40px;
+    max-width: 420px;
+}
+.contact-block {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    margin-bottom: 32px;
+}
+.contact-icon-wrap {
+    flex-shrink: 0;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: rgba(170, 149, 79, 0.12);
+    border: 1px solid rgba(170, 149, 79, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 16px;
+    margin-top: 2px;
+    transition: background 0.3s, transform 0.3s;
+}
+.contact-block:hover .contact-icon-wrap {
+    background: rgba(170, 149, 79, 0.22);
+    transform: scale(1.08);
+}
+.contact-block-text { flex: 1; }
+.contact-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+.contact-address-link {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    text-decoration: none;
+    line-height: 1.6;
+    transition: color 0.3s;
+}
+.contact-address-link:hover { color: var(--gold); }
+.contact-ext-icon {
+    font-size: 11px;
+    margin-left: 6px;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    vertical-align: middle;
+}
+.contact-sub { font-size: 13px; color: #888; margin-top: 6px; line-height: 1.5; }
+
+.hours-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+.hours-table tr { border-bottom: 1px solid rgba(255,255,255,0.07); }
+.hours-table tr:last-child { border-bottom: none; }
+.hours-day  { font-size: 13px; font-weight: 600; color: var(--white); padding: 8px 16px 8px 0; white-space: nowrap; width: 42%; }
+.hours-time { font-size: 13px; color: var(--text-muted); padding: 8px 0; }
+
+.btn-contact-cta {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    gap: 10px;
+    margin-top: 10px;
+    background: var(--gold);
+    color: var(--dark-900);
+    
+    /* 🌟 ვასწორებთ ღილაკის ბალანსს, რომ ხატულა დაბლა აღარ ჩაიძიროს */
+    padding-top: 15px !important;
+    padding-bottom: 13px !important;
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+    
+    font-size: 13px !important;
+    line-height: 1 !important;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    box-shadow: 0 8px 25px rgba(170, 149, 79, 0.25);
+}
+
+.btn-contact-cta i {
+    font-size: 15px !important; 
+    /* 🌟 მთავარი ფიქსი: ხატულას ხელით ვწევთ ზემოთ, რომ ტექსტის ხაზს იდეალურად გაუსწორდეს */
+    transform: translateY(-3px) !important; 
+}
+
+.btn-contact-cta:hover {
+    background: var(--gold-light);
+    /* 🌟 ჰოვერზე ვინარჩუნებთ translateY(-3px)-ს, რომ ანიმაციამ კოდი არ აურიოს */
+    transform: translateY(-3px) !important;
+    box-shadow: 0 14px 35px rgba(170, 149, 79, 0.4);
+}
+
+.contact-map-col { display: flex; flex-direction: column; gap: 12px; }
+
+.map-wrapper {
+    position: relative;
+    width: 100%; height: 480px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 25px 55px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.07);
+    background: var(--dark-700);
+}
+.contact-map-iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    border: none; display: block;
+}
+.map-overlay {
+    position: absolute;
+    inset: 0; z-index: 2;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.map-overlay:hover { background: rgba(170, 149, 79, 0.06); }
+.map-overlay.map-unlocked { pointer-events: none; background: transparent; }
+.map-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px; color: #666;
+    letter-spacing: 0.5px;
+    padding-left: 4px;
+    transition: color 0.3s;
+}
+.map-hint i { color: var(--gold); opacity: 0.6; font-size: 13px; }
+
+/* ==========================================================================
+   MINIMAL COPYRIGHT STRIP
+   ========================================================================== */
+.minimal-copyright-strip {
+    background: var(--dark-900);
+    padding: 24px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+.minimal-copyright-strip p {
+    font-size: 12px;
+    color: #666;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   BACK TO TOP
+   ========================================================================== */
+.back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--dark-900);
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px) scale(0.85);
+    transition:
+        opacity   0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        background 0.3s ease;
+    box-shadow: 0 6px 24px rgba(170, 149, 79, 0.45);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+.back-to-top:hover {
+    background: var(--gold-light);
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 0 12px 32px rgba(170, 149, 79, 0.55);
+}
+
+.back-to-top:active {
+    transform: scale(0.95);
+}
+
+/* ==========================================================================
+   RESPONSIVE TWO COLUMNS SYSTEM
+   ========================================================================== */
+.responsive-two-col {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 50px;
+    align-items: stretch;
+}
+
+@media (max-width: 991px) {
+    .responsive-two-col {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE (მობილური სექცია ხელუხლებელია, აკორდეონები მუშაობს გამართულად)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .welcome-banner.floating-banner { padding: 50px 40px; }
+    .info-grid-container { gap: 50px; }
+    .contact-container   { gap: 50px; }
+    .map-wrapper         { height: 420px; }
+}
+
+@media (max-width: 991px) {
+    .scroll-reveal:has(.camp-video-placeholder) {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+
+    .camp-video-placeholder {
+        display: flex !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        aspect-ratio: 16 / 9 !important;
+        height: auto !important;
+        min-height: 230px !important;
+        box-sizing: border-box !important;
+    }
+
+    .camp-video-placeholder .video-container {
+        width: 100% !important;
+        min-height: 230px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Forced Flex/Grid Collapse for Columns */
+    .welcome-container,
+    .info-grid-container,
+    .contact-container,
+    .responsive-two-col,
+    .give-split-layout,
+    .team-asymmetric-layout,
+    .events-grid,
+    .series-grid,
+    .sermons-grid,
+    .steps-grid,
+    .schedule-grid,
+    .container,
+    .steps-container,
+    .sermons-container,
+    .registration-container {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        gap: 30px !important;
+    }
+
+    /* Strict 100% Rule for Media */
+    .video-container, 
+    .video-container iframe,
+    .video-container video,
+    .camp-video-placeholder,
+    .camp-video-placeholder iframe,
+    .camp-video-placeholder video,
+    iframe, 
+    video, 
+    img {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .scroll-reveal:has(.camp-video-placeholder) {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+
+    .camp-video-placeholder {
+        aspect-ratio: 16 / 9 !important;
+        min-height: 210px !important;
+        height: auto !important;
+        margin-bottom: 0 !important;
+    }
+
+    .camp-video-placeholder .video-container {
+        min-height: 210px !important;
+    }
+
+    .nav-menu {
+        display: none;
+        position: fixed;
+        top: 0; right: 0;
+        width: 300px;
+        max-width: 100%;
+        height: 100vh;
+        background: rgba(17,17,17,0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 100px 30px 40px;
+        z-index: 1050;
+        transform: translateX(100%);
+        transition: transform var(--transition);
+        overflow-y: auto;
+    }
+    
+    .nav-menu.open { 
+        display: flex; 
+        transform: translateX(0); 
+    }
+    
+    .nav-list {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: 15px;
+    }
+    
+    .nav-list > li {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .nav-list a {
+        font-size: 17px;
+        padding: 10px 0;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .nav-list > li > a::after {
+        display: none;
+    }
+
+    /* მობილური ჩამოსაშლელი სტილი - ინარჩუნებს აკორდეონის ლოგიკას */
+    .dropdown-menu {
+        position: static;
+        transform: none !important;
+        opacity: 1;
+        visibility: visible;
+        display: none;
+        background: rgba(255, 255, 255, 0.03);
+        box-shadow: none;
+        border-top: none;
+        border-left: 2px solid var(--gold);
+        padding: 5px 0 5px 15px;
+        margin-top: 5px;
+        min-width: 100%;
+        border-radius: 4px;
+    }
+
+    .dropdown-menu a {
+        padding: 8px 10px;
+        color: rgba(255, 255, 255, 0.75);
+    }
+
+    .has-dropdown.dropdown-open .dropdown-menu {
+        display: block;
+    }
+
+    .has-dropdown.dropdown-open > a > i {
+        transform: rotate(180deg);
+        color: var(--gold);
+    }
+
+    .nav-give-item {
+        width: 100%;
+        margin-left: 0 !important;
+        margin-top: 15px;
+    }
+
+    .btn-nav-give {
+        text-align: center;
+        justify-content: center !important;
+        padding: 12px 0 !important;
+    }
+
+    .hamburger       { display: flex; }
+    .header-socials  { display: none; }
+    .hero-section {
+        height: 100svh;
+        min-height: 420px;
+        padding: 104px 18px 34px;
+    }
+
+    .hero-content {
+        padding: 0 10px;
+    }
+
+    /* 💻 კომპიუტერებისა და დიდ ეკრანებისთვის */
+.hero-content h1 {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+    font-size: clamp(2.2rem, 5vw, 3.5rem) !important; /* 🌟 ფლუიდური ზომა, რომელიც ეკრანს თავად ერგება */
+    white-space: nowrap !important;                  /* 🌟 კომპიუტერზე მკაცრად ერთ ხაზზე რჩება */
+    line-height: 1.2 !important;
+}
+
+/* 📱 მობილური ტელეფონებისა და ტაბლეტებისთვის (768px-ზე მცირე ეკრანები) */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: clamp(1.6rem, 7vw, 2.2rem) !important; /* 🌟 ტელეფონისთვის შესაბამისი კომპაქტური ზომა */
+        white-space: normal !important;                    /* 🌟 მობილურზე ტექსტი ლამაზად გადავა ორ ხაზზე */
+        text-align: center !important;                     /* 🌟 ინარჩუნებს მკაცრ ცენტრირებას */
+        display: block !important;
+    }
+}   
+
+    .cursive-text {
+        font-size: clamp(1.15rem, 5vw, 1.7rem);
+        margin-bottom: 24px;
+    }
+
+    .welcome-banner.floating-banner {
+        margin-top: -40px;
+        border-radius: 0;
+        padding: 40px 25px;
+    }
+    .welcome-container   { grid-template-columns: 1fr; gap: 35px; }
+    .schedule-grid       { justify-content: flex-start; gap: 25px; }
+    .building-video-wrap  { width: 85%; max-width: 340px; }
+    .slider-arrow        { display: none; }
+    .card-item           { flex: 0 0 280px; height: 360px; }
+    .info-grid-container { grid-template-columns: 1fr; gap: 40px; }
+    .contact-container   { grid-template-columns: 1fr; gap: 40px; }
+    .contact-section     { padding: 70px 20px; }
+    .map-wrapper         { height: 300px; }
+    .contact-intro       { max-width: 100%; }
+    .back-to-top         { width: 44px; height: 44px; bottom: 20px; right: 20px; }
+}
+
+@media (max-width: 480px) {
+    /* Forced Flex/Grid Collapse for Columns */
+    .welcome-container,
+    .info-grid-container,
+    .contact-container,
+    .responsive-two-col,
+    .give-split-layout,
+    .team-asymmetric-layout,
+    .events-grid,
+    .series-grid,
+    .sermons-grid,
+    .steps-grid,
+    .schedule-grid,
+    .container,
+    .steps-container,
+    .sermons-container,
+    .registration-container {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        gap: 20px !important;
+    }
+
+    /* Strict 100% Rule for Media */
+    .video-container, 
+    .video-container iframe,
+    .video-container video,
+    .camp-video-placeholder,
+    .camp-video-placeholder iframe,
+    .camp-video-placeholder video,
+    iframe, 
+    video, 
+    img {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .camp-video-placeholder {
+        min-height: 190px !important;
+    }
+
+    .camp-video-placeholder .video-container {
+        min-height: 190px !important;
+    }
+
+    .hero-section {
+        min-height: 380px;
+        padding: 96px 14px 28px;
+    }
+    .hero-content h1                   { letter-spacing: 2px; }
+    .welcome-banner.floating-banner    { margin-top: 0; }
+    .building-video-wrap                { width: 90%; }
+    .card-item                         { flex: 0 0 260px; height: 330px; }
+    .main-video-placeholder            { height: 260px; }
+}
+
+/* ⚡ სლაიდერის მაუსის მიტანის ეფექტების დაჩქარება და ოპტიმიზაცია */
+.card-item {
+    transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.25s ease !important;
+    cursor: pointer;
+}
+@media (hover: hover) {
+    .card-item:hover {
+        transform: scale(1.03) !important;
+    }
+}
+.slider-arrow {
+    transition: all 0.2s ease !important;
+}
+
+/* 🌟 საათების პირველადი დიზაინის შენარჩუნება კურსორის შეცვლით */
+.schedule-item {
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   შიდა გვერდების კონტენტის შევიწროება (Capture.jpg-ის მიხედვით)
+   ========================================================================== */
+
+/* ვრცელდება მხოლოდ შიდა გვერდების (სადაც <main> ელემენტია) კონტენტზე */
+main .responsive-two-col,
+main .info-grid-container,
+main .single-leader-section .container,
+main .team-asymmetric-layout,
+main .goals-list,
+main .counseling-text-content,
+main section:not(.hero-section):not(.contact-section) .container {
+    max-width: 1340px !important; /* ზღუდავს მაქსიმალურ სიგანეს ფოტოს მსგავსად */
+    margin-left: auto !important;  /* აცენტრებს კონტენტს მარცხნიდან */
+    margin-right: auto !important; /* აცენტრებს კონტენტს მარჯვნიდან */
+    padding-left: 40px !important;  /* ქმნის შიდა დამცავ დაშორებას */
+    padding-right: 40px !important; /* ქმნის შიდა დამცავ დაშორებას */
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* სპეციალური თავსებადობა პლანშეტებისა და მობილურებისთვის */
+@media (max-width: 991px) {
+    main .responsive-two-col,
+    main .info-grid-container,
+    main .single-leader-section .container,
+    main .team-asymmetric-layout,
+    main section:not(.hero-section):not(.contact-section) .container {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+}
+
+/* ==========================================================================
+   BREAKPOINT FIX: მობილური ნავბარის ჩართვა 1063px სიგანეზე ან დაბალზე
+   ========================================================================== */
+
+@media (max-width: 1307px) {
+    /* ბურგერ ღილაკის გამოჩენა */
+    .hamburger {
+        display: flex !important;
+    }
+
+    /* დესკტოპის სოციალური ხატულების დამალვა */
+    .header-socials {
+        display: none !important;
+    }
+
+    /* ნავბარის მენიუს გადაყვანა გვერდითა ჩამოსაშლელ რეჟიმზე */
+    .nav-menu {
+        display: none;
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 300px !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+        background: rgba(17, 17, 17, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding: 100px 30px 40px !important;
+        z-index: 1050 !important;
+        transform: translateX(100%) !important;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        overflow-y: auto !important;
+    }
+    
+    /* მენიუს გახსნის კლასი */
+    .nav-menu.open { 
+        display: flex !important; 
+        transform: translateX(0) !important; 
+    }
+    
+    /* ლინკების სიის ვერტიკალური განლაგება */
+    .nav-list {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        width: 100% !important;
+        gap: 15px !important;
+    }
+    
+    .nav-list > li {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+    
+    .nav-list a {
+        font-size: 16px !important;
+        padding: 10px 0 !important;
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+
+    /* ჰოვერის ხაზის გათიშვა */
+    .nav-list > li > a::after {
+        display: none !important;
+    }
+
+    /* მობილური ჩამოსაშლელი (Dropdown) მენიუების სტილი */
+    .dropdown-menu {
+        position: static !important;
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: none !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        box-shadow: none !important;
+        border-top: none !important;
+        border-left: 2px solid var(--gold) !important;
+        padding: 5px 0 5px 15px !important;
+        margin-top: 5px !important;
+        min-width: 100% !important;
+        border-radius: 4px !important;
+    }
+
+    .dropdown-menu a {
+        padding: 8px 10px !important;
+        color: rgba(255, 255, 255, 0.75) !important;
+    }
+
+    /* აკორდეონის პრინციპით გახსნა */
+    .has-dropdown.dropdown-open .dropdown-menu {
+        display: block !important;
+    }
+
+    .has-dropdown.dropdown-open > a > i {
+        transform: rotate(180deg) !important;
+        color: var(--gold) !important;
+    }
+
+    /* "გაეცი" ღილაკის მორგება მობილურის სიგანეზე */
+    .nav-give-item {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-top: 15px !important;
+    }
+
+    .btn-nav-give {
+        text-align: center !important;
+        justify-content: center !important;
+        padding: 12px 0 !important;
+    }
+    /* 🌟 მობილურის ეკრანზე ვაჩენთ ხატულებს ბურგერ მენიუს ბოლოში */
+    .mobile-socials {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 25px;
+        width: 100%;
+        margin-top: 40px;
+        padding-top: 25px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1); /* დახვეწილი გამყოფი ხაზი */
+    }
+
+    .mobile-socials a {
+        color: rgba(255, 255, 255, 0.85) !important;
+        font-size: 22px !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease;
+    }
+
+    /* ფერების ეფექტები მობილურზე დაჭერისას */
+    .mobile-socials a.fb-icon:hover    { color: #1877f2 !important; }
+    .mobile-socials a.insta-icon:hover { color: #e1306c !important; }
+    .mobile-socials a.yt-icon:hover    { color: #ff0000 !important; }
+    /* 🌟 მშობელ ბლოკს ვაბრუნებთ მარცხენა მხარეს, სადაც თავიდანვე იყო */
+    .nav-menu .nav-list li.nav-give-item {
+        display: flex !important;
+        justify-content: flex-start !important; /* აბრუნებს მარცხნივ */
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-top: 20px !important;
+    }
+
+    /* 🌟 ღილაკს ვუკუმშავთ სიგანეს მობილურზეც */
+    .nav-menu .nav-list li.nav-give-item a.btn-nav-give {
+        width: fit-content !important;
+        display: inline-flex !important;
+        justify-content: center !important;
+        padding: 4px 12px !important; /* 🌟 აქაც ვწერთ ახალ, პატარა ზომას */
+        text-align: center !important;
+    }
+}
+
+/* 🌟 იუთუბის ქავერების ვიზუალური ეფექტები */
+.video-placeholder,
+.main-video-placeholder,
+.camp-video-placeholder {
+    background-color: #111 !important; /* ნაცრისფერის ნაცვლად მუქი ბაზა */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Play ხატულის გამოკვეთა სურათის თავზე */
+.video-placeholder i,
+.main-video-placeholder i,
+.camp-video-placeholder i {
+    z-index: 3;
+    font-size: 4rem !important;
+    color: #ffffff !important;
+    background: rgba(170, 149, 79, 0.85); /* ეკლესიის ოქროსფერი გამჭვირვალე წრე */
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+/* მაუსის მიტანისას ღილაკის ანიმაცია */
+.video-placeholder:hover i,
+.main-video-placeholder:hover i,
+.camp-video-placeholder:hover i {
+    transform: scale(1.1);
+    background: #aa954f !important; /* სრული ოქროსფერი ჰოვერზე */
+    box-shadow: 0 15px 30px rgba(170, 149, 79, 0.5);
+}
+
+/* 🌟 ვიდეოს დამცავი კონტეინერი */
+.building-video-wrap {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* 🌟 უხილავი ფენა, რომელიც ეფარება იუთუბს და ბლოკავს ნებისმიერ მაუსის ინტერაქციას */
+.building-video-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background: transparent; /* სრულიად უხილავია */
+    pointer-events: auto;    /* იჭერს ყველა კლიკს თავის თავზე */
+}
+
+/* დესკტოპ ვერსიაზე მენიუს შიგნით არსებული ხატულები დამალულია */
+.mobile-socials {
+    display: none;
+}
+
+/* 🌟 გლობალურად ვცვლით მხოლოდ ფონტს, ზომებს კი ვუტოვებთ გვერდების მშობლიურ წესებს */
+h2 {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+    
+    /* ❌ აქედან სრულად ამოშლილია font-size და line-height მნიშვნელობები !important-ით, */
+    /* რადგან ისინი უფუჭებდნენ შიდა გვერდების (მსახურებების) ბანერებს განლაგებას შუალედურ ეკრანებზე. */
+}
+
+.safe-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;   /* არანაირი ფიქსირებული სიგანე ან სიმაღლე */
+    height: auto;        /* სიმაღლე იზრდება ტექსტთან ერთად */
+    padding: 1.5em;      /* დაშორება იზრდება/მცირდება ფონტის პროპორციულად */
+}
+
+.safe-card h3 {
+    font-family: 'BPGNinoMtavruliBold', sans-serif !important;
+    font-size: clamp(1.4rem, 4vw, 2.2rem) !important; /* ფლუიდური ზომა */
+    line-height: 1.25 !important;                      /* უსაფრთხო ხაზებსშორისი დაშორება */
+    white-space: normal !important;                    /* 🌟 ყოველთვის მიეცი ხაზზე გადასვლის უფლება */
+}
+
+/* ==========================================================================
+   🎯 სქროლის საბოლოო დაზღვეული ფიქსი (იზოლირებული ეკრანები)
+   ========================================================================== */
+
+/* 📱 მობილური ტელეფონებისა და ტაბლეტებისთვის (მხოლოდ 768px-მდე ეკრანებზე) */
+@media (max-width: 768px) {
+    html {
+        scroll-padding-top: 110px !important;
+        scroll-behavior: smooth;
+    }
+}
+
+/* 💻 კომპიუტერებისა და დიდ ეკრანებისთვის (769px-დან ზემოთ) */
+@media (min-width: 769px) {
+    html {
+        /* 🌟 ვიყენებთ ზუსტად შენს სასურველ 250px-ს, რამაც იდეალური შედეგი მოგცა */
+        scroll-padding-top: 250px !important;
+        scroll-behavior: smooth;
+    }
+}
+
+/* ==========================================================================
+   ✨ ვიზუალური გაუმჯობესება (ოქროსფერი გამყოფები, მინი-ნავიგატორი, Scroll Reveal)
+   ========================================================================== */
+
+/* 1. ოქროსფერი ნაზი გამყოფები (Premium Dividers) */
+.section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto;
+    max-width: 600px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.section-divider::before, .section-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(170, 149, 79, 0) 0%, rgba(170, 149, 79, 0.4) 100%);
+}
+
+.section-divider::after {
+    background: linear-gradient(to left, rgba(170, 149, 79, 0) 0%, rgba(170, 149, 79, 0.4) 100%);
+}
+
+.section-divider-icon {
+    color: #aa954f;
+    margin: 0 20px;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    filter: drop-shadow(0 2px 5px rgba(170, 149, 79, 0.2));
+}
+
+/* 2. გვერდითი მინი-ნავიგატორი (Floating Side Nav) */
+.side-dots-nav {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: none;
+}
+
+@media (min-width: 1025px) {
+    .side-dots-nav {
+        display: block;
+    }
+}
+
+.side-dots-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.dot-nav-item {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(34, 34, 34, 0.2);
+    border: 2px solid transparent;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.dot-nav-item:hover,
+.dot-nav-item.active {
+    background-color: #aa954f;
+    transform: scale(1.4);
+}
+
+.dot-nav-item.active {
+    border-color: #ffffff;
+    box-shadow: 0 0 12px rgba(170, 149, 79, 0.6);
+}
+
+/* ტექსტური მინიშნება ჰოვერზე */
+.dot-nav-item span {
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%) translateX(10px);
+    background-color: #111111;
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-family: 'BPGNinoMtavruliBold', 'Montserrat', sans-serif;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.dot-nav-item span::after {
+    content: "";
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    background-color: #111111;
+}
+
+.dot-nav-item:hover span {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
+}
+
+/* 3. სქროლვაზე გამოჩენის ანიმაცია (Scroll Reveal Animations) */
+.js-enabled .reveal-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.js-enabled .reveal-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
