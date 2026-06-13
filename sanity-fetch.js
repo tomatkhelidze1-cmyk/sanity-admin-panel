@@ -79,10 +79,10 @@ function updatePageContent() {
             }
           }
 
-          // Main Image
+          // Main Image (Background of Hero Section)
           if (siteContent.imageUrl) {
             const imgEl = document.getElementById('sanity-main-image');
-            if (imgEl) imgEl.src = siteContent.imageUrl;
+            if (imgEl) imgEl.style.backgroundImage = `url('${siteContent.imageUrl}')`;
           }
 
           // Building Section Texts
