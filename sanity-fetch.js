@@ -272,19 +272,6 @@ function updatePageContent() {
                                 <span class="meta-label">სერიის შესახებ</span>
                                 <p class="meta-description-text">${series.description}</p>
                             </div>
-                            <div class="meta-tags-section">
-                                <div class="meta-tag">
-                                    <i class="fa-solid fa-folder"></i>
-                                    <div>კატეგორია: ${
-                                      series.category === 'spiritual' ? 'სულიერი ზრდა' :
-                                      series.category === 'family' ? 'ოჯახი & ცხოვრება' : 'ბიბლიური სწავლებები'
-                                    }</div>
-                                </div>
-                                <div class="meta-tag">
-                                    <i class="fa-solid fa-user"></i>
-                                    <div>სპიკერი: ${series.speaker}</div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="series-main">
@@ -292,6 +279,19 @@ function updatePageContent() {
                             <div class="series-info">
                                 <h3>${series.title}</h3>
                                 <p>${series.subtitle}</p>
+                                <div class="meta-tags-section">
+                                    <div class="meta-tag">
+                                        <i class="fa-solid fa-folder"></i>
+                                        <div>კატეგორია: ${
+                                          series.category === 'spiritual' ? 'სულიერი ზრდა' :
+                                          series.category === 'family' ? 'ოჯახი & ცხოვრება' : 'ბიბლიური სწავლებები'
+                                        }</div>
+                                    </div>
+                                    <div class="meta-tag">
+                                        <i class="fa-solid fa-user"></i>
+                                        <div>სპიკერი: ${series.speaker}</div>
+                                    </div>
+                                </div>
                             </div>
                             <div style="display: flex; align-items: center;">
                                 <span class="series-badge">${episodeCount} ეპიზოდი</span>
