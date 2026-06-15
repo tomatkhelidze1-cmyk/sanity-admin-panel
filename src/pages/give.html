@@ -166,13 +166,13 @@ has_contact: true
                         <div class="copy-field-group">
                             <label>გადახდის დანიშნულება (აირჩიეთ სასურველი)</label>
                             <select class="purpose-select" id="purposeChooser" onchange="updatePurposeValue()">
-                                <option value="შესაწირავი">შესაწირავი</option>
-                                <option value="მეათედის შესაწირავი">მეათედის შესაწირავი</option>
-                                <option value="სამშენებლო შესაწირავი">სამშენებლო შესაწირავი</option>
-                                <option value="მისიონერული შესაწირავი">მისიონერული შესაწირავი</option>
+                                <option value="შესაწირი">შესაწირი</option>
+                                <option value="მეათედი">მეათედი</option>
+                                <option value="სამშენებლო შესაწირი">სამშენებლო შესაწირი</option>
+                                <option value="მისიონერული შესაწირი">მისიონერული შესაწირი</option>
                             </select>
                             <div class="copy-input-wrapper">
-                                <input type="text" class="copy-value-text" id="bankPurpose" value="შესაწირავი" readonly>
+                                <input type="text" class="copy-value-text" id="bankPurpose" value="შესაწირი" readonly>
                                 <button class="btn-copy-action" onclick="copyTargetText('bankPurpose')"><i class="fa-regular fa-copy"></i> Copy</button>
                             </div>
                         </div>
@@ -255,8 +255,8 @@ has_contact: true
                 const purposeInput = document.getElementById("bankPurpose");
                 
                 if (chooser && purposeInput) {
-                    chooser.value = "სამშენებლო შესაწირავი";
-                    purposeInput.value = "სამშენებლო შესაწირავი";
+                    chooser.value = "სამშენებლო შესაწირი";
+                    purposeInput.value = "სამშენებლო შესაწირი";
                 }
             }
         });
