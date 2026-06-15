@@ -42,7 +42,9 @@ has_contact: true
             min-height: 390px;
             box-sizing: border-box;
             box-shadow: 0 10px 30px rgba(170, 149, 79, 0.02);
-            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+            transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* ფერების დიფერენციაცია ხაზების მიხედვით */
@@ -51,6 +53,7 @@ has_contact: true
 
         /* ინტერაქციის დროს ეფექტების გაძლიერება */
         .next-step-card:hover {
+            transform: translateY(-8px);
             box-shadow: 0 20px 45px rgba(170, 149, 79, 0.08);
         }
         .next-step-card.card-gold:hover { border-color: #aa954f; }
@@ -132,6 +135,13 @@ has_contact: true
         .card-gold .card-link { border-bottom: 2px solid #aa954f; }
         .card-dark .card-link { border-bottom: 2px solid #222222; }
         .card-link:hover { color: #aa954f; }
+
+        .card-link i {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .next-step-card:hover .card-link i {
+            transform: translateX(4px);
+        }
 
         /* ფილოსოფიური ქვედა ბლოკი */
         .info-msg-box {
