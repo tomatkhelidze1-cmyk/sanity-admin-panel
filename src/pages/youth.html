@@ -392,17 +392,22 @@ has_contact: true
             overflow: hidden;
         }
         
-        .dual-content-grid {
+        .dual-content-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 80px;
             align-items: center;
+            margin-bottom: 120px;
         }
         
-        .dual-content-grid.reverse {
+        .dual-content-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .dual-content-row.reverse {
             direction: rtl;
         }
-        .dual-content-grid.reverse > * {
+        .dual-content-row.reverse > * {
             direction: ltr;
         }
         
@@ -438,7 +443,7 @@ has_contact: true
         
         .overlapping-images-wrapper {
             position: relative;
-            height: 480px;
+            height: 580px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -461,26 +466,26 @@ has_contact: true
         }
         
         .frame-1 {
-            width: 290px;
-            height: 290px;
-            left: 5%;
-            top: 10%;
+            width: 330px;
+            height: 330px;
+            left: 2%;
+            top: 5%;
             transform: rotate(-6deg);
             z-index: 2;
         }
         
         .frame-2 {
-            width: 280px;
-            height: 330px;
-            right: 10%;
-            bottom: 10%;
+            width: 320px;
+            height: 380px;
+            right: 5%;
+            bottom: 5%;
             transform: rotate(4deg);
             z-index: 3;
         }
         
         .frame-single {
-            width: 380px;
-            height: 380px;
+            width: 440px;
+            height: 440px;
             transform: rotate(-4deg);
             z-index: 2;
         }
@@ -503,12 +508,16 @@ has_contact: true
             .dual-content-section {
                 padding: 60px 0;
             }
-            .dual-content-grid {
+            .dual-content-row {
                 grid-template-columns: 1fr;
                 gap: 50px;
                 text-align: center;
+                margin-bottom: 80px;
             }
-            .dual-content-grid.reverse {
+            .dual-content-row:last-child {
+                margin-bottom: 0;
+            }
+            .dual-content-row.reverse {
                 direction: ltr;
             }
             .dual-text-area {
@@ -516,24 +525,24 @@ has_contact: true
                 order: 2;
             }
             .overlapping-images-wrapper {
-                height: 380px;
+                height: 460px;
                 order: 1;
             }
             .frame-1 {
-                width: 220px;
-                height: 220px;
-                left: 10%;
+                width: 260px;
+                height: 260px;
+                left: 8%;
                 top: 5%;
             }
             .frame-2 {
-                width: 210px;
-                height: 250px;
-                right: 12%;
+                width: 240px;
+                height: 290px;
+                right: 8%;
                 bottom: 5%;
             }
             .frame-single {
-                width: 280px;
-                height: 280px;
+                width: 330px;
+                height: 330px;
             }
         }</style>
 <!-- endblock -->
@@ -596,10 +605,12 @@ has_contact: true
             </div>
         </section>
 
-        <!-- 🌟 Worship Section -->
+        <!-- 🌟 Youth Activities Section (Consolidated) -->
         <section class="dual-content-section" style="background-color: #ffffff;">
             <div class="container">
-                <div class="dual-content-grid scroll-reveal">
+                
+                <!-- Row 1: Worship -->
+                <div class="dual-content-row scroll-reveal">
                     <div class="overlapping-images-wrapper">
                         <div class="polaroid-frame frame-1">
                             <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=cover&w=400&q=80" alt="Worship crowd">
@@ -615,13 +626,9 @@ has_contact: true
                         <p>სანამ სხვა რამეს გავაკეთებდეთ, ჩვენ გვსურს ვაჩვენოთ ახალგაზრდებს, თუ როგორ შეჩერდნენ ცხოვრების ამ აჩქარებულ რიტმში და მიმართონ ყურადღება ღმერთზე, რომელიც ყოველთვის მათთანაა.</p>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- 🌟 Preaching Section -->
-        <section class="dual-content-section" style="background-color: #faf8f5;">
-            <div class="container">
-                <div class="dual-content-grid reverse scroll-reveal">
+                <!-- Row 2: Preaching -->
+                <div class="dual-content-row reverse scroll-reveal">
                     <div class="overlapping-images-wrapper">
                         <div class="polaroid-frame frame-1">
                             <img src="https://images.unsplash.com/photo-1526976775577-3f66e9da75aa?auto=format&fit=cover&w=400&q=80" alt="Preaching">
@@ -637,13 +644,9 @@ has_contact: true
                         <p>ყოველი შეხვედრისას ახალგაზრდები ისმენენ ბიბლიურ ჭეშმარიტებას იმის შესახებ, თუ ვინ არის ღმერთი, ვინ არიან თავად ისინი, რას ნიშნავს იესოს მიყოლა რეალურ ცხოვრებაში და როგორ შეუძლიათ შეცვალონ სამყარო უკეთესობისკენ.</p>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- 🌟 Small Groups Section -->
-        <section class="dual-content-section" style="background-color: #ffffff;">
-            <div class="container">
-                <div class="dual-content-grid scroll-reveal">
+                <!-- Row 3: Small Groups -->
+                <div class="dual-content-row scroll-reveal">
                     <div class="overlapping-images-wrapper">
                         <div class="polaroid-frame frame-single">
                             <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=cover&w=500&q=80" alt="Small Group huddle">
@@ -656,6 +659,7 @@ has_contact: true
                         <p>თითოეული ახალგაზრდა ნაწილდება თანატოლების მცირე ჯგუფში, რომელსაც ხელმძღვანელობს ლიდერი. ეს ჯგუფები ეხმარება მათ ერთად გაიაზრონ ცხოვრება, რწმენა და ერთობლივად მიჰყვნენ იესოს.</p>
                     </div>
                 </div>
+
             </div>
         </section>
 
