@@ -65,7 +65,7 @@ function updatePageContent() {
         // Try to fetch the latest video from the YouTube playlist RSS feed
         let latestVideoId = null;
         try {
-          const playlistId = 'PLC_n-dqgCYfWLQiKdJHCd5u1MykCJMJJk';
+          const playlistId = 'PLC_n-dqgCYfWAb2CbwumDHPRApAkcP99A';
           const feedUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?playlist_id=' + playlistId)}`;
           const rssRes = await fetch(feedUrl);
           if (rssRes.ok) {
