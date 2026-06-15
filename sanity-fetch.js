@@ -66,7 +66,8 @@ function updatePageContent() {
         let latestVideoId = null;
         try {
           const playlistId = 'PLC_n-dqgCYfWAb2CbwumDHPRApAkcP99A';
-          const feedUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?playlist_id=' + playlistId)}`;
+          const cacheBuster = Math.floor(Date.now() / 300000);
+          const feedUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?playlist_id=' + playlistId + '&t=' + cacheBuster)}`;
           const rssRes = await fetch(feedUrl);
           if (rssRes.ok) {
             const rssData = await rssRes.json();
