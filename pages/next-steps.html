@@ -36,7 +36,6 @@
             perspective: 1200px; /* აძლიერებს 3D სიღრმის აღქმას */
         }
 
-        /* ბარათების პრემიუმ სტილი */
         .next-step-card {
             background: #fdfbf7;
             padding: 50px 35px;
@@ -49,12 +48,7 @@
             min-height: 390px;
             box-sizing: border-box;
             box-shadow: 0 10px 30px rgba(170, 149, 79, 0.02);
-            
-            /* 3D აპარატურული აქსელერაცია */
-            transform-style: preserve-3d;
-            transform: translateZ(0); 
-            will-change: transform;
-            transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
         /* ფერების დიფერენციაცია ხაზების მიხედვით */
@@ -486,42 +480,6 @@
             } else {
                 revealElements.forEach(el => el.classList.add('is-visible'));
             }
-
-
-            // 2. ულტრა-მინიმალისტური 3D Tilt ანიმაცია (მაქსიმალურად დასტაბილურებული)
-            const tiltCards = document.querySelectorAll('.next-step-card');
-            
-            tiltCards.forEach(card => {
-                let ticking = false;
-
-                card.addEventListener('mousemove', (e) => {
-                    if (!ticking) {
-                        window.requestAnimationFrame(() => {
-                            const rect = card.getBoundingClientRect();
-                            const x = e.clientX - rect.left;
-                            const y = e.clientY - rect.top;
-                            
-                            const centerX = rect.width / 2;
-                            const centerY = rect.height / 2;
-                            
-                            // კოეფიციენტი ჩამოყვანილია 1 გრადუსამდე სრული სიმყარისთვის
-                            const rotateX = ((centerY - y) / centerY) * 1;
-                            const rotateY = ((x - centerX) / centerX) * 1;
-
-                            // translateY ჩამოვიდა 0.5px-მდე (ნახევარი პიქსელი), რომ ფაქტობრივად არ აიწიოს
-                            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-0.5px) translateZ(2px)`;
-                            ticking = false;
-                        });
-                        ticking = true;
-                    }
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    window.requestAnimationFrame(() => {
-                        card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0px) translateZ(0px)';
-                    });
-                });
-            });
         });
     </script>
 
