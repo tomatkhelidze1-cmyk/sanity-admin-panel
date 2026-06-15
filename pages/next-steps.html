@@ -50,7 +50,10 @@
             box-shadow: 0 10px 30px rgba(170, 149, 79, 0.02);
             transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
                         box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                        transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform: translate3d(0, 0, 0);
         }
 
         /* ფერების დიფერენციაცია ხაზების მიხედვით */
@@ -490,6 +493,39 @@
             } else {
                 revealElements.forEach(el => el.classList.add('is-visible'));
             }
+
+            // 2. ულტრა-მინიმალისტური 3D Tilt ანიმაცია (ტექსტის სიმკვეთრის დაცვით)
+            const tiltCards = document.querySelectorAll('.next-step-card');
+            
+            tiltCards.forEach(card => {
+                let ticking = false;
+
+                card.addEventListener('mousemove', (e) => {
+                    if (!ticking) {
+                        window.requestAnimationFrame(() => {
+                            const rect = card.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const y = e.clientY - rect.top;
+                            
+                            const centerX = rect.width / 2;
+                            const centerY = rect.height / 2;
+                            
+                            const rotateX = ((centerY - y) / centerY) * 1.5;
+                            const rotateY = ((x - centerX) / centerX) * 1.5;
+
+                            card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-8px)`;
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    window.requestAnimationFrame(() => {
+                        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+                    });
+                });
+            });
         });
     </script>
 
