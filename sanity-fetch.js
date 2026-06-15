@@ -58,9 +58,37 @@ function updatePageContent() {
 
   fetch(url)
     .then(response => response.json())
-    .then(data => {
+    .then(async data => {
       if (data && data.result) {
         const { siteContent, events, sermons } = data.result;
+
+        // Try to fetch the latest video from the YouTube playlist RSS feed
+        let latestVideoId = null;
+        try {
+          const playlistId = 'PLC_n-dqgCYfWLQiKdJHCd5u1MykCJMJJk';
+          const feedUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?playlist_id=' + playlistId)}`;
+          const rssRes = await fetch(feedUrl);
+          if (rssRes.ok) {
+            const rssData = await rssRes.json();
+            if (rssData && rssData.items && rssData.items.length > 0) {
+              // Find the video item with the latest pubDate
+              const latestVideo = rssData.items.reduce((latest, item) => {
+                return (new Date(item.pubDate) > new Date(latest.pubDate)) ? item : latest;
+              }, rssData.items[0]);
+              
+              if (latestVideo && latestVideo.guid) {
+                const parts = latestVideo.guid.split(':');
+                if (parts.length >= 3) {
+                  latestVideoId = parts[2];
+                } else {
+                  latestVideoId = getYouTubeId(latestVideo.link);
+                }
+              }
+            }
+          }
+        } catch (rssError) {
+          console.warn('Failed to fetch latest YouTube playlist video, falling back to Sanity config:', rssError);
+        }
 
         // 1. UPDATE SITECONTENT PROPERTIES
         if (siteContent) {
@@ -103,24 +131,23 @@ function updatePageContent() {
             if (el) el.textContent = siteContent.buildingText2;
           }
 
-          // Latest Sermon Video ID update
-          if (siteContent.latestSermonUrl) {
-            const sermonId = getYouTubeId(siteContent.latestSermonUrl);
-            if (sermonId) {
-              const sermonEls = document.querySelectorAll('#sanity-latest-sermon');
-              sermonEls.forEach(el => {
-                el.setAttribute('data-video-id', sermonId);
-                el.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('https://img.youtube.com/vi/${sermonId}/hqdefault.jpg')`;
-              });
-            }
+          // Latest Sermon Video ID update (uses YouTube feed if available, otherwise falls back to Sanity)
+          let sermonId = latestVideoId;
+          if (!sermonId && siteContent.latestSermonUrl) {
+            sermonId = getYouTubeId(siteContent.latestSermonUrl);
           }
+          if (sermonId) {
+            const sermonEls = document.querySelectorAll('#sanity-latest-sermon');
+            sermonEls.forEach(el => {
+              el.setAttribute('data-video-id', sermonId);
+              el.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('https://img.youtube.com/vi/${sermonId}/hqdefault.jpg')`;
+            });
+          }
+
           // Main Sermon Player Initial Video
           const mainPlayer = document.getElementById('mainSermonPlayer');
           if (mainPlayer) {
-            let initialVideoId = null;
-            if (siteContent.latestSermonUrl) {
-              initialVideoId = getYouTubeId(siteContent.latestSermonUrl);
-            }
+            let initialVideoId = sermonId;
             if (!initialVideoId && sermons && sermons.length > 0) {
               const firstEpisode = sermons[0]?.episodes?.[0];
               if (firstEpisode) {
