@@ -11,6 +11,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Noto+Sans+Georgian:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
     <link rel="icon" type="image/svg+xml" href="../pages/images/logo.svg">
+    <script>
+        function handleYoutubeImgLoad(img, videoId) {
+            if (img.naturalWidth === 120) {
+                const stage = parseInt(img.getAttribute('data-thumb-stage') || '0');
+                if (stage === 0) {
+                    img.setAttribute('data-thumb-stage', '1');
+                    img.src = 'https://img.youtube.com/vi/' + videoId + '/hq720.jpg';
+                } else if (stage === 1) {
+                    img.setAttribute('data-thumb-stage', '2');
+                    img.src = 'https://img.youtube.com/vi/' + videoId + '/mqdefault.jpg';
+                } else if (stage === 2) {
+                    img.setAttribute('data-thumb-stage', '3');
+                    img.src = 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg';
+                }
+            }
+        }
+        function setYouTubeThumbnailBackground(el, videoId, overlay) {
+            const stages = [
+                'maxresdefault.jpg',
+                'hq720.jpg',
+                'mqdefault.jpg',
+                'hqdefault.jpg'
+            ];
+            let index = 0;
+            function tryLoad() {
+                if (index >= stages.length) return;
+                const filename = stages[index];
+                const url = 'https://img.youtube.com/vi/' + videoId + '/' + filename;
+                const tempImg = new Image();
+                tempImg.onload = function() {
+                    if (tempImg.naturalWidth === 120 && index < stages.length - 1) {
+                        index++;
+                        tryLoad();
+                    } else {
+                        if (overlay) {
+                            el.style.backgroundImage = overlay + ', url(' + url + ')';
+                        } else {
+                            el.style.backgroundImage = 'url(' + url + ')';
+                        }
+                    }
+                };
+                tempImg.onerror = function() {
+                    if (index < stages.length - 1) {
+                        index++;
+                        tryLoad();
+                    }
+                };
+                tempImg.src = url;
+            }
+            tryLoad();
+        }
+    </script>
     <style>/* სპეციფიკური სტილები ქადაგებების გვერდისთვის */
         .sermons-hero {
             background: linear-gradient(rgba(17, 17, 17, 0.75), rgba(17, 17, 17, 0.95)), url('https://images.unsplash.com/photo-1438032005730-c779502df39b?auto=format&fit=crop&q=80&w=1600') center/cover no-repeat;
@@ -592,7 +644,7 @@
             <div class="series-card" data-category="biblical">
                 <div class="series-thumbnail">
                     <div class="thumbnail-img-wrap">
-                        <img src="https://img.youtube.com/vi/kSiTENovKqU/maxresdefault.jpg" alt="თესალონიკელთა პირველი წერილის განხილვა" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/kSiTENovKqU/hqdefault.jpg';">
+                        <img src="https://img.youtube.com/vi/kSiTENovKqU/maxresdefault.jpg" alt="თესალონიკელთა პირველი წერილის განხილვა" onload="handleYoutubeImgLoad(this, 'kSiTENovKqU')" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/kSiTENovKqU/hqdefault.jpg';">
                     </div>
                     <div class="series-meta-details">
                         <div class="meta-description-section">
@@ -681,7 +733,7 @@
             <div class="series-card" data-category="biblical">
                 <div class="series-thumbnail">
                     <div class="thumbnail-img-wrap">
-                        <img src="https://img.youtube.com/vi/Nn9daTJxb2s/maxresdefault.jpg" alt="კოლასელთა წერილის განხილვა" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/Nn9daTJxb2s/hqdefault.jpg';">
+                        <img src="https://img.youtube.com/vi/Nn9daTJxb2s/maxresdefault.jpg" alt="კოლასელთა წერილის განხილვა" onload="handleYoutubeImgLoad(this, 'Nn9daTJxb2s')" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/Nn9daTJxb2s/hqdefault.jpg';">
                     </div>
                     <div class="series-meta-details">
                         <div class="meta-description-section">
@@ -758,7 +810,7 @@
             <div class="series-card" data-category="biblical">
                 <div class="series-thumbnail">
                     <div class="thumbnail-img-wrap">
-                        <img src="https://img.youtube.com/vi/5TEG7mxXj7M/maxresdefault.jpg" alt="იაკობის წერილის განხილვა" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/5TEG7mxXj7M/hqdefault.jpg';">
+                        <img src="https://img.youtube.com/vi/5TEG7mxXj7M/maxresdefault.jpg" alt="იაკობის წერილის განხილვა" onload="handleYoutubeImgLoad(this, '5TEG7mxXj7M')" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/5TEG7mxXj7M/hqdefault.jpg';">
                     </div>
                     <div class="series-meta-details">
                         <div class="meta-description-section">
@@ -847,7 +899,7 @@
             <div class="series-card" data-category="biblical">
                 <div class="series-thumbnail">
                     <div class="thumbnail-img-wrap">
-                        <img src="https://img.youtube.com/vi/1U6VUElmP9U/maxresdefault.jpg" alt="იგავები სამეფოს შესახებ" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/1U6VUElmP9U/hqdefault.jpg';">
+                        <img src="https://img.youtube.com/vi/1U6VUElmP9U/maxresdefault.jpg" alt="იგავები სამეფოს შესახებ" onload="handleYoutubeImgLoad(this, '1U6VUElmP9U')" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/1U6VUElmP9U/hqdefault.jpg';">
                     </div>
                     <div class="series-meta-details">
                         <div class="meta-description-section">

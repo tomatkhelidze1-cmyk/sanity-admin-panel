@@ -141,7 +141,11 @@ function updatePageContent() {
             const sermonEls = document.querySelectorAll('#sanity-latest-sermon');
             sermonEls.forEach(el => {
               el.setAttribute('data-video-id', sermonId);
-              el.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('https://img.youtube.com/vi/${sermonId}/hqdefault.jpg')`;
+              if (typeof setYouTubeThumbnailBackground === 'function') {
+                setYouTubeThumbnailBackground(el, sermonId, 'linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2))');
+              } else {
+                el.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('https://img.youtube.com/vi/${sermonId}/hqdefault.jpg')`;
+              }
             });
           }
 
@@ -166,7 +170,11 @@ function updatePageContent() {
             const campVideoEl = document.getElementById('sanity-youth-camp-video');
             if (campVideoId && campVideoEl) {
               campVideoEl.setAttribute('data-video-id', campVideoId);
-              campVideoEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('https://img.youtube.com/vi/${campVideoId}/hqdefault.jpg')`;
+              if (typeof setYouTubeThumbnailBackground === 'function') {
+                setYouTubeThumbnailBackground(campVideoEl, campVideoId, 'linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4))');
+              } else {
+                campVideoEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('https://img.youtube.com/vi/${campVideoId}/hqdefault.jpg')`;
+              }
             }
           }
           if (siteContent.youthCampTitle) {
@@ -188,7 +196,11 @@ function updatePageContent() {
             const kidsVideoEl = document.getElementById('sanity-kids-camp-video');
             if (kidsVideoId && kidsVideoEl) {
               kidsVideoEl.setAttribute('data-video-id', kidsVideoId);
-              kidsVideoEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('https://img.youtube.com/vi/${kidsVideoId}/hqdefault.jpg')`;
+              if (typeof setYouTubeThumbnailBackground === 'function') {
+                setYouTubeThumbnailBackground(kidsVideoEl, kidsVideoId, 'linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4))');
+              } else {
+                kidsVideoEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('https://img.youtube.com/vi/${kidsVideoId}/hqdefault.jpg')`;
+              }
             }
           }
           if (siteContent.kidsCampTitle) {

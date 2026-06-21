@@ -340,8 +340,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const setupVideoClick = (el) => {
         const videoId = el.getAttribute('data-video-id') || '-yhiipmNtMA';
         
-        /* 🌟 ავტომატურად ვსვამთ იუთუბის ორიგინალ მაღალი ხარისხის სურათს (hqdefault ან maxresdefault) */
-        el.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('https://img.youtube.com/vi/${videoId}/hqdefault.jpg')`;
+        /* Set high quality YouTube thumbnail dynamically */
+        if (typeof setYouTubeThumbnailBackground === 'function') {
+            setYouTubeThumbnailBackground(el, videoId, 'linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2))');
+        } else {
+            el.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('https://img.youtube.com/vi/${videoId}/hqdefault.jpg')`;
+        }
         el.style.backgroundSize = 'cover';
         el.style.backgroundPosition = 'center';
         el.style.position = 'relative';

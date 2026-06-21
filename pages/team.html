@@ -11,6 +11,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Noto+Sans+Georgian:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
     <link rel="icon" type="image/svg+xml" href="../pages/images/logo.svg">
+    <script>
+        function handleYoutubeImgLoad(img, videoId) {
+            if (img.naturalWidth === 120) {
+                const stage = parseInt(img.getAttribute('data-thumb-stage') || '0');
+                if (stage === 0) {
+                    img.setAttribute('data-thumb-stage', '1');
+                    img.src = 'https://img.youtube.com/vi/' + videoId + '/hq720.jpg';
+                } else if (stage === 1) {
+                    img.setAttribute('data-thumb-stage', '2');
+                    img.src = 'https://img.youtube.com/vi/' + videoId + '/mqdefault.jpg';
+                } else if (stage === 2) {
+                    img.setAttribute('data-thumb-stage', '3');
+                    img.src = 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg';
+                }
+            }
+        }
+        function setYouTubeThumbnailBackground(el, videoId, overlay) {
+            const stages = [
+                'maxresdefault.jpg',
+                'hq720.jpg',
+                'mqdefault.jpg',
+                'hqdefault.jpg'
+            ];
+            let index = 0;
+            function tryLoad() {
+                if (index >= stages.length) return;
+                const filename = stages[index];
+                const url = 'https://img.youtube.com/vi/' + videoId + '/' + filename;
+                const tempImg = new Image();
+                tempImg.onload = function() {
+                    if (tempImg.naturalWidth === 120 && index < stages.length - 1) {
+                        index++;
+                        tryLoad();
+                    } else {
+                        if (overlay) {
+                            el.style.backgroundImage = overlay + ', url(' + url + ')';
+                        } else {
+                            el.style.backgroundImage = 'url(' + url + ')';
+                        }
+                    }
+                };
+                tempImg.onerror = function() {
+                    if (index < stages.length - 1) {
+                        index++;
+                        tryLoad();
+                    }
+                };
+                tempImg.src = url;
+            }
+            tryLoad();
+        }
+    </script>
     
 </head>
 <body>
