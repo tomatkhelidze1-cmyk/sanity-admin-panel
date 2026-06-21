@@ -268,6 +268,17 @@ function updatePageContent() {
         if (sermons && sermons.length > 0) {
           const seriesGrid = document.querySelector('.series-grid');
           if (seriesGrid) {
+            // Keep static cards that are NOT in Sanity (e.g. by title)
+            const staticCards = Array.from(seriesGrid.querySelectorAll('.series-card'));
+            const sanityTitles = new Set(sermons.map(s => s.title.trim().toLowerCase()));
+            
+            const uniqueStaticCards = staticCards.filter(card => {
+              const titleEl = card.querySelector('.series-info h3');
+              if (!titleEl) return false;
+              const title = titleEl.textContent.trim().toLowerCase();
+              return !sanityTitles.has(title);
+            });
+
             let sermonsHtml = '';
             sermons.forEach(series => {
               let episodesHtml = '';
@@ -335,7 +346,15 @@ function updatePageContent() {
                 </div>
               `;
             });
-            seriesGrid.innerHTML = sermonsHtml;
+            
+            // Rebuild container and append cards
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = sermonsHtml;
+            const sanityCards = Array.from(tempDiv.children);
+            
+            seriesGrid.innerHTML = '';
+            sanityCards.forEach(card => seriesGrid.appendChild(card));
+            uniqueStaticCards.forEach(card => seriesGrid.appendChild(card));
           }
         }
       }
