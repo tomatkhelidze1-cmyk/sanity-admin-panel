@@ -451,14 +451,19 @@ ul {
 }
 
 .header-socials a {
-    color: var(--white);
-    margin-left: 18px;
-    font-size: 17px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin-left: 12px;
+    font-size: 15px;
     text-decoration: none !important;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: color 0.3s, transform 0.2s;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .header-socials a::before,
@@ -467,9 +472,13 @@ ul {
     display: none !important;
 }
 
-.header-socials a.fb-icon:hover    { color: #1877f2; transform: scale(1.15); }
-.header-socials a.insta-icon:hover { color: #e1306c; transform: scale(1.15); }
-.header-socials a.yt-icon:hover    { color: #ff0000; transform: scale(1.15); }
+.header-socials a:hover {
+    border-color: #aa954f;
+    background: rgba(170, 149, 79, 0.1);
+    color: #aa954f !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(170, 149, 79, 0.15);
+}
 
 /* მობილური ჰამბურგერი */
 .hamburger {
@@ -1846,7 +1855,7 @@ main section:not(.hero-section):not(.contact-section) .container {
         display: flex !important;
         align-items: center;
         justify-content: center;
-        gap: 25px;
+        gap: 15px;
         width: 100%;
         margin-top: 40px;
         padding-top: 25px;
@@ -1854,16 +1863,27 @@ main section:not(.hero-section):not(.contact-section) .container {
     }
 
     .mobile-socials a {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.03);
         color: rgba(255, 255, 255, 0.85) !important;
-        font-size: 22px !important;
+        font-size: 18px !important;
         text-decoration: none !important;
-        transition: color 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* ფერების ეფექტები მობილურზე დაჭერისას */
-    .mobile-socials a.fb-icon:hover    { color: #1877f2 !important; }
-    .mobile-socials a.insta-icon:hover { color: #e1306c !important; }
-    .mobile-socials a.yt-icon:hover    { color: #ff0000 !important; }
+    .mobile-socials a:hover {
+        border-color: #aa954f;
+        background: rgba(170, 149, 79, 0.1);
+        color: #aa954f !important;
+        transform: translateY(-3px);
+    }
     /* 🌟 მშობელ ბლოკს ვაბრუნებთ მარცხენა მხარეს, სადაც თავიდანვე იყო */
     .nav-menu .nav-list li.nav-give-item {
         display: flex !important;
