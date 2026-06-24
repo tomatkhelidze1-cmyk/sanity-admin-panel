@@ -5,14 +5,14 @@ has_contact: true
 -->
 
 <!-- block: extra_head -->
-<style>/* სექციების შიდა დაშორებები */
+<style>/* Section Paddings */
         .section-padding-md {
             padding: 60px 0;
         }
 
         .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; }
 
-        /* ვიდეო პლეისჰოლდერების სტილი */
+        /* Video Placeholders Style */
         .main-video-placeholder {
             width: 100%;
             aspect-ratio: 16 / 9;
@@ -43,97 +43,142 @@ has_contact: true
             transform: scale(1.1);
         }
 
-        /* თიმ-ბადე (Advanced Asymmetric Team Layout) */
-        .team-asymmetric-layout {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr 1fr;
-            gap: 30px;
-            margin-top: 50px;
-            align-items: stretch;
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 80px 0;
+            background-color: #faf8f5;
+            text-align: center;
         }
 
-        .leader-card {
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .testimonial-card {
             background: #ffffff;
             border: 1px solid #f3eedf;
             border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 35px rgba(170, 149, 79, 0.01);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 35px 30px;
+            box-shadow: 0 10px 30px rgba(170, 149, 79, 0.02);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            position: relative;
         }
 
-        .leader-card:hover {
+        .testimonial-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(170, 149, 79, 0.06);
         }
 
-        .leader-card.main-leader-highlight {
-            grid-column: 1;
-            grid-row: 1 / span 2;
-            border: 1px solid #e1d4b7;
-            background: #fdfbf7;
-            box-shadow: 0 15px 45px rgba(170, 149, 79, 0.04);
+        .testimonial-card i.quote-icon {
+            font-size: 1.8rem;
+            color: #aa954f;
+            opacity: 0.8;
+            margin-bottom: 20px;
         }
 
-        .leader-card.main-leader-highlight .leader-img-wrap {
-            height: 440px;
-        }
-
-        .leader-img-wrap {
-            height: 220px;
-            background-color: #ebdcd0;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .leader-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .leader-card:hover .leader-img-wrap img {
-            transform: scale(1.02);
-        }
-
-        .leader-info {
-            padding: 25px;
+        .testimonial-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.7;
+            margin: 0 0 25px 0;
             flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        }
+
+        .testimonial-author {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #111;
+        }
+
+        .testimonial-author span {
+            font-weight: 500;
+            color: #888;
+            font-size: 0.8rem;
+            margin-left: 5px;
+        }
+
+        /* FAQ Accordion Section */
+        .faq-section {
+            padding: 80px 0;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 40px auto 0;
             text-align: left;
         }
 
-        .leader-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
-            color: #111;
-            margin: 0 0 4px 0;
+        .faq-item {
+            border-bottom: 1px solid #f3eedf;
+            padding: 5px 0;
         }
 
-        .leader-role {
-            font-family: 'Montserrat', sans-serif;
+        .faq-item:first-child {
+            border-top: 1px solid #f3eedf;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 10px;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s ease;
+        }
+
+        .faq-question h3 {
+            font-family: 'Montserrat', 'Noto Sans Georgian', sans-serif;
             font-weight: 600;
-            font-size: 0.72rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .leader-bio {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.86rem;
-            color: #666;
-            line-height: 1.6;
+            font-size: 1.05rem;
+            color: #111;
             margin: 0;
+            transition: color 0.2s ease;
         }
 
-        /* ბანაკის სექციის ვიდეო */
+        .faq-question:hover h3 {
+            color: #aa954f;
+        }
+
+        .faq-icon {
+            font-size: 0.9rem;
+            color: #aa954f;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        .faq-answer p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.7;
+            margin: 0;
+            padding-bottom: 22px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Camp Video Placeholder */
         .camp-video-placeholder {
             width: 100%;
             aspect-ratio: 16 / 9;
@@ -158,7 +203,7 @@ has_contact: true
             opacity: 1;
         }
 
-        /* პრემიუმ პულსირებადი ღილაკი ბანაკისთვის */
+        /* Premium Camp Button */
         .btn-camp-premium {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
@@ -186,9 +231,7 @@ has_contact: true
             box-shadow: 0 15px 30px rgba(170, 149, 79, 0.4);
         }
 
-        /* -----------------------------------------
-            სარეგისტრაციო მოდალური ფანჯარა (Camp Modal)
-        ----------------------------------------- */
+        /* Modal Dialog Styles */
         .camp-modal {
             position: fixed;
             top: 0;
@@ -290,7 +333,7 @@ has_contact: true
             background: #ffffff;
         }
 
-        /* პრემიუმ სტილის საბმიტ ღილაკი */
+        /* Premium Modal Submit Button */
         .btn-modal-primary {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
@@ -319,7 +362,7 @@ has_contact: true
             box-shadow: 0 15px 30px rgba(170, 149, 79, 0.4);
         }
 
-        /* ვალიდაციის შეცდომების ვიზუალური ეფექტები */
+        /* Validation Style Helpers */
         .form-group.has-error input, .form-group.has-error textarea {
             border-color: #ea4335 !important;
             background-color: #fffaf9 !important;
@@ -365,186 +408,11 @@ has_contact: true
                 grid-template-columns: 1fr !important;
                 gap: 40px !important;
             }
-            .team-asymmetric-layout {
-                grid-template-columns: 1fr 1fr;
-            }
-            .leader-card.main-leader-highlight {
-                grid-column: 1 / span 2;
-                grid-row: auto;
-            }
-            .leader-card.main-leader-highlight .leader-img-wrap {
-                height: 340px;
-            }
-        }
-
-        @media (max-width: 650px) {
-            .team-asymmetric-layout {
+            .testimonials-grid {
                 grid-template-columns: 1fr;
-            }
-            .leader-card.main-leader-highlight {
-                grid-column: auto;
+                gap: 20px;
             }
         }
-
-        /* Dual Content Zone (Switch Style) */
-        .dual-content-section {
-            padding: 100px 0;
-            overflow: hidden;
-        }
-        
-        .dual-content-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-            margin-bottom: 60px;
-        }
-        
-        .dual-content-row:last-child {
-            margin-bottom: 0;
-        }
-        
-        .dual-content-row.reverse {
-            direction: rtl;
-        }
-        .dual-content-row.reverse > * {
-            direction: ltr;
-        }
-        
-        .dual-text-area {
-            text-align: left;
-        }
-        
-        .dual-text-area h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-weight: 300;
-            color: #111;
-            margin-top: 0;
-            margin-bottom: 20px;
-        }
-        
-        .dual-text-area h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #222;
-            line-height: 1.45;
-            margin-bottom: 20px;
-        }
-        
-        .dual-text-area p {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.98rem;
-            color: #555;
-            line-height: 1.75;
-            margin: 0;
-        }
-        
-        .overlapping-images-wrapper {
-            position: relative;
-            height: 580px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .polaroid-frame {
-            background: #ffffff;
-            padding: 15px 15px 35px 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-            border: 1px solid #eaeaea;
-            position: absolute;
-            transition: transform 0.4s ease;
-        }
-        
-        .polaroid-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        
-        .frame-1 {
-            width: 330px;
-            height: 330px;
-            left: 2%;
-            top: 5%;
-            transform: rotate(-6deg);
-            z-index: 2;
-        }
-        
-        .frame-2 {
-            width: 320px;
-            height: 380px;
-            right: 5%;
-            bottom: 5%;
-            transform: rotate(4deg);
-            z-index: 3;
-        }
-        
-        .frame-single {
-            width: 440px;
-            height: 440px;
-            transform: rotate(-4deg);
-            z-index: 2;
-        }
-        
-        .overlapping-images-wrapper:hover .frame-1 {
-            transform: rotate(-3deg) scale(1.02);
-            z-index: 4;
-        }
-        
-        .overlapping-images-wrapper:hover .frame-2 {
-            transform: rotate(2deg) scale(1.02);
-            z-index: 4;
-        }
-        
-        .overlapping-images-wrapper:hover .frame-single {
-            transform: rotate(-1deg) scale(1.02);
-        }
-
-        @media (max-width: 991px) {
-            .dual-content-section {
-                padding: 60px 0;
-            }
-            .dual-content-row {
-                grid-template-columns: 1fr;
-                gap: 50px;
-                text-align: center;
-                margin-bottom: 40px;
-            }
-            .dual-content-row:last-child {
-                margin-bottom: 0;
-            }
-            .dual-content-row.reverse {
-                direction: ltr;
-            }
-            .dual-text-area {
-                text-align: center;
-                order: 2;
-            }
-            .overlapping-images-wrapper {
-                height: 460px;
-                order: 1;
-            }
-            .frame-1 {
-                width: 260px;
-                height: 260px;
-                left: 8%;
-                top: 5%;
-            }
-            .frame-2 {
-                width: 240px;
-                height: 290px;
-                right: 8%;
-                bottom: 5%;
-            }
-            .frame-single {
-                width: 330px;
-                height: 330px;
-            }
-        }</style>
 <!-- endblock -->
 
 <!-- block: content -->
@@ -594,65 +462,98 @@ has_contact: true
             </div>
         </section>
 
-        <!-- 🌟 Youth Activities Section (Consolidated) -->
-        <section class="dual-content-section" style="background-color: #faf8f5;">
+        <!-- Testimonials Section -->
+        <section class="testimonials-section">
             <div class="container">
-                
-                <!-- Row 1: Worship -->
-                <div class="dual-content-row scroll-reveal">
-                    <div class="overlapping-images-wrapper">
-                        <div class="polaroid-frame frame-1">
-                            <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=cover&w=400&q=80" alt="Worship crowd">
-                        </div>
-                        <div class="polaroid-frame frame-2">
-                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=cover&w=400&q=80" alt="Worship lead">
-                        </div>
+                <span class="cursive-text" style="color: #aa954f; display: block; margin-bottom: 10px; font-size: 1.2rem;">ახალგაზრდების ისტორიები</span>
+                <h2 style="font-family: 'Playfair Display', serif; font-weight: 300; font-size: 2.6rem; color: #111; margin: 0 0 10px 0;">რეალური ისტორიები, რეალური ადამიანები</h2>
+                <div class="testimonials-grid scroll-reveal">
+                    
+                    <div class="testimonial-card">
+                        <i class="fa-solid fa-quote-left quote-icon" aria-hidden="true"></i>
+                        <p class="testimonial-text">აქ ვიპოვე ადამიანები, რომლებიც ჩემი ცხოვრების განუყოფელი ნაწილი გახდნენ. ახალგაზრდულმა დამანახა, რომ ჩემი რწმენა არ არის მოსაწყენი რუტინა, არამედ ცოცხალი ურთიერთობაა ღმერთთან და მეგობრებთან.</p>
+                        <div class="testimonial-author">ანა, <span>19 წლის</span></div>
                     </div>
-                    <div class="dual-text-area">
-                        <span class="grid-uppertitle" style="color: #aa954f; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; display: block; margin-bottom: 10px;">თაყვანისცემა</span>
-                        <h2>თაყვანისცემა</h2>
-                        <h3>დრო, რომელიც გვაახლოებს იესოსთან და გვაბრუნებს მთავარ ღირებულებებთან.</h3>
-                        <p>სანამ სხვა რამეს გავაკეთებდეთ, ჩვენ გვსურს ვაჩვენოთ ახალგაზრდებს, თუ როგორ შეჩერდნენ ცხოვრების ამ აჩქარებულ რიტმში და მიმართონ ყურადღება ღმერთზე, რომელიც ყოველთვის მათთანაა.</p>
-                    </div>
-                </div>
 
-                <!-- Row 2: Preaching -->
-                <div class="dual-content-row reverse scroll-reveal">
-                    <div class="overlapping-images-wrapper">
-                        <div class="polaroid-frame frame-1">
-                            <img src="https://images.unsplash.com/photo-1526976775577-3f66e9da75aa?auto=format&fit=cover&w=400&q=80" alt="Preaching">
-                        </div>
-                        <div class="polaroid-frame frame-2">
-                            <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=cover&w=400&q=80" alt="Presentation">
-                        </div>
+                    <div class="testimonial-card">
+                        <i class="fa-solid fa-quote-left quote-icon" aria-hidden="true"></i>
+                        <p class="testimonial-text">ყოველთვის მეგონა, რომ ჩემი ნიჭი ეკლესიაში გამოუყენებელი იქნებოდა, მაგრამ აქ მედია გუნდში ჩავერთე და ახლა ფოტოებსა და ვიდეოებს ვამზადებ. ახალგაზრდული ჩემთვის ზრდის საუკეთესო სივრცეა.</p>
+                        <div class="testimonial-author">ლუკა, <span>21 წლის</span></div>
                     </div>
-                    <div class="dual-text-area">
-                        <span class="grid-uppertitle" style="color: #aa954f; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; display: block; margin-bottom: 10px;">სწავლება</span>
-                        <h2>სწავლება</h2>
-                        <h3>ბიბლიური ჭეშმარიტება, მორგებული ჩვენს რეალობაზე.</h3>
-                        <p>ყოველი შეხვედრისას ახალგაზრდები ისმენენ ბიბლიურ ჭეშმარიტებას იმის შესახებ, თუ ვინ არის ღმერთი, ვინ არიან თავად ისინი, რას ნიშნავს იესოს მიყოლა რეალურ ცხოვრებაში და როგორ შეუძლიათ შეცვალონ სამყარო უკეთესობისკენ.</p>
-                    </div>
-                </div>
 
-                <!-- Row 3: Small Groups -->
-                <div class="dual-content-row scroll-reveal">
-                    <div class="overlapping-images-wrapper">
-                        <div class="polaroid-frame frame-single">
-                            <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=cover&w=500&q=80" alt="Small Group huddle">
-                        </div>
+                    <div class="testimonial-card">
+                        <i class="fa-solid fa-quote-left quote-icon" aria-hidden="true"></i>
+                        <p class="testimonial-text">პირველად რომ მოვედი, ძალიან მორცხვი ვიყავი. მცირე ჯგუფების დისკუსიამ დამეხმარა გავხსნილიყავი, მეპოვა პასუხები ჩემს კითხვებზე და მეგრძნო თავი ისეთი საზოგადოების ნაწილად, რომელსაც მართლა ვუყვარვარ.</p>
+                        <div class="testimonial-author">მარიამი, <span>17 წლის</span></div>
                     </div>
-                    <div class="dual-text-area">
-                        <span class="grid-uppertitle" style="color: #aa954f; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; display: block; margin-bottom: 10px;">მცირე ჯგუფები</span>
-                        <h2>მცირე ჯგუფები</h2>
-                        <h3>ცხოვრებისეული ცვლილებები საუკეთესოდ ურთიერთობებში ხდება.</h3>
-                        <p>თითოეული ახალგაზრდა ნაწილდება თანატოლების მცირე ჯგუფში, რომელსაც ხელმძღვანელობს ლიდერი. ეს ჯგუფები ეხმარება მათ ერთად გაიაზრონ ცხოვრება, რწმენა და ერთობლივად მიჰყვნენ იესოს.</p>
-                    </div>
-                </div>
 
+                </div>
             </div>
         </section>
 
-        <section class="section-padding-md" style="background-color: #ffffff;">
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <span class="cursive-text" style="color: #aa954f; display: block; margin-bottom: 10px; font-size: 1.2rem;">კითხვა-პასუხი</span>
+                <h2 style="font-family: 'Playfair Display', serif; font-weight: 300; font-size: 2.6rem; color: #111; margin: 0 0 10px 0;">ხშირად დასმული კითხვები</h2>
+                <div class="faq-container scroll-reveal">
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>რა ასაკიდან შემიძლია შემოვუერთდე ახალგაზრდულ მსახურებას?</h3>
+                            <i class="fa-solid fa-chevron-down faq-icon" aria-hidden="true"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>ჩვენს მსახურებაში ჩართვა შეუძლიათ ახალგაზრდებს 14-დან 25 წლამდე.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>როდის და სად ტარდება შეხვედრები?</h3>
+                            <i class="fa-solid fa-chevron-down faq-icon" aria-hidden="true"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>ახალგაზრდული შეხვედრები ტარდება ყოველ პარასკევს, 18:00 საათზე, ეკლესიის მთავარ შენობაში (მისამართი: მესხის ქ. 42, ქუთაისი).</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>რა ხდება ახალგაზრდულ შეხვედრაზე?</h3>
+                            <i class="fa-solid fa-chevron-down faq-icon" aria-hidden="true"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>თითოეული შეხვედრა მოიცავს თანამედროვე მუსიკას (თაყვანისცემას), აქტუალურ თემებზე სწავლებას, სახალისო თამაშებს და რაც მთავარია — მცირე ჯგუფებში დისკუსიასა და ერთმანეთის გაცნობას.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>ფასიანია თუ არა ახალგაზრდულ შეხვედრებზე დასწრება?</h3>
+                            <i class="fa-solid fa-chevron-down faq-icon" aria-hidden="true"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>შეხვედრებზე დასწრება სრულიად უფასოა და ნებისმიერ მსურველს შეუძლია მოსვლა წინასწარი რეგისტრაციის გარეშე.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>როგორ შემიძლია ჩავერთო მოხალისედ მსახურების გუნდში?</h3>
+                            <i class="fa-solid fa-chevron-down faq-icon" aria-hidden="true"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>თუ გსურს ჩაერთო მუსიკალურ, მედია, დეკორაციის ან საორგანიზაციო გუნდში, შეგიძლია მიმართო ნებისმიერ ლიდერს შეხვედრის დასრულებისას ან მოგვწერო საკონტაქტო გვერდიდან.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Camp Section -->
+        <section class="section-padding-md" style="background-color: #faf8f5;">
             <div class="container">
                 <div class="responsive-two-col" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center;">
                     
@@ -869,6 +770,30 @@ has_contact: true
                 .catch(err => {
                     console.error('შეცდომა გაგზავნისას:', err);
                     alert("დაფიქსირდა ტექნიკური ხარვეზი. გთხოვთ სცადოთ მოგვიანებით.");
+                });
+            });
+
+            // FAQ Accordion toggling
+            document.querySelectorAll(".faq-question").forEach(question => {
+                question.addEventListener("click", () => {
+                    const item = question.parentElement;
+                    const answer = item.querySelector(".faq-answer");
+                    const isActive = item.classList.contains("active");
+                    
+                    document.querySelectorAll(".faq-item.active").forEach(activeItem => {
+                        if (activeItem !== item) {
+                            activeItem.classList.remove("active");
+                            activeItem.querySelector(".faq-answer").style.maxHeight = null;
+                        }
+                    });
+                    
+                    if (isActive) {
+                        item.classList.remove("active");
+                        answer.style.maxHeight = null;
+                    } else {
+                        item.classList.add("active");
+                        answer.style.maxHeight = answer.scrollHeight + "px";
+                    }
                 });
             });
 
