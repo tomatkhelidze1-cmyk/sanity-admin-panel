@@ -243,8 +243,9 @@ def build_site():
             # Shared components
             # Navbar
             navbar_html = blocks.get('navbar', navbar_template)
-            if is_subpage:
-                navbar_html = adapt_paths_for_subpage(navbar_html)
+            # Keep navbar identical to index.html across all pages (no path adaptation)
+            # if is_subpage:
+            #     navbar_html = adapt_paths_for_subpage(navbar_html)
             page_html = page_html.replace('{{navbar}}', navbar_html)
             
             # Contact
