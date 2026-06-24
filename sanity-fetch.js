@@ -9,6 +9,23 @@ function getYouTubeId(url) {
   return (match && match[2].length === 11) ? match[2] : null;
 }
 
+function getVideoDetails(url) {
+  if (!url) return null;
+  // YouTube
+  const ytRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const ytMatch = url.match(ytRegExp);
+  if (ytMatch && ytMatch[2].length === 11) {
+    return { platform: 'youtube', id: ytMatch[2] };
+  }
+  // Vimeo
+  const vimeoRegExp = /vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/;
+  const vimeoMatch = url.match(vimeoRegExp);
+  if (vimeoMatch && vimeoMatch[3]) {
+    return { platform: 'vimeo', id: vimeoMatch[3] };
+  }
+  return null;
+}
+
 function updatePageContent() {
   const groqQuery = `{
     "siteContent": *[_type == "siteContent"][0]{
@@ -166,14 +183,34 @@ function updatePageContent() {
 
           // Youth Camp (Youth Page)
           if (siteContent.youthCampVideoUrl) {
-            const campVideoId = getYouTubeId(siteContent.youthCampVideoUrl);
+            const videoDetails = getVideoDetails(siteContent.youthCampVideoUrl);
             const campVideoEl = document.getElementById('sanity-youth-camp-video');
-            if (campVideoId && campVideoEl) {
+            if (videoDetails && campVideoEl) {
+              const campVideoId = videoDetails.id;
+              const platform = videoDetails.platform;
               campVideoEl.setAttribute('data-video-id', campVideoId);
-              if (typeof setYouTubeThumbnailBackground === 'function') {
-                setYouTubeThumbnailBackground(campVideoEl, campVideoId, 'linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4))');
+              campVideoEl.setAttribute('data-video-platform', platform);
+              if (platform === 'vimeo') {
+                campVideoEl.style.backgroundSize = 'cover';
+                campVideoEl.style.backgroundPosition = 'center';
+                campVideoEl.style.position = 'relative';
+                fetch(`https://vimeo.com/api/v2/video/${campVideoId}.json`)
+                  .then(res => res.json())
+                  .then(data => {
+                    if (data && data[0] && data[0].thumbnail_large) {
+                      campVideoEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('${data[0].thumbnail_large}')`;
+                    }
+                  })
+                  .catch(err => {
+                    console.error('Error fetching Vimeo thumbnail:', err);
+                    campVideoEl.style.backgroundColor = '#1e1e1e';
+                  });
               } else {
-                campVideoEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('https://img.youtube.com/vi/${campVideoId}/hqdefault.jpg')`;
+                if (typeof setYouTubeThumbnailBackground === 'function') {
+                  setYouTubeThumbnailBackground(campVideoEl, campVideoId, 'linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4))');
+                } else {
+                  campVideoEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('https://img.youtube.com/vi/${campVideoId}/hqdefault.jpg')`;
+                }
               }
             }
           }
@@ -192,14 +229,34 @@ function updatePageContent() {
 
           // Kids Camp (Kids Page)
           if (siteContent.kidsCampVideoUrl) {
-            const kidsVideoId = getYouTubeId(siteContent.kidsCampVideoUrl);
+            const videoDetails = getVideoDetails(siteContent.kidsCampVideoUrl);
             const kidsVideoEl = document.getElementById('sanity-kids-camp-video');
-            if (kidsVideoId && kidsVideoEl) {
+            if (videoDetails && kidsVideoEl) {
+              const kidsVideoId = videoDetails.id;
+              const platform = videoDetails.platform;
               kidsVideoEl.setAttribute('data-video-id', kidsVideoId);
-              if (typeof setYouTubeThumbnailBackground === 'function') {
-                setYouTubeThumbnailBackground(kidsVideoEl, kidsVideoId, 'linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4))');
+              kidsVideoEl.setAttribute('data-video-platform', platform);
+              if (platform === 'vimeo') {
+                kidsVideoEl.style.backgroundSize = 'cover';
+                kidsVideoEl.style.backgroundPosition = 'center';
+                kidsVideoEl.style.position = 'relative';
+                fetch(`https://vimeo.com/api/v2/video/${kidsVideoId}.json`)
+                  .then(res => res.json())
+                  .then(data => {
+                    if (data && data[0] && data[0].thumbnail_large) {
+                      kidsVideoEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('${data[0].thumbnail_large}')`;
+                    }
+                  })
+                  .catch(err => {
+                    console.error('Error fetching Vimeo thumbnail:', err);
+                    kidsVideoEl.style.backgroundColor = '#1e1e1e';
+                  });
               } else {
-                kidsVideoEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('https://img.youtube.com/vi/${kidsVideoId}/hqdefault.jpg')`;
+                if (typeof setYouTubeThumbnailBackground === 'function') {
+                  setYouTubeThumbnailBackground(kidsVideoEl, kidsVideoId, 'linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4))');
+                } else {
+                  kidsVideoEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('https://img.youtube.com/vi/${kidsVideoId}/hqdefault.jpg')`;
+                }
               }
             }
           }

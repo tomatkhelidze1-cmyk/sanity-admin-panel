@@ -364,22 +364,50 @@ document.addEventListener('DOMContentLoaded', () => {
     // ──────────────────────────────────────────────
     const setupVideoClick = (el) => {
         const videoId = el.getAttribute('data-video-id') || '-yhiipmNtMA';
+        const platform = el.getAttribute('data-video-platform') || (videoId.match(/^\d+$/) ? 'vimeo' : 'youtube');
         
-        /* Set high quality YouTube thumbnail dynamically */
-        if (typeof setYouTubeThumbnailBackground === 'function') {
-            setYouTubeThumbnailBackground(el, videoId, 'linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2))');
+        if (platform === 'vimeo') {
+            el.style.backgroundSize = 'cover';
+            el.style.backgroundPosition = 'center';
+            el.style.position = 'relative';
+            
+            // Try to fetch Vimeo thumbnail
+            fetch(`https://vimeo.com/api/v2/video/${videoId}.json`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data[0] && data[0].thumbnail_large) {
+                        el.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('${data[0].thumbnail_large}')`;
+                    }
+                })
+                .catch(err => {
+                    console.error('Error fetching Vimeo thumbnail:', err);
+                    el.style.backgroundColor = '#1e1e1e';
+                });
         } else {
-            el.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('https://img.youtube.com/vi/${videoId}/hqdefault.jpg')`;
+            /* Set high quality YouTube thumbnail dynamically */
+            if (typeof setYouTubeThumbnailBackground === 'function') {
+                setYouTubeThumbnailBackground(el, videoId, 'linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2))');
+            } else {
+                el.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('https://img.youtube.com/vi/${videoId}/hqdefault.jpg')`;
+            }
+            el.style.backgroundSize = 'cover';
+            el.style.backgroundPosition = 'center';
+            el.style.position = 'relative';
         }
-        el.style.backgroundSize = 'cover';
-        el.style.backgroundPosition = 'center';
-        el.style.position = 'relative';
 
         el.addEventListener('click', () => {
             const iframe = document.createElement('iframe');
-            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-            iframe.setAttribute('allowfullscreen', 'true');
-            iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+            
+            if (platform === 'vimeo') {
+                iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share');
+                iframe.setAttribute('allowfullscreen', 'true');
+                iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+                iframe.setAttribute('frameborder', '0');
+            } else {
+                iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                iframe.setAttribute('allowfullscreen', 'true');
+                iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+            }
 
             // შეფუთვა video-container კლასში სითხისთვის
             const videoContainer = document.createElement('div');
@@ -396,9 +424,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Append container to the DOM first so the navigation is linked to the active user gesture
             el.appendChild(videoContainer);
             
-            // Set src AFTER appending to DOM to trigger active autoplay
-            const activeVideoId = el.getAttribute('data-video-id') || '-yhiipmNtMA';
-            iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${activeVideoId}?autoplay=1&vq=hd1080&rel=0&modestbranding=1`);
+            const activeVideoId = el.getAttribute('data-video-id') || videoId;
+            const activePlatform = el.getAttribute('data-video-platform') || platform;
+            
+            if (activePlatform === 'vimeo') {
+                iframe.setAttribute('src', `https://player.vimeo.com/video/${activeVideoId}?autoplay=1&badge=0&autopause=0&player_id=0&app_id=58479`);
+            } else {
+                iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${activeVideoId}?autoplay=1&vq=hd1080&rel=0&modestbranding=1`);
+            }
             
             // Focus the iframe immediately to transfer user activation
             iframe.focus();
