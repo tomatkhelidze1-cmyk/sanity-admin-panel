@@ -8,38 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. STICKY HEADER - სქროლის ეფექტი (ხელუხლებელი)
     // ──────────────────────────────────────────────
     const header = document.querySelector('.main-header');
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
 
     if (header) {
-        let lastScrollY = window.scrollY;
-        
         const onScroll = () => {
-            const currentScrollY = window.scrollY;
-            
-            // 1. Toggle standard scroll class
-            header.classList.toggle('scrolled', currentScrollY > 60);
-            
-            // 2. Mobile smart header logic (hide on scroll down, show on scroll up)
-            if (hamburger) {
-                const isMobile = window.getComputedStyle(hamburger).display !== 'none';
-                const isMenuOpen = navMenu && navMenu.classList.contains('open');
-                
-                if (isMobile && !isMenuOpen) {
-                    if (currentScrollY > 100 && currentScrollY > lastScrollY) {
-                        // Scrolling down - hide header
-                        header.classList.add('header-hidden');
-                    } else {
-                        // Scrolling up or at the top - show header
-                        header.classList.remove('header-hidden');
-                    }
-                } else {
-                    // Always show on desktop or when mobile menu is open
-                    header.classList.remove('header-hidden');
-                }
-            }
-            
-            lastScrollY = currentScrollY;
+            header.classList.toggle('scrolled', window.scrollY > 60);
         };
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();

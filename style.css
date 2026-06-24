@@ -272,7 +272,7 @@ ul {
     width: 100%;
     z-index: 1000;
     padding: 20px 0;
-    transition: background var(--transition), padding var(--transition), box-shadow var(--transition), transform 0.3s ease;
+    transition: background var(--transition), padding var(--transition), box-shadow var(--transition);
 }
 
 .main-header.scrolled {
@@ -281,10 +281,6 @@ ul {
     -webkit-backdrop-filter: blur(20px);
     padding: 14px 0;
     box-shadow: 0 4px 30px rgba(0,0,0,0.4);
-}
-
-.main-header.header-hidden {
-    transform: translateY(-100%);
 }
 
 .header-container {
