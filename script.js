@@ -480,5 +480,56 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     });
 
+    // ──────────────────────────────────────────────
+    // 8. OPTIMIZE VIDEO PLAYBACK (Intersection Observer)
+    // ──────────────────────────────────────────────
+    const setupIntersectionObserverForVideo = (videoEl) => {
+        if (!videoEl || videoEl.dataset.observed === 'true') return;
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0
+        };
+        
+        const observerCallback = (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    videoEl.play().catch(err => {
+                        console.warn('Video play interrupted or blocked:', err);
+                    });
+                } else {
+                    videoEl.pause();
+                }
+            });
+        };
+        
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+        observer.observe(videoEl);
+        videoEl.dataset.observed = 'true';
+    };
+
+    // Watch for current and future video elements in the building container
+    const watchVideoContainer = document.getElementById('building-video-container');
+    if (watchVideoContainer) {
+        const initialVideo = watchVideoContainer.querySelector('video');
+        if (initialVideo) {
+            setupIntersectionObserverForVideo(initialVideo);
+        }
+        const mutObserver = new MutationObserver(() => {
+            const currentVideo = watchVideoContainer.querySelector('video');
+            if (currentVideo) {
+                setupIntersectionObserverForVideo(currentVideo);
+            }
+        });
+        mutObserver.observe(watchVideoContainer, { childList: true });
+    }
+
+    // Also support direct fallback selections
+    const directVideo = document.getElementById('churchVideo') || document.getElementById('sanity-video-element');
+    if (directVideo) {
+        setupIntersectionObserverForVideo(directVideo);
+    }
+
 });
 
