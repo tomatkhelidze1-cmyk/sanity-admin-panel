@@ -1049,7 +1049,7 @@ iframe, video {
 .video-container {
     position: relative;
     padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-    padding-top: 30px; 
+    padding-top: 0; 
     height: 0; 
     overflow: hidden;
     width: 100%;
