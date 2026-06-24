@@ -87,14 +87,16 @@ has_contact: true
         <div class="building-container">
 
             <div class="building-video-wrap">
-    <div class="video-container">
-        <iframe 
-            id="sanity-video-iframe"
-            src="https://www.youtube-nocookie.com/embed/FnAaUcbma58?autoplay=1&mute=1&loop=1&playlist=FnAaUcbma58&controls=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&showinfo=0&vq=hd1080" 
-            allow="autoplay; encrypted-media" 
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-            style="pointer-events: none;"> </iframe>
+    <div class="video-container" id="building-video-container">
+        <video 
+            id="sanity-video-element"
+            src="https://res.cloudinary.com/dllgqmubd/video/upload/v1782325226/church_project_AI_ku3xyg.mp4" 
+            autoplay 
+            loop 
+            muted 
+            playsinline 
+            style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; pointer-events: none;">
+        </video>
     </div>
 </div>
 

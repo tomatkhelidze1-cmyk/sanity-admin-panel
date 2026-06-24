@@ -118,10 +118,52 @@ function updatePageContent() {
 
           // Main Video
           if (siteContent.youtubeUrl) {
-            const videoId = getYouTubeId(siteContent.youtubeUrl);
-            const iframeEl = document.getElementById('sanity-video-iframe');
-            if (videoId && iframeEl) {
-              iframeEl.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&showinfo=0&vq=hd1080`;
+            const videoUrl = siteContent.youtubeUrl;
+            const containerEl = document.getElementById('building-video-container') || document.querySelector('.building-video-wrap .video-container');
+            if (containerEl) {
+              if (videoUrl.includes('.mp4') || videoUrl.includes('cloudinary.com')) {
+                // Render HTML5 video element
+                containerEl.innerHTML = `
+                  <video 
+                      id="sanity-video-element"
+                      src="${videoUrl}" 
+                      autoplay 
+                      loop 
+                      muted 
+                      playsinline 
+                      style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; pointer-events: none;">
+                  </video>
+                `;
+              } else {
+                const videoDetails = getVideoDetails(videoUrl);
+                if (videoDetails) {
+                  if (videoDetails.platform === 'vimeo') {
+                    containerEl.innerHTML = `
+                      <iframe 
+                          id="sanity-video-iframe"
+                          src="https://player.vimeo.com/video/${videoDetails.id}?autoplay=1&mute=1&loop=1&autopause=0&background=1" 
+                          allow="autoplay; fullscreen; picture-in-picture" 
+                          referrerpolicy="strict-origin-when-cross-origin"
+                          allowfullscreen
+                          style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; pointer-events: none;"
+                          frameborder="0">
+                      </iframe>
+                    `;
+                  } else {
+                    containerEl.innerHTML = `
+                      <iframe 
+                          id="sanity-video-iframe"
+                          src="https://www.youtube-nocookie.com/embed/${videoDetails.id}?autoplay=1&mute=1&loop=1&playlist=${videoDetails.id}&controls=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&showinfo=0&vq=hd1080" 
+                          allow="autoplay; encrypted-media" 
+                          referrerpolicy="strict-origin-when-cross-origin"
+                          allowfullscreen
+                          style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; pointer-events: none;"
+                          frameborder="0">
+                      </iframe>
+                    `;
+                  }
+                }
+              }
             }
           }
 
