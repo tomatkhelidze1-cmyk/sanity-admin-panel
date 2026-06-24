@@ -7,19 +7,7 @@ has_contact: true
 <!-- block: extra_head -->
 <style>/* სპეციფიკური სტილები ქადაგებების გვერდისთვის */
         .sermons-hero {
-            background: linear-gradient(rgba(17, 17, 17, 0.75), rgba(17, 17, 17, 0.95)), url('https://images.unsplash.com/photo-1438032005730-c779502df39b?auto=format&fit=crop&q=80&w=1600') center/cover no-repeat;
-            padding: 180px 20px 100px;
-            text-align: center;
-            color: var(--white);
-        }
-        .sermons-hero h1 {
-            color: var(--white) !important;
-            font-family: 'FiraGo-SemiBold', sans-serif !important;
-            font-feature-settings: "case" on;
-            white-space: normal !important;
-            text-align: center !important;
-            line-height: 1.25 !important;
-            font-size: clamp(1.8rem, 4.5vw, 3.2rem) !important;
+            background: linear-gradient(rgba(17, 17, 17, 0.75), rgba(17, 17, 17, 0.95)), url('https://images.unsplash.com/photo-1438032005730-c779502df39b?auto=format&fit=crop&q=80&w=1600') center/cover no-repeat !important;
         }
         .grid-uppertitle {
             display: block;
@@ -348,22 +336,8 @@ has_contact: true
             color: var(--gold);
             font-weight: 700;
         }
-        
-        /* ნავბარის კორექცია */
-        .main-header {
-            background-color: rgba(17, 17, 17, 0.85) !important;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-        }
-        .main-header.scrolled {
-            background-color: var(--dark-900) !important;
-        }
-
         /* 📱 რესპონსიული დიზაინი მობილურებისთვის */
         @media (max-width: 768px) {
-            .sermons-hero {
-                padding: 140px 20px 70px;
-            }
             .main-player-section {
                 padding: 40px 15px;
             }
@@ -436,10 +410,13 @@ has_contact: true
 <!-- endblock -->
 
 <!-- block: content -->
-<section class="sermons-hero">
-        <span class="grid-uppertitle">მედია არქივი</span>
-        <h1>ონლაინ ქადაგებები</h1>
-        <p class="cursive-text" style="margin-bottom: 0; color: var(--gold-light);">მოუსმინე და გაიზარდე რწმენაში</p>
+<section class="hero-section sermons-hero" style="height: 45vh; min-height: 350px;" aria-label="Page banner">
+        <div class="hero-overlay" aria-hidden="true"></div>
+        <div class="hero-content">
+            <span class="grid-uppertitle">მედია არქივი</span>
+            <h1>ონლაინ ქადაგებები</h1>
+            <p class="cursive-text" style="margin-bottom: 0; color: var(--gold-light);">მოუსმინე და გაიზარდე რწმენაში</p>
+        </div>
     </section>
 
     <section class="main-player-section" id="playerZone">
