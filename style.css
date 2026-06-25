@@ -1685,7 +1685,7 @@ iframe, video {
     .welcome-banner.floating-banner    { margin-top: 0; }
     .building-video-wrap                { width: 90%; }
     .card-item                         { flex: 0 0 260px; height: 330px; }
-    .main-video-placeholder            { height: 260px; }
+    .main-video-placeholder            { height: auto !important; aspect-ratio: 16 / 9 !important; }
 }
 
 /* ⚡ სლაიდერის მაუსის მიტანის ეფექტების დაჩქარება და ოპტიმიზაცია */
