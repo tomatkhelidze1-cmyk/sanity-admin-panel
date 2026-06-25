@@ -13,18 +13,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (header) {
         let lastScrollY = window.scrollY;
-        
+
         const onScroll = () => {
             const currentScrollY = window.scrollY;
-            
+
             // 1. Toggle standard scroll class
             header.classList.toggle('scrolled', currentScrollY > 60);
-            
+
             // 2. Mobile smart header logic (hide on scroll down, show on scroll up)
             if (hamburger) {
                 const isMobile = window.getComputedStyle(hamburger).display !== 'none';
                 const isMenuOpen = navMenu && navMenu.classList.contains('open');
-                
+
                 if (isMobile && !isMenuOpen) {
                     if (currentScrollY > 100 && currentScrollY > lastScrollY) {
                         // Scrolling down - hide header
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     header.classList.remove('header-hidden');
                 }
             }
-            
+
             lastScrollY = currentScrollY;
         };
         window.addEventListener('scroll', onScroll, { passive: true });
@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // მენიუს დაკეტვა გარედან კლიკისას
         document.addEventListener('click', (e) => {
-            if (navMenu.classList.contains('open') && 
-                !navMenu.contains(e.target) && 
+            if (navMenu.classList.contains('open') &&
+                !navMenu.contains(e.target) &&
                 !hamburger.contains(e.target)) {
                 navMenu.classList.remove('open');
                 hamburger.classList.remove('active');
@@ -132,12 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // ──────────────────────────────────────────────
     // 4. CARD SLIDER (მკაცრი დაცვა: ერთი დრაგი = მაქსიმუმ ერთი ქარდი)
     // ──────────────────────────────────────────────
-// ──────────────────────────────────────────────
+    // ──────────────────────────────────────────────
     // 4. CARD SLIDER (მკაცრი დაცვა: ერთი დრაგი = მაქსიმუმ ერთი ქარდი)
     // ──────────────────────────────────────────────
-    const track      = document.querySelector('.slider-track');
-    const container  = document.querySelector('.slider-container');
-    const arrowLeft  = document.querySelector('.arrow-left');
+    const track = document.querySelector('.slider-track');
+    const container = document.querySelector('.slider-container');
+    const arrowLeft = document.querySelector('.arrow-left');
     const arrowRight = document.querySelector('.arrow-right');
 
     if (track && container) {
@@ -149,12 +149,12 @@ document.addEventListener('DOMContentLoaded', () => {
             originalItems.forEach(item => track.appendChild(item.cloneNode(true)));
         }
 
-        let currentX   = 0;
-        let targetX    = 0;
+        let currentX = 0;
+        let targetX = 0;
         let isDragging = false;
-        let startX     = 0;
-        let storedX    = 0;
-        const EASE     = 0.075; 
+        let startX = 0;
+        let storedX = 0;
+        const EASE = 0.075;
         const DRAG_THRESHOLD = 50; // მინიმალური პიქსელები დრაგის დასაფიქსირებლად
         let lastTouchTime = 0;
 
@@ -165,11 +165,11 @@ document.addEventListener('DOMContentLoaded', () => {
         function getItemMetrics() {
             const item = track.querySelector('.card-item');
             if (!item) return { itemWidth: 380, totalWidth: 380 * originalCount };
-            const rect  = item.getBoundingClientRect();
+            const rect = item.getBoundingClientRect();
             const style = window.getComputedStyle(item);
-            const ml    = parseFloat(style.marginLeft)  || 0;
-            const mr    = parseFloat(style.marginRight) || 0;
-            const itemWidth  = rect.width + ml + mr;
+            const ml = parseFloat(style.marginLeft) || 0;
+            const mr = parseFloat(style.marginRight) || 0;
+            const itemWidth = rect.width + ml + mr;
             const totalWidth = itemWidth * originalCount;
             return { itemWidth, totalWidth };
         }
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentX = targetX;
             } else {
                 // საწყისი ჩატვირთვა
-                targetX  = -totalWidth + pad;
+                targetX = -totalWidth + pad;
                 currentX = -totalWidth + pad;
             }
 
@@ -212,9 +212,9 @@ document.addEventListener('DOMContentLoaded', () => {
         function snapToNearest() {
             const { itemWidth } = getItemMetrics();
             const pad = getContainerPadding();
-            let rel   = targetX - pad;
-            rel       = Math.round(rel / itemWidth) * itemWidth;
-            targetX   = rel + pad;
+            let rel = targetX - pad;
+            rel = Math.round(rel / itemWidth) * itemWidth;
+            targetX = rel + pad;
         }
 
         // მაუსის დაჭერა
@@ -224,24 +224,24 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!e.target.closest('.slider-track')) return; // სქროლვა მხოლოდ სლაიდერის შიგთავსზე
             e.preventDefault();
             isDragging = true;
-            startX  = e.clientX;
+            startX = e.clientX;
             storedX = targetX;
         });
 
         // მაუსის მოძრაობა მკაცრი ჩამკეტით
         window.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
-            
+
             const { itemWidth } = getItemMetrics();
             const diff = e.clientX - startX;
 
             if (diff > DRAG_THRESHOLD) {
                 targetX = storedX + itemWidth;
-                isDragging = false; 
+                isDragging = false;
                 snapToNearest();
             } else if (diff < -DRAG_THRESHOLD) {
                 targetX = storedX - itemWidth;
-                isDragging = false; 
+                isDragging = false;
                 snapToNearest();
             } else {
                 targetX = storedX + diff;
@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // 🌟 თაჩ დრაგი მობილურისთვის ოპტიმიზებული სქროლის ბლოკით (ახალი კოდი სწორ ადგილას)
-        let touchStartX = 0, touchStartY = 0, touchStoredX = 0; 
+        let touchStartX = 0, touchStartY = 0, touchStoredX = 0;
         let isTouchDragging = false;
 
         container.addEventListener('touchstart', (e) => {
@@ -266,15 +266,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.closest('.slider-arrow')) return;
             if (!e.target.closest('.slider-track')) return; // სქროლვა მხოლოდ სლაიდერის შიგთავსზე
             isTouchDragging = true;
-            touchStartX  = e.touches[0].clientX;
-            touchStartY  = e.touches[0].clientY; 
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
             touchStoredX = targetX;
         }, { passive: true });
 
         container.addEventListener('touchmove', (e) => {
             lastTouchTime = Date.now();
             if (!isTouchDragging) return;
-            
+
             const diffX = e.touches[0].clientX - touchStartX;
             const diffY = e.touches[0].clientY - touchStartY;
 
@@ -284,15 +284,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const { itemWidth } = getItemMetrics();
-            const diff = diffX; 
+            const diff = diffX;
 
             if (diff > DRAG_THRESHOLD) {
                 targetX = touchStoredX + itemWidth;
-                isTouchDragging = false; 
+                isTouchDragging = false;
                 snapToNearest();
             } else if (diff < -DRAG_THRESHOLD) {
                 targetX = touchStoredX - itemWidth;
-                isTouchDragging = false; 
+                isTouchDragging = false;
                 snapToNearest();
             } else {
                 targetX = touchStoredX + diff;
@@ -359,18 +359,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-   // ──────────────────────────────────────────────
+    // ──────────────────────────────────────────────
     // 6. VIDEO PLACEHOLDERS - ინტერაქტიული YouTube ფლეიერი და Thumbnail-ები
     // ──────────────────────────────────────────────
     const setupVideoClick = (el) => {
         const videoId = el.getAttribute('data-video-id') || '-yhiipmNtMA';
         const platform = el.getAttribute('data-video-platform') || (videoId.match(/^\d+$/) ? 'vimeo' : 'youtube');
-        
+
         if (platform === 'vimeo') {
             el.style.backgroundSize = 'cover';
             el.style.backgroundPosition = 'center';
             el.style.position = 'relative';
-            
+
             // Try to fetch Vimeo thumbnail
             fetch(`https://vimeo.com/api/v2/video/${videoId}.json`)
                 .then(res => res.json())
@@ -397,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         el.addEventListener('click', () => {
             const iframe = document.createElement('iframe');
-            
+
             if (platform === 'vimeo') {
                 iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share');
                 iframe.setAttribute('allowfullscreen', 'true');
@@ -423,16 +423,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Append container to the DOM first so the navigation is linked to the active user gesture
             el.appendChild(videoContainer);
-            
+
             const activeVideoId = el.getAttribute('data-video-id') || videoId;
             const activePlatform = el.getAttribute('data-video-platform') || platform;
-            
+
             if (activePlatform === 'vimeo') {
                 iframe.setAttribute('src', `https://player.vimeo.com/video/${activeVideoId}?autoplay=1&badge=0&autopause=0&player_id=0&app_id=58479`);
             } else {
                 iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${activeVideoId}?autoplay=1&vq=hd1080&rel=0&modestbranding=1`);
             }
-            
+
             // Focus the iframe immediately to transfer user activation
             iframe.focus();
 
@@ -458,20 +458,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // 7. რუკის სქროლის დამცავი ფენა (Map Overlay) (ხელუხლებელი)
     // ──────────────────────────────────────────────
     document.querySelectorAll('.map-wrapper').forEach(wrapper => {
-        const overlay  = wrapper.querySelector('.map-overlay');
-        const hint     = wrapper.closest('.contact-map-col')?.querySelector('.map-hint');
+        const overlay = wrapper.querySelector('.map-overlay');
+        const hint = wrapper.closest('.contact-map-col')?.querySelector('.map-hint');
         const hintText = hint?.querySelector('.hint-text');
         if (!overlay) return;
 
         overlay.addEventListener('click', () => {
             overlay.classList.add('map-unlocked');
-            if (hint)     hint.classList.add('hint-active');
+            if (hint) hint.classList.add('hint-active');
             if (hintText) hintText.textContent = 'რუკის დასაბლოკად მაუსი გაწიეთ გარეთ';
         });
 
         wrapper.addEventListener('mouseleave', () => {
             overlay.classList.remove('map-unlocked');
-            if (hint)     hint.classList.remove('hint-active');
+            if (hint) hint.classList.remove('hint-active');
             if (hintText) hintText.textContent = 'დააკლიკეთ რუკაზე ინტერაქტივისთვის';
         });
 
@@ -485,13 +485,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // ──────────────────────────────────────────────
     const setupIntersectionObserverForVideo = (videoEl) => {
         if (!videoEl || videoEl.dataset.observed === 'true') return;
-        
+
         const observerOptions = {
             root: null,
             rootMargin: '0px',
             threshold: 0
         };
-        
+
         const observerCallback = (entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -503,7 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         };
-        
+
         const observer = new IntersectionObserver(observerCallback, observerOptions);
         observer.observe(videoEl);
         videoEl.dataset.observed = 'true';
@@ -537,20 +537,12 @@ document.addEventListener('DOMContentLoaded', () => {
 let scrollPosition = 0;
 
 window.lockBodyScroll = function() {
-    scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollPosition}px`;
-    document.body.style.width = '100%';
-    document.body.style.height = '100%';
+    document.documentElement.classList.add('no-scroll');
+    document.body.classList.add('no-scroll');
 };
 
 window.unlockBodyScroll = function() {
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    document.body.style.height = '';
-    window.scrollTo(0, scrollPosition);
+    document.documentElement.classList.remove('no-scroll');
+    document.body.classList.remove('no-scroll');
 };
 
