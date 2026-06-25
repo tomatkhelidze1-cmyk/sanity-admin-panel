@@ -534,15 +534,36 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Global Body Scroll Lock/Unlock helpers
-let scrollPosition = 0;
+let isScrollLocked = false;
+
+function preventDefault(e) {
+    const activeOverlay = document.querySelector('.creed-modal-overlay.open, .camp-modal.modal-active, .reg-modal.modal-active, .group-modal.modal-active, .modal.modal-active');
+    if (activeOverlay) {
+        const scrollableContent = activeOverlay.querySelector('.creed-modal, .modal-content-box, .modal-body, #campRegisterForm, #groupRegisterForm');
+        if (scrollableContent) {
+            if (scrollableContent.contains(e.target)) {
+                return;
+            }
+        }
+        e.preventDefault();
+    }
+}
 
 window.lockBodyScroll = function() {
     document.documentElement.classList.add('no-scroll');
     document.body.classList.add('no-scroll');
+    if (!isScrollLocked) {
+        window.addEventListener('wheel', preventDefault, { passive: false });
+        window.addEventListener('touchmove', preventDefault, { passive: false });
+        isScrollLocked = true;
+    }
 };
 
 window.unlockBodyScroll = function() {
     document.documentElement.classList.remove('no-scroll');
     document.body.classList.remove('no-scroll');
+    window.removeEventListener('wheel', preventDefault, { passive: false });
+    window.removeEventListener('touchmove', preventDefault, { passive: false });
+    isScrollLocked = false;
 };
 
