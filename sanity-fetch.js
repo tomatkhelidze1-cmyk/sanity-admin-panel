@@ -122,11 +122,15 @@ function updatePageContent() {
             const containerEl = document.getElementById('building-video-container') || document.querySelector('.building-video-wrap .video-container');
             if (containerEl) {
               if (videoUrl.includes('.mp4') || videoUrl.includes('cloudinary.com')) {
+                let optimizedUrl = videoUrl;
+                if (videoUrl.includes('cloudinary.com') && !videoUrl.includes('f_auto') && !videoUrl.includes('q_auto')) {
+                  optimizedUrl = videoUrl.replace('/video/upload/', '/video/upload/f_auto,q_auto/');
+                }
                 // Render HTML5 video element
                 containerEl.innerHTML = `
                   <video 
                       id="sanity-video-element"
-                      src="${videoUrl}" 
+                      src="${optimizedUrl}" 
                       autoplay 
                       loop 
                       muted 
