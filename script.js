@@ -533,3 +533,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+// Global Body Scroll Lock/Unlock helpers
+let scrollPosition = 0;
+
+window.lockBodyScroll = function() {
+    scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollPosition}px`;
+    document.body.style.width = '100%';
+    document.body.style.height = '100%';
+};
+
+window.unlockBodyScroll = function() {
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.height = '';
+    window.scrollTo(0, scrollPosition);
+};
+

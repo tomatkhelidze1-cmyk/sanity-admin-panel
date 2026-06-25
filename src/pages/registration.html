@@ -279,12 +279,12 @@ has_contact: true
                         regForm.style.display = "block";
                         successToast.style.display = "none";
                         modal.classList.add("modal-active");
-                        document.body.style.overflow = "hidden";
+                        if (typeof window.lockBodyScroll === "function") window.lockBodyScroll();
                     }
                 });
             }
 
-            closeModalBtn.addEventListener("click", () => { modal.classList.remove("modal-active"); document.body.style.overflow = ""; });
+            closeModalBtn.addEventListener("click", () => { modal.classList.remove("modal-active"); if (typeof window.unlockBodyScroll === "function") window.unlockBodyScroll(); });
 
             function buildFormFields(event) {
                 formContainer.innerHTML = "";
@@ -416,7 +416,7 @@ has_contact: true
                     successToast.style.display = "block";
                     setTimeout(() => {
                         modal.classList.remove("modal-active");
-                        document.body.style.overflow = "";
+                        if (typeof window.unlockBodyScroll === "function") window.unlockBodyScroll();
                     }, 2500);
                 })
                 .catch(err => {

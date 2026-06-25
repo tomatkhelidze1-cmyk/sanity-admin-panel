@@ -1126,8 +1126,7 @@
                 modalOverlay.setAttribute('aria-hidden', 'false');
                 
                 // Prevent background scrolling on all devices (desktop + mobile)
-                document.documentElement.style.overflow = 'hidden';
-                document.body.style.overflow = 'hidden';
+                if (typeof window.lockBodyScroll === "function") window.lockBodyScroll();
 
                 // Focus on modal close button or container
                 modalCloseBtn.focus();
@@ -1138,8 +1137,7 @@
                 modalOverlay.setAttribute('aria-hidden', 'true');
                 
                 // Restore background scrolling
-                document.documentElement.style.overflow = '';
-                document.body.style.overflow = '';
+                if (typeof window.unlockBodyScroll === "function") window.unlockBodyScroll();
                 
                 // Focus back on the card that triggered the modal
                 if (lastActiveElement) {
